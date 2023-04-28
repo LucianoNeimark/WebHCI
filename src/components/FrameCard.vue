@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-    <VCard class="ma-6 pa-1 card" color="tertiary">
+    <VCard class="ma-2 pa-1 card v-col-3" color="tertiary">
         <VContainer>
             <VRow class="flex-row justify-space-between">
                 <div>{{ name }}</div>
