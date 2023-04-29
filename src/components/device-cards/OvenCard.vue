@@ -11,7 +11,7 @@ const temp = ref(90)
 const power = ref(false)
 
 const powerButtonColor = computed(() => {
-    return power.value ? 'white' : 'green' // TODO: Change to constants
+    return power.value ? 'green' : 'white' // TODO: Change to constants
 })
 
 </script>
