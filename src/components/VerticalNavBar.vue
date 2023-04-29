@@ -1,24 +1,35 @@
+<script setup>
+
+</script>
+
 <template>
+
       <VNavigationDrawer
               app
               clipped
               color="primary"
-              dark
-              width=200
+              width=240
       >
           <VList color="transparent">
-              <!-- Prepend icon -->
-              <VListItem title="Pantalla principal" value="main" @click="$router.push('/')"></VListItem>
-              <VListItem title="Dispositivos" value="devices" @click="$router.push('/devices')"></VListItem>
-              <VListItem title="Rutinas" value="routines" @click="$router.push('/routines')"></VListItem>
-              <VListItem title="Habitaciones" value="rooms" @click="$router.push('/rooms')"></VListItem>
+              <VListItem prepend-icon="mdi-view-dashboard" title="Pantalla principal" value="main" @click="$router.push('/')"></VListItem>
+              <VListItem prepend-icon="mdi-lamp" title="Dispositivos" value="devices" @click="$router.push('/devices')"></VListItem>
+              <VListItem prepend-icon="mdi-clock-fast" title="Rutinas" value="routines"  @click="$router.push('/routines')"></VListItem>
+              <VListItem prepend-icon="mdi-bed-king-outline" title="Habitaciones" value="rooms" @click="$router.push('/rooms')"></VListItem>
           </VList>
       </VNavigationDrawer>
 </template>
 
-<script>
-</script>
 
-<style scoped>
+<style>
+  .v-list .v-list-item--active {
+      background-color: rgb(var(--v-theme-secondary))!important;
+  }
+  .v-list .v-list-item--active .v-list-item-title {
+      color: white !important;
+  }
+
+  .v-list .v-list-item--active i {
+      color: white !important;
+  }
 
 </style>

@@ -15,17 +15,11 @@ import './assets/main.css'
 const defaultTheme = {
     dark: false,
     colors: {
-        background: '4F9B8F',
-        surface: '#FFFFFF',
-        primary: '#2D4552',
-        'primary-darken-1': '#3700B3',
-        secondary: '#1A282F',
-        'secondary-darken-1': '#018786',
-        error: '#B00020',
-        info: '#2196F3',
-        success: '#4CAF50',
-        warning: '#FB8C00',
-        tertiary:'#89D8CB'
+        background: '#4F9B8F',
+        primary: '#2D4552', //azul navbar
+        secondary:'#50AB64', //verde select
+        tertiary:'#89D8CB', //verde cards
+        footer: '#1a282f'
     }
 }
 

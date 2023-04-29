@@ -4,7 +4,7 @@
 <template>
     <VFooter
         app
-        color="secondary"
+        color="footer"
         dark
     >
         <VRow>

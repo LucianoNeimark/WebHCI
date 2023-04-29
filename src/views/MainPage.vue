@@ -19,9 +19,9 @@ const devices = [
 
 <template>
   <p> Pagina Principal </p>
-<!--    <VContainer class="flex">-->
-         <component v-for="device in devices" :key="device.id" :name="device.name" :is="device.component" class="v-col-3" />
-<!--    </VContainer>-->
+    <VRow class="ma-3">
+         <component v-for="device in devices" :key="device.id" :name="device.name" :is="device.component" class="v-col-3 pa-3" />
+    </VRow>
 </template>
 
 <style scoped>
