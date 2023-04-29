@@ -29,7 +29,7 @@ defineProps({
 <style scoped>
 
 .slot-content {
-    height: 100px;
+    height: 150px;
 }
 
 </style>
