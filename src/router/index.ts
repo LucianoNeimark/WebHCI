@@ -11,22 +11,22 @@ const router = createRouter({
       // route to main page view
       {
           path: '/',
-          name: 'MainPage',
+          name: 'Pagina Principal',
           component: MainPage
       },
       {
           path: '/devices',
-          name: 'DevicesPage',
+          name: 'Dispositivos',
           component: DevicesPage
       },
       {
           path: '/routines',
-          name: 'RoutinesPage',
+          name: 'Rutinas',
           component: RoutinesPage
       },
       {
           path: '/rooms',
-          name: 'RoomsPage',
+          name: 'Habitaciones',
           component: RoomsPage
       }
   ]

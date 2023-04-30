@@ -2,6 +2,7 @@
   import { /*RouterLink,*/ RouterView } from 'vue-router'
   import VerticalNavBar from "@/components/VerticalNavBar.vue"
   import Footer from "@/components/StaticFooter.vue"
+  import StaticHeader from "@/components/StaticHeader.vue";
 </script>
 
 <template>
@@ -9,6 +10,7 @@
             <VLayout>
                 <VerticalNavBar/>
                 <VMain>
+                    <StaticHeader/>
                     <router-view/>
                 </VMain>
                 <Footer/>

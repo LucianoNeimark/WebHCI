@@ -3,9 +3,7 @@
 </template>
 
 <script>
-export default {
-    name: "RoutinesPage"
-}
+
 </script>
 
 <style scoped>

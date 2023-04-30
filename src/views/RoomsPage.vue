@@ -3,9 +3,7 @@
 </template>
 
 <script>
-export default {
-    name: "RoomsPage"
-}
+
 </script>
 
 <style scoped>
