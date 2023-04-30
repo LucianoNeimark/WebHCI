@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-    <VCard class="ma-2 pa-1 card v-col-3" color="tertiary">
+    <VCard class="ma-5 pa-5 card" color="tertiary" rounded="xl">
         <VContainer>
             <VRow class="flex-row justify-space-between">
                 <div>{{ name }}</div>
@@ -27,6 +27,10 @@ defineProps({
 </template>
 
 <style scoped>
+
+.card {
+    width: 22%;
+}
 
 .slot-content {
     height: 150px;
