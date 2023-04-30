@@ -7,17 +7,17 @@
         color="footer"
         dark
     >
-        <VRow>
-            <div>
+            <VCol cols="4">
                 Contactenos por <a>smart@itba.edu.ar</a>
-            </div>
-            <div class="d-flex justify-center">
+            </VCol>
+            <VCol class="copyright" cols="4">
                 &copy; {{ new Date().getFullYear() }} Copyright — Grupo 2
-            </div>
-        </VRow>
+            </VCol>
     </VFooter>
 </template>
 
 <style scoped>
-
+.copyright {
+    text-align: center;
+}
 </style>

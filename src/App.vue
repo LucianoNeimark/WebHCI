@@ -11,8 +11,8 @@
                 <VMain>
                     <router-view/>
                 </VMain>
+                <Footer/>
             </VLayout>
-            <Footer/>
         </VApp>
 </template>
 
