@@ -12,7 +12,7 @@ const devices = [
     { id: '2', name: 'Puerta cocina', component: DoorCard },
     { id: '3', name: 'Horno living', component: OvenCard },
     { id: '4', name: 'Luz cocina', component: LightCard },
-    { id: '5', name: 'Parlante living', component: SpeakerCard },
+    //{ id: '5', name: 'Parlante living', component: SpeakerCard },
 ]
 
 </script>
@@ -20,7 +20,7 @@ const devices = [
 <template>
   <p> Pagina Principal </p>
     <VRow class="ma-3">
-         <component v-for="device in devices" :key="device.id" :name="device.name" :is="device.component" class="v-col-3 pa-3" />
+         <component v-for="device in devices" :key="device.id" :name="device.name" :is="device.component" class="pa-3" />
     </VRow>
 </template>
 

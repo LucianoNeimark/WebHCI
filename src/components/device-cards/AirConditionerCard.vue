@@ -21,12 +21,12 @@ defineProps({
     <FrameCard :name="name" :icon="AirConditionerSVG">
         <VContainer class="mx-1">
             <VRow>
-                <VCol cols="8" class="d-flex justify-center" align-self="center">
+                <VCol class="d-flex justify-center" align-self="center">
                     <VBtn rounded="xl" size="large" icon="mdi-minus" @click="temperature--"/>
                     <span style="font-size: 28px" class="px-2 align-self-center">{{temperature}}°</span>
                     <VBtn rounded="xl" size="large" icon="mdi-plus" @click="temperature++"/>
                 </VCol>
-                <VCol  cols="4" align-self="center" class="d-flex justify-center">
+                <VCol align-self="center" class="d-flex justify-center">
                     <VBtn rounded="xl" size="x-large" icon="mdi-power" @click="power = !power" :color="powerColor"/>
                 </VCol>
             </VRow>
