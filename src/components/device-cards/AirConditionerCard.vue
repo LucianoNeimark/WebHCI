@@ -19,7 +19,7 @@ defineProps({
 
 <template>
     <FrameCard :name="name" :icon="AirConditionerSVG">
-        <VContainer class="mx-1">
+        <VContainer class="mx-0">
             <VRow>
                 <VCol class="d-flex justify-center" align-self="center">
                     <VBtn rounded="xl" size="large" icon="mdi-minus" @click="temperature--"/>
