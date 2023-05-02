@@ -21,7 +21,7 @@ const powerButtonColor = computed(() => {
         <VContainer>
             <VRow class="flex-row justify-center mb-1">
                 <VBtn class="light-button" rounded="xl" @click="power = !power" :color="powerButtonColor" size="x-large" stacked>
-                    <VIcon icon="mdi:mdi-power" size="x-large"></VIcon>
+                    <VIcon icon="mdi:mdi-power" size="6vw"></VIcon>
                 </VBtn>
             </VRow>
         </VContainer>
@@ -34,4 +34,7 @@ const powerButtonColor = computed(() => {
     width: 8vw;
     height: 8vw;
 }
+
+
+
 </style>
