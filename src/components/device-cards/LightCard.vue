@@ -29,8 +29,9 @@ const powerButtonColor = computed(() => {
 </template>
 
 <style scoped>
+
 .light-button {
     width: 8vw;
-    height: 12vh;
+    height: 8vw;
 }
 </style>

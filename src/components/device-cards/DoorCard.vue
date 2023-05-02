@@ -41,8 +41,8 @@ const doorButtonIcon = computed(() => {
 <style scoped>
 
     .door-button{
-        width: 7vw;
-        height: 11vh;
+        width: 8vw;
+        height: 8vw;
     }
 
 </style>

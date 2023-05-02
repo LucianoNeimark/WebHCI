@@ -42,7 +42,7 @@ const powerButtonColor = computed(() => {
 
 <style scoped>
     .oven-button{
-        width: 6vw;
-        height: 10vh;
+        width: 7vw;
+        height: 7vw;
     }
 </style>

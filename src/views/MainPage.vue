@@ -12,7 +12,7 @@ const devices = [
     { id: '2', name: 'Puerta cocina', component: DoorCard },
     { id: '3', name: 'Horno living', component: OvenCard },
     { id: '4', name: 'Luz cocina', component: LightCard },
-    //{ id: '5', name: 'Parlante living', component: SpeakerCard },
+    { id: '5', name: 'Parlante living', component: SpeakerCard },
 ]
 
 </script>
