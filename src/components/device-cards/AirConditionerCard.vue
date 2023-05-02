@@ -15,6 +15,7 @@ defineProps({
     name : String
 })
 
+
 </script>
 
 <template>
@@ -22,9 +23,9 @@ defineProps({
         <VContainer class="mx-0">
             <VRow>
                 <VCol class="d-flex justify-center" align-self="center">
-                    <VBtn rounded="xl" size="large" icon="mdi-minus" @click="temperature--"/>
+                    <VBtn class="temperature" icon="mdi-minus" @click="temperature--"/>
                     <span style="font-size: 28px" class="px-2 align-self-center">{{temperature}}°</span>
-                    <VBtn rounded="xl" size="large" icon="mdi-plus" @click="temperature++"/>
+                    <VBtn class="temperature" icon="mdi-plus" @click="temperature++"/>
                 </VCol>
                 <VCol align-self="center" class="d-flex justify-center">
                     <VBtn rounded="xl" size="x-large" icon="mdi-power" @click="power = !power" :color="powerColor"/>
@@ -50,4 +51,9 @@ defineProps({
 </template>
 
 <style scoped>
+.temperature{
+    width: 3vw;
+    height: 3vw;
+    border-radius: 40%;
+}
 </style>
