@@ -3,6 +3,7 @@ import MainPage from '../views/MainPage.vue'
 import DevicesPage from '../views/DevicesPage.vue'
 import RoomsPage from "@/views/RoomsPage.vue"
 import RoutinesPage from "@/views/RoutinesPage.vue"
+import DeviceInfoPage from "@/views/DeviceInfoPage.vue";
 
 
 const router = createRouter({
@@ -20,6 +21,11 @@ const router = createRouter({
           component: DevicesPage
       },
       {
+          path: '/devices/:id',
+          name: 'Dispositivo',
+          component: DeviceInfoPage
+      },
+      {
           path: '/routines',
           name: 'Rutinas',
           component: RoutinesPage
@@ -28,7 +34,7 @@ const router = createRouter({
           path: '/rooms',
           name: 'Habitaciones',
           component: RoomsPage
-      }
+      },
   ]
 })
 

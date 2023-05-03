@@ -1,6 +1,7 @@
 <script setup>
 
 defineProps({
+    id: String,
     name : String,
     icon : String
 })
@@ -20,7 +21,7 @@ defineProps({
             </VRow>
 
             <VRow class="flex-column">
-                <v-btn bottom rounded="xl" size="small" class="align-self-center">Mas opciones</v-btn>
+                <VBtn bottom rounded="xl" size="small" class="align-self-center" to="devices/hola">Mas opciones</VBtn>
             </VRow>
         </VContainer>
     </VCard>

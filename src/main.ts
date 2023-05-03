@@ -19,7 +19,9 @@ const defaultTheme = {
         primary: '#2D4552', //azul navbar
         secondary:'#50AB64', //verde select
         tertiary:'#89D8CB', //verde cards
-        footer: '#1a282f'
+        footer: '#1a282f',
+        surface: '#89D8CB',
+        surface_light: '#A4E3D9'
     }
 }
 
