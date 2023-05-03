@@ -28,7 +28,7 @@ defineProps({
                     <VBtn class="temperature" icon="mdi-plus" @click="temperature++"/>
                 </VCol>
                 <VCol align-self="center" class="d-flex justify-center">
-                    <VBtn rounded="xl" size="x-large" @click="power = !power" :color="powerColor">
+                    <VBtn @click="power = !power" :color="powerColor" class="power">
                         <VIcon icon="mdi-power" size="3vw"> </VIcon>
                     </VBtn>
                 </VCol>
@@ -56,6 +56,11 @@ defineProps({
 .temperature{
     width: 3vw;
     height: 3vw;
+    border-radius: 40%;
+}
+.power{
+    width: 4vw;
+    height: 4vw;
     border-radius: 40%;
 }
 </style>

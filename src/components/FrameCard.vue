@@ -16,11 +16,11 @@ defineProps({
                 <img :src=icon alt="device-icon" width="35" height="35"/>
             </VRow>
 
-            <VRow class="slot-content">
+            <VRow class="slot-content mb-5">
                 <slot></slot>
             </VRow>
 
-            <VRow class="flex-column">
+            <VRow class="flex-column mt-5">
                 <VBtn bottom rounded="xl" size="small" class="align-self-center" to="devices/hola">Mas opciones</VBtn>
             </VRow>
         </VContainer>
@@ -34,7 +34,7 @@ defineProps({
 }
 
 .slot-content {
-    height: 150px;
+    height: 20vh;
 }
 
 </style>

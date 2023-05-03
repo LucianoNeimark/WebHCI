@@ -2,8 +2,6 @@
 import FrameCard from "@/components/FrameCard.vue"
 import OpenDoorSVG from "@/assets/device-icons/device/door-open.svg"
 import CloseDoorSVG from "@/assets/device-icons/device/door-close.svg"
-import OpenLockSVG from "@/assets/device-icons/device/open-lock.svg"
-import CloseLockSVG from "@/assets/device-icons/device/close-lock.svg"
 import {computed, ref} from "vue";
 
 
