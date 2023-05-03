@@ -4,7 +4,7 @@ import LightInfo from "@/components/device-pages/LightInfo.vue";
 import ActionsHistoryTable from "@/components/tables/ActionsHistoryTable.vue";
 import ToRooms from "@/components/ToRooms.vue";
 
-const device = { id: '4', component: LightInfo, data: { intensity: 50, color: 'red', power: true } };
+const device = { id: '4', component: LightInfo, data: { intensity: 50, color: '#FF0000', power: true } };
 
 const actions = [
     { id: 1, actionName: 'apagar', params: '', date: '25/03/2023', time: '12:32' },
@@ -19,18 +19,13 @@ const room = "Cocina"
 <template>
     <VCol>
         <VRow>
-            <div>
-                <!-- El id nos da toda la info necesaria (aca seria el nombre)-->
-                <h1>{{$route.params.id}}</h1>
-            </div>
+            <h1 class="ma-5">
+                Lampara living 1
+            </h1>
         </VRow>
-        <VRow>
-            <VCol>
-                <component :is="device.component" v-bind="device.data" ></component>
-            </VCol>
-            <VCol>
-                <ToRooms :room="room" />
-            </VCol>
+        <VRow class="device-row ma-5">
+            <component :is="device.component" v-bind="device.data" class="device mr-10" ></component>
+            <ToRooms :room="room" class="ml-10" />
         </VRow>
         <VRow>
             <VExpansionPanels multiple class="ma-5">
@@ -51,6 +46,12 @@ const room = "Cocina"
 </template>
 
 <style>
+
+.device {
+    min-width: 30vw;
+    min-height: 35vh;
+}
+
 .v-expansion-panel-title {
     font-weight: bold;
 }
@@ -62,4 +63,5 @@ const room = "Cocina"
 .v-table thead th {
     background-color: rgba(0, 0, 0, .03);
 }
+
 </style>

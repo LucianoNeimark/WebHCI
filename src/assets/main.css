@@ -33,3 +33,7 @@
 /*    !*padding: 0 2rem;*!*/
 /*  }*/
 /*}*/
+
+.v-slider-thumb__surface {
+    background-color: white;
+}
