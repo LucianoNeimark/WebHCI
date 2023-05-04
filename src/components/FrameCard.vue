@@ -11,7 +11,7 @@ defineProps({
 <template>
     <VCard class="ma-3 pa-5 card" color="tertiary" rounded="xl">
         <VContainer>
-            <VRow class="flex-row justify-space-between">
+            <VRow class="flex-row justify-space-between mb-1">
                 <div>{{ name }}</div>
                 <img :src=icon alt="device-icon" width="35" height="35"/>
             </VRow>

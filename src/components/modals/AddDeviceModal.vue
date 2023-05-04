@@ -143,7 +143,6 @@
 .modal{
     width: 80%;
     position: absolute;
-    left: 19vw;
 }
 
 .add{

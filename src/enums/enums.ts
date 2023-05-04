@@ -1,7 +1,7 @@
 export enum SizesEnum {
     XSmall = 'x-small',
     Small = 'small',
-    Medium = 'medium',
+    Medium = 'default',
     Large = 'large',
     XLarge = 'x-large'
 }

@@ -4,17 +4,19 @@ import OvenSVG from "@/assets/device-icons/device/oven.svg"
 import {computed, ref} from "vue";
 import {SizesEnum} from "@/enums/enums";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
+import CardSlider from "@/components/custom-inputs/CardSlider.vue";
 defineProps({
     id: String,
     name : String
 })
 
 const temp = ref(90)
+
 const power = ref(false)
 
-const powerButtonColor = computed(() => {
-    return power.value ? 'green' : 'white' // TODO: Change to constants
-})
+const postInfo = () => {
+    console.log("Soy una api call! Cambiando el valor a ...", temp.value)
+}
 
 </script>
 <template>
@@ -24,24 +26,14 @@ const powerButtonColor = computed(() => {
                 <PowerButton :power="power" @click="power = !power" :size="SizesEnum.Large"/>
             </VRow>
             <VRow>
-                <VSlider
-                    v-model="temp"
-                    :min="90"
-                    :max="240"
-                    step="1"
-                    thumb-label
-                    track-fill-color="white"
-                    thumb-color="white"
-                    append-icon="mdi-thermometer-high"
-                ></VSlider>
+                <CardSlider :value="temp" :min="90" :max="240" icon="mdi-thermometer-low"
+                @updateSlider="postInfo"
+                @updateValue="value => temp = value"/>
             </VRow>
         </VContainer>
     </FrameCard>
 </template>
 
 <style scoped>
-    .oven-button{
-        width: 7vw;
-        height: 7vw;
-    }
+
 </style>

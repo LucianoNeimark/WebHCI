@@ -7,6 +7,8 @@ import OvenCard from "@/components/device-cards/OvenCard.vue";
 import LightCard from "@/components/device-cards/LightCard.vue";
 import SpeakerCard from "@/components/device-cards/SpeakerCard.vue";
 
+
+
 const devices = [
     { id: '1', name: 'Aire acondicionado cocina', component: AirConditionerCard },
     { id: '2', name: 'Puerta cocina', component: DoorCard },
