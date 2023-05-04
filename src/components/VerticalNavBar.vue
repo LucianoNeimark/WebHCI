@@ -20,9 +20,11 @@
 </template>
 
 
-<style>
+<style lang="scss">
+  @import '@/assets/variables.scss';
+
   .v-list .v-list-item--active {
-      background-color: rgb(var(--v-theme-secondary))!important;
+      background-color: $secondary !important;
   }
   .v-list .v-list-item--active .v-list-item-title {
       color: white !important;

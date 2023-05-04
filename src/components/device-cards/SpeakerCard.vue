@@ -20,13 +20,13 @@ const pauseIcon = "mdi:mdi-pause"
     <FrameCard :name="name" :icon="SpeakerSVG">
         <VContainer>
             <VRow class="align-content-center justify-space-evenly mb-1">
-                <VBtn rounded="xl" size="large"  @click="playing = true" stacked>
+                <VBtn rounded="xl" size="large"  @click="playing = true" color="lightSurface" stacked>
                     <VIcon icon="mdi:mdi-skip-previous" size="3vw"></VIcon>
                 </VBtn>
-                <VBtn rounded="xl" size="large" @click="playing = !playing"   stacked>
+                <VBtn rounded="xl" size="large" @click="playing = !playing" color="lightSurface" stacked>
                     <VIcon :icon="!playing?playIcon:pauseIcon" size="3vw"></VIcon>
                 </VBtn>
-                <VBtn rounded="xl" size="large" @click="playing = true" stacked>
+                <VBtn rounded="xl" size="large" @click="playing = true" color="lightSurface" stacked>
                     <VIcon icon="mdi:mdi-skip-next" size="3vw"></VIcon>
                 </VBtn>
             </VRow>

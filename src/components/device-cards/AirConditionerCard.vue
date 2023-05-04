@@ -23,9 +23,9 @@ defineProps({
         <VContainer class="mx-0">
             <VRow>
                 <VCol class="d-flex justify-center" align-self="center">
-                    <VBtn class="temperature" icon="mdi-minus" @click="temperature--"/>
+                    <VBtn color="lightSurface" class="temperature" icon="mdi-minus" @click="temperature--"/>
                     <span style="font-size: 28px" class="px-2 align-self-center">{{temperature}}°</span>
-                    <VBtn class="temperature" icon="mdi-plus" @click="temperature++"/>
+                    <VBtn color="lightSurface" class="temperature" icon="mdi-plus" @click="temperature++"/>
                 </VCol>
                 <VCol align-self="center" class="d-flex justify-center">
                     <VBtn @click="power = !power" :color="powerColor" class="power">

@@ -7,7 +7,6 @@ import AirConditionerSVG from "@/assets/device-icons/device/air-conditioner.svg"
 import CurtainSVG from "@/assets/device-icons/device/curtain.svg"
 import FridgeSVG from "@/assets/device-icons/device/refrigerator.svg"
 
-
 import {ref} from 'vue'
 import {mdi} from "vuetify/iconsets/mdi";
 const dialog = ref(false)
@@ -105,7 +104,6 @@ const deviceTypes = [
                                             <p class="device-name">{{deviceType.name}}</p>
                                         </VRow>
                                     </VContainer>
-
                                 </VBtnToggle>
                             </VRow>
                         </VCol>
@@ -125,7 +123,8 @@ const deviceTypes = [
     </VDialog>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+    @import '@/assets/variables';
 
     .device-type{
         height: 6vw !important;
@@ -143,7 +142,7 @@ const deviceTypes = [
     }
 
     .add{
-        background-color: #50AB64;
+        background-color: $secondary;
     }
 
 </style>

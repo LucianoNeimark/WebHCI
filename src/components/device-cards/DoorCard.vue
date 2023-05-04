@@ -26,10 +26,10 @@ const doorButtonIcon = computed(() => {
 <template>
     <FrameCard :name="name" :icon="OpenDoorSVG">
         <VRow class="align-content-center justify-space-evenly mb-1">
-            <VBtn class="door-button" rounded="xl" size="x-large"  @click="lock = !lock" stacked>
+            <VBtn class="door-button" color="lightSurface" rounded="xl" size="x-large"  @click="lock = !lock" stacked>
                 <VIcon :icon="lockButtonIcon" size="4vw"> </VIcon>
             </VBtn>
-            <VBtn class="door-button" rounded="xl" size="x-large"  @click="door = !door" stacked>
+            <VBtn class="door-button" color="lightSurface" rounded="xl" size="x-large"  @click="door = !door" stacked>
                 <img :src="doorButtonIcon" alt="door-icon" class="door-size"/>
             </VBtn>
         </VRow>
