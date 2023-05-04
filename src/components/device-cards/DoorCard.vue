@@ -18,7 +18,7 @@ const lockButtonIcon = computed(() => {
 })
 
 const doorButtonIcon = computed(() => {
-    return door.value ? OpenDoorSVG : CloseDoorSVG // TODO: Change to constants
+    return door.value ? "mdi-door-open" : "mdi-door-closed" // TODO: Change to constants
 })
 
 </script>
@@ -30,7 +30,7 @@ const doorButtonIcon = computed(() => {
                 <VIcon :icon="lockButtonIcon" size="4vw"> </VIcon>
             </VBtn>
             <VBtn class="door-button" color="lightSurface" rounded="xl" size="x-large"  @click="door = !door" stacked>
-                <img :src="doorButtonIcon" alt="door-icon" class="door-size"/>
+                <VIcon :icon="doorButtonIcon" size="4vw"> </VIcon>
             </VBtn>
         </VRow>
     </FrameCard>

@@ -2,6 +2,8 @@
 import FrameCard from "@/components/FrameCard.vue"
 import OvenSVG from "@/assets/device-icons/device/oven.svg"
 import {computed, ref} from "vue";
+import {SizesEnum} from "@/enums/enums";
+import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 defineProps({
     id: String,
     name : String
@@ -19,10 +21,7 @@ const powerButtonColor = computed(() => {
     <FrameCard :name="name" :icon="OvenSVG">
         <VContainer>
             <VRow class="flex-row justify-center">
-
-                <VBtn class="oven-button" rounded="xl" @click="power = !power" :color="powerButtonColor" stacked>
-                    <VIcon icon="mdi:mdi-power" size="5vw"></VIcon>
-                </VBtn>
+                <PowerButton :power="power" @click="power = !power" :size="SizesEnum.Large"/>
             </VRow>
             <VRow>
                 <VSlider

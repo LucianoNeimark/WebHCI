@@ -1,6 +1,8 @@
 <script setup>
 
 import {computed, ref, toRefs} from "vue";
+import PowerButton from "@/components/custom-inputs/PowerButton.vue";
+import {SizesEnum} from "@/enums/enums";
 
 const props = defineProps({
     intensity: {
@@ -24,19 +26,13 @@ const intensity = ref(props.intensity)
 const color = ref(props.color)
 const power = ref(props.power)
 
-const powerButtonColor = computed(() => {
-    return power.value ? 'green' : 'white' // TODO: Change to constants
-});
-
 </script>
 
 <template>
   <VCard class="pa-3" color="primary" rounded="xl">
       <VContainer>
           <VRow class="flex-row justify-center mb-1">
-              <VBtn class="light-button" rounded="xl" @click="power = !power" :color="powerButtonColor" size="x-large" stacked>
-                  <VIcon icon="mdi:mdi-power" size="6vw"></VIcon>
-              </VBtn>
+              <PowerButton :power="power" @click="power = !power" :size="SizesEnum.XLarge"/>
           </VRow>
           <VRow>
               Intensidad

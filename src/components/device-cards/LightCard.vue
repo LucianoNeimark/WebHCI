@@ -1,7 +1,9 @@
 <script setup>
 import FrameCard from "@/components/FrameCard.vue"
 import LightbulbSVG from "@/assets/device-icons/device/lightbulb.svg"
-import {computed, ref} from "vue";
+import { ref} from "vue";
+import PowerButton from "@/components/custom-inputs/PowerButton.vue";
+import {SizesEnum} from "@/enums/enums";
 
 defineProps({
     id: String,
@@ -10,31 +12,18 @@ defineProps({
 
 const power = ref(false)
 
-const powerButtonColor = computed(() => {
-    return power.value ? 'green' : 'white' // TODO: Change to constants
-})
-
 </script>
 
 <template>
     <FrameCard :name="name" :icon="LightbulbSVG">
         <VContainer>
             <VRow class="flex-row justify-center mb-1">
-                <VBtn class="light-button" rounded="xl" @click="power = !power" :color="powerButtonColor" size="x-large" stacked>
-                    <VIcon icon="mdi:mdi-power" size="6vw"></VIcon>
-                </VBtn>
+                <PowerButton :power="power" @click="power = !power" :size="SizesEnum.XLarge"/>
             </VRow>
         </VContainer>
     </FrameCard>
 </template>
 
 <style scoped>
-
-.light-button {
-    width: 8vw;
-    height: 8vw;
-}
-
-
 
 </style>

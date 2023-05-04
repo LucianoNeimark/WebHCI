@@ -37,3 +37,24 @@
 .v-slider-thumb__surface {
     background-color: white;
 }
+
+.btn-x-small {
+    min-width: 2vw !important;
+    min-height: 2vw !important;
+}
+.btn-small {
+    min-width: 3vw !important;
+    min-height: 3vw !important;
+}
+.btn-medium{
+    min-width: 4vw !important;
+    min-height: 4vw !important;
+}
+.btn-large {
+    min-width: 7vw !important;
+    min-height: 7vw !important;
+}
+.btn-x-large {
+    min-width: 9vw !important;
+    min-height: 9vw !important;
+}

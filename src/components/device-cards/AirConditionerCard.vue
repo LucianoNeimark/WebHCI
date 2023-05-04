@@ -2,9 +2,12 @@
 import FrameCard from "@/components/FrameCard.vue"
 import AirConditionerSVG from "@/assets/device-icons/device/air-conditioner.svg"
 import { ref, computed } from 'vue'
+import PowerButton from "@/components/custom-inputs/PowerButton.vue";
+import {SizesEnum} from "@/enums/enums";
+
 const temperature = ref(22)
 const toggle = ref("wind")
-const power = ref(true)
+const power = ref(false)
 const powerColor = computed(() => {
         return power.value ? 'white' : 'grey-lighten-1'
     }
@@ -14,8 +17,6 @@ defineProps({
     id: String,
     name : String
 })
-
-
 </script>
 
 <template>
@@ -28,9 +29,7 @@ defineProps({
                     <VBtn color="lightSurface" class="temperature" icon="mdi-plus" @click="temperature++"/>
                 </VCol>
                 <VCol align-self="center" class="d-flex justify-center">
-                    <VBtn @click="power = !power" :color="powerColor" class="power">
-                        <VIcon icon="mdi-power" size="3vw"> </VIcon>
-                    </VBtn>
+                    <PowerButton :power="power" @click="power = !power" :size="SizesEnum.Small"/>
                 </VCol>
             </VRow>
             <VRow>
