@@ -20,7 +20,7 @@ const postInfo = () => {
 
 </script>
 <template>
-    <FrameCard :name="name" :icon="OvenSVG">
+    <FrameCard :id="id" :name="name" :icon="OvenSVG">
         <VContainer>
             <VRow class="flex-row justify-center">
                 <PowerButton :power="power" @click="power = !power" :size="SizesEnum.Large"/>

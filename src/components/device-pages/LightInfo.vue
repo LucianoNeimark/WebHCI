@@ -1,30 +1,52 @@
-<script setup>
+<script setup lang="ts">
 
 import {computed, ref, toRefs} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
+import type { Device } from '@/interfaces/device.interface';
+import { toggleLamp, type Lamp, changeLampStatus, changeLampColor, changeLampBrightness} from "@/interfaces/models/lamp";
+import type { PropType } from 'vue';
+import { reactive } from 'vue';
+import { watch } from 'vue';
+import { watchEffect } from 'vue';
 
 const props = defineProps({
-    intensity: {
-        type: Number,
+    device: {
+        type: Object as PropType<Lamp>,
         required: true
-    },
-    color: {
-        type: String,
-        required: true
-    },
-    power: {
-        type: Boolean,
-        required: true
-    }
+    } 
 });
+const lamp = reactive(props.device)
 
-// const {intensity, color, power} = toRefs(props);
+/*const status = ref(props.device)
+const color = ref(lamp.state.brightness)
+const brightness = ref(props.brightness)*/
 
-// TODO: Cambiar cuando este la api
-const intensity = ref(props.intensity)
-const color = ref(props.color)
-const power = ref(props.power)
+const power = computed(() => {
+    return lamp.state.status === 'on'
+})
+
+watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
+    if (newStatus !== oldStatus) {
+        console.log("Change lamp status");
+        await changeLampStatus(lamp, newStatus)
+    }
+})
+
+watch(() => lamp.state.brightness, async (newBrightness: number, oldBrightness: number) => {
+    if (newBrightness !== oldBrightness){
+        console.log("Change lamp brightness");
+        await changeLampBrightness(lamp, newBrightness)
+    }
+})
+
+watch(() => lamp.state.color, async (newColor: string, oldColor: string) => {
+    if (newColor !== oldColor){
+        console.log("Change lamp status");
+        await changeLampColor(lamp, newColor)
+    }
+})
+
 
 </script>
 
@@ -32,14 +54,14 @@ const power = ref(props.power)
   <VCard class="pa-3" color="primary" rounded="xl">
       <VContainer>
           <VRow class="flex-row justify-center mb-1">
-              <PowerButton :power="power" @click="power = !power" :size="SizesEnum.XLarge"/>
+              <PowerButton :power="power" @click="() => toggleLamp(lamp)" :size="SizesEnum.XLarge"/>
           </VRow>
           <VRow>
               Intensidad
           </VRow>
           <VRow>
               <VSlider
-                      v-model="intensity"
+                      v-model="lamp.state.brightness"
                       min="0"
                       max="100"
                       step="1"
@@ -49,21 +71,21 @@ const power = ref(props.power)
                       thumb-color="white"
               >
                   <template v-slot:append>
-                      <v-text-field
-                              v-model="intensity"
+                      <VTextField
+                              v-model="lamp.state.brightness"
                               hide-details
                               single-line
                               density="compact"
                               type="number"
                               style="width: 70px"
-                      ></v-text-field>
+                      ></VTextField>
                   </template>
               </VSlider>
 
           </VRow>
           <VRow class="justify-center">
               <VColorPicker
-                      v-model="color"
+                      v-model="lamp.state.color"
                       flat
                       hide-canvas
                       hide-inputs
@@ -82,9 +104,6 @@ const power = ref(props.power)
     width: 8vw;
     height: 8vw;
 }
-
-
-
 
 
 </style>

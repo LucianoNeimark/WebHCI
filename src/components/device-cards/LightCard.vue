@@ -15,7 +15,7 @@ const power = ref(false)
 </script>
 
 <template>
-    <FrameCard :name="name" :icon="LightbulbSVG">
+    <FrameCard :id="id" :name="name" :icon="LightbulbSVG">
         <VContainer>
             <VRow class="flex-row justify-center mb-1">
                 <PowerButton :power="power" @click="power = !power" :size="SizesEnum.XLarge"/>

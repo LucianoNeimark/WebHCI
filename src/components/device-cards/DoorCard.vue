@@ -16,7 +16,7 @@ const closed = ref(false)
 </script>
 
 <template>
-    <FrameCard :name="name" :icon="OpenDoorSVG">
+    <FrameCard :id="id" :name="name" :icon="OpenDoorSVG">
         <VRow class="align-content-center justify-space-evenly mb-1">
             <ToggleButton :selected="locked" icon-selected="mdi-lock" icon="mdi-lock-open" @click="locked = !locked"/>
             <ToggleButton :selected="closed" icon-selected="mdi-door-closed" icon="mdi-door-open" @click="closed = !closed"/>

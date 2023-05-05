@@ -22,7 +22,7 @@ defineProps({
 </script>
 
 <template>
-    <FrameCard :name="name" :icon="AirConditionerSVG">
+    <FrameCard :id="id" :name="name" :icon="AirConditionerSVG">
             <VRow>
                 <VCol class="d-flex justify-center" align-self="center">
                     <NumericController :val="temperature" suffix="º" :min="18" :max="38" @increment="temperature++" @decrement="temperature--"/>

@@ -23,8 +23,8 @@ onMounted(async () => {
 <template>
   <p> Pagina Principal </p>
     <VRow class="ma-3">
-         <component v-for="device in topDevices.items" :key="device.id" :name="device.name" 
-         :is="deviceTypes[device.type.id].component" class="pa-3" />
+         <component v-for="device in topDevices.items" :key="device.id" :id="device.id" :name="device.name" 
+         :is="deviceTypes[device.type.id].card" class="pa-3" />
     </VRow>
 </template>
 

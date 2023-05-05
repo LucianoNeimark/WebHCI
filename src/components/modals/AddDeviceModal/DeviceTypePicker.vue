@@ -55,8 +55,8 @@ const { deviceTypes } = useDeviceTypesStore()
 }
 
 .device-type{
-    height: 5vw !important;
-    width: 5vw;
+    height: 6vw !important;
+    width: 6vw;
 }
 
 .device-name{

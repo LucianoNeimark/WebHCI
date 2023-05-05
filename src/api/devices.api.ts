@@ -1,8 +1,8 @@
 import { Api } from '@/api/api'
 import type { Device } from '@/interfaces/device.interface'
-import { DeviceCreationDTO } from '../dtos/deviceCreation.dto'
-import { DeviceUpdateDTO } from '../dtos/deviceUpdate.dto'
-import { useDevicesStore } from '../stores/device.store';
+import { DeviceCreationDTO } from '@/dtos/deviceCreation.dto'
+import { DeviceUpdateDTO } from '@/dtos/deviceUpdate.dto'
+import { useDevicesStore } from '@/stores/device.store';
 export class DevicesApi {
 
     static async addDevice(typeId: string, name: string) {
@@ -13,6 +13,8 @@ export class DevicesApi {
     static async getDevices() : Promise<Device[]> {
         const res = await Api.get("/devices");
         const { result } = await res.json();
+        const { devices, loadDevice } = useDevicesStore();
+        result.forEach((device: Device) => loadDevice(device));
         return result;
     }
 
@@ -33,15 +35,15 @@ export class DevicesApi {
         return result;
     }
 
-    static async executeAction(deviceId: string, actionName: string, params: any) : Promise<string> {
+    static async executeAction(deviceId: string, actionName: string, params?: any) : Promise<string> {
         const res = await Api.put(`/devices/${deviceId}/${actionName}`, params);
         if (res.ok) {
-            const { devices, addDevice } = useDevicesStore();
+            const { devices, loadDevice } = useDevicesStore();
             const actionedDevice = devices.items.get(deviceId);
             if (actionedDevice) {
                 actionedDevice.meta.qtyUses++;
-                addDevice(actionedDevice);
                 this.updateDevice(actionedDevice);
+                loadDevice(actionedDevice);
             } else {
                 // TODO: Error???
             }

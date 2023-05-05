@@ -14,17 +14,24 @@ import OvenCard from "@/components/device-cards/OvenCard.vue";
 import LightCard from "@/components/device-cards/LightCard.vue";
 import SpeakerCard from "@/components/device-cards/SpeakerCard.vue";
 
+import LightInfo from "@/components/device-pages/LightInfo.vue";
+import ACInfo from "@/components/device-pages/ACInfo.vue";
+import SpeakerInfo from "@/components/device-pages/SpeakerInfo.vue";
+import OvenInfo from "@/components/device-pages/OvenInfo.vue";
+import DoorInfo from "@/components/device-pages/DoorInfo.vue";
+
+
 export const useDeviceTypesStore = defineStore('deviceTypes', () => {
   const deviceTypes = reactive({
         // TODO: Poner iconos bien
-        'li6cbv5sdlatti0j': { name: 'AC', img: AirConditionerSVG, icon: null, component: AirConditionerCard },
-        'go46xmbqeomjrsjr': { name: 'Lámpara', img: LightbulbSVG, icon: null, component: LightCard },
-        'c89b94e8581855bc': { name: 'Parlante', img: SpeakerSVG, icon: null , component: SpeakerCard},
-        'eu0v2xgprrhhg41g': { name: 'Persiana', img: CurtainSVG, icon: null, component: null },
-        'mxztsyjzsrq7iaqc': { name: 'Alarma', img: null, icon: "mdi:mdi-alarm-light-outline", component: null},
-        'im77xxyulpegfmv8': { name: 'Horno', img: OvenSVG, icon: null, component: OvenCard },
-        'lsf78ly0eqrjbz91': { name: 'Puerta', img: CloseDoorSVG, icon: null, component: DoorCard },
-        'rnizejqr2di0okho': { name: 'Heladera', img: FridgeSVG, icon: null, component: null },
+        'li6cbv5sdlatti0j': { name: 'AC', img: AirConditionerSVG, icon: null, card: AirConditionerCard, info: ACInfo},
+        'go46xmbqeomjrsjr': { name: 'Lámpara', img: LightbulbSVG, icon: null, card: LightCard, info: LightInfo},
+        'c89b94e8581855bc': { name: 'Parlante', img: SpeakerSVG, icon: null , card: SpeakerCard, info: SpeakerInfo},
+        'eu0v2xgprrhhg41g': { name: 'Persiana', img: CurtainSVG, icon: null, card: null, info: null},
+        'mxztsyjzsrq7iaqc': { name: 'Alarma', img: null, icon: "mdi:mdi-alarm-light-outline", card: null, info: null},
+        'im77xxyulpegfmv8': { name: 'Horno', img: OvenSVG, icon: null, card: OvenCard, info: OvenInfo},
+        'lsf78ly0eqrjbz91': { name: 'Puerta', img: CloseDoorSVG, icon: null, card: DoorCard, info: DoorInfo},
+        'rnizejqr2di0okho': { name: 'Heladera', img: FridgeSVG, icon: null, card: null, info: null},
   }) 
 
   

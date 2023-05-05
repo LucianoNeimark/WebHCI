@@ -34,7 +34,7 @@ const togglePlay = () => {
 
 </script>
 <template>
-    <FrameCard :name="name" :icon="SpeakerSVG">
+    <FrameCard :id="id" :name="name" :icon="SpeakerSVG">
         <VContainer>
             <VRow class="align-content-center justify-space-evenly mb-1">
                 <SpeakerPlayer :playing="playing" @prev="prev" @next="next" @togglePlay="togglePlay"/>
