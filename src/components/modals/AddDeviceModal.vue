@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
   import AirConditionerSVG from "@/assets/device-icons/device/air-conditioner.svg";
   import LightbulbSVG from "@/assets/device-icons/device/lightbulb.svg";
   import SpeakerSVG from "@/assets/device-icons/device/speaker.svg";
@@ -7,6 +7,7 @@
   import CloseDoorSVG from "@/assets/device-icons/device/door-close.svg";
   import FridgeSVG from "@/assets/device-icons/device/refrigerator.svg";
   import {computed, ref} from "vue";
+  import {Api} from "@/api/api"
 
   const deviceTypes = [
       { value: 'AC', name: 'AC', img: AirConditionerSVG, icon: null },
@@ -34,6 +35,7 @@
         emit('updateDialog', value)
       }
   })
+
 
 </script>
 
