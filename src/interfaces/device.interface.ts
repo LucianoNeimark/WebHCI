@@ -5,8 +5,8 @@ export interface Device {
     id: string;
     name: string;
     type: DeviceType;
-    state: any;
-    room : Room;
+    state?: any;
+    room? : Room;
     meta? : any
 }
 

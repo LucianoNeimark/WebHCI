@@ -18,7 +18,7 @@ export class Api {
         });
     }
 
-    static post(path: string, data: string): Promise<Response> {
+    static post(path: string, data: any): Promise<Response> {
         return Api.fetchApi(path, {
             method: "POST",
             headers: {
@@ -29,7 +29,7 @@ export class Api {
         })
     }
 
-    static put(path: string, data: string): Promise<Response> {
+    static put(path: string, data: any): Promise<Response> {
         return Api.fetchApi(path, {
             method: "PUT",
             headers: {
@@ -40,7 +40,7 @@ export class Api {
         })
     }
 
-    static delete(url : string): Promise<Response> {
+    static delete(url: string): Promise<Response> {
         return Api.fetchApi(url, {
             method: "DELETE",
             headers: {

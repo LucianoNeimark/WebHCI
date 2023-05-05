@@ -1,16 +1,8 @@
 <script setup lang="ts">
 
-    import {ref, onMounted} from 'vue'
-    import AddDeviceModal from "@/components/modals/AddDeviceModal.vue";
-    import {DevicesApi} from "@/api/devices.api"
+    import {ref} from 'vue'
+    import AddDeviceModal from "@/components/modals/AddDeviceModal/AddDeviceModal.vue";
     const dialog = ref(false)
-
-    onMounted(async () => {
-        console.log("Calling api")
-        const devices = await DevicesApi.getDevices()
-        console.log(devices[0].id)
-        console.log(await DevicesApi.executeAction(devices[0].id,"setColor",["ffffff"]));
-    })
 </script>
 
 <template>
@@ -24,3 +16,4 @@
     </VBtn>
     <AddDeviceModal :dialog="dialog" @updateDialog="(state: boolean) => dialog = state"/>
 </template>
+

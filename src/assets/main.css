@@ -33,6 +33,9 @@
 /*    !*padding: 0 2rem;*!*/
 /*  }*/
 /*}*/
+.bold {
+    font-weight: bold;
+}
 
 .v-slider-thumb__surface {
     background-color: white;
