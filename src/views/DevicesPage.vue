@@ -2,7 +2,6 @@
 
     import {ref, onMounted} from 'vue'
     import AddDeviceModal from "@/components/modals/AddDeviceModal.vue";
-    import {Api} from "@/api/api"
     import {DevicesApi} from "@/api/devices.api"
     const dialog = ref(false)
 
@@ -10,6 +9,7 @@
         console.log("Calling api")
         const devices = await DevicesApi.getDevices()
         console.log(devices[0].id)
+        console.log(await DevicesApi.executeAction(devices[0].id,"setColor",["ffffff"]));
     })
 </script>
 
