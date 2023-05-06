@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {computed, type PropType, reactive, watch} from "vue";
+import {computed, type PropType, reactive, watch, onMounted} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
 import { toggleLamp, type Lamp, changeLampStatus, changeLampColor, changeLampBrightness} from "@/interfaces/models/lamp";
@@ -50,7 +50,7 @@ watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
                               single-line
                               density="compact"
                               type="number"
-                              style="width: 70px"
+                              class="input-brightness"
                       ></VTextField>
                   </template>
               </VSlider>
@@ -61,7 +61,6 @@ watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
                       v-model:model-value="lamp.state.color"
                       @mouseup="() => changeLampColor(lamp, lamp.state.color)"
                       flat
-                      hide-canvas
                       hide-inputs
                       mode="hex"
                       color="primary"
@@ -78,5 +77,7 @@ watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
     height: 8vw;
 }
 
-
+.input-brightness{
+    width: 6vw !important;
+}
 </style>

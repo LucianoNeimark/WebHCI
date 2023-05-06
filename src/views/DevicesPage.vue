@@ -14,6 +14,6 @@
         Agregar Dispositivo
         <VIcon icon="mdi-plus-circle-outline"></VIcon>
     </VBtn>
-    <AddDeviceModal :dialog="dialog" @updateDialog="(state: boolean) => dialog = state"/>
+    <AddDeviceModal v-model:dialog="dialog"/>
 </template>
 

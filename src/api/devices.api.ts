@@ -20,7 +20,7 @@ export class DevicesApi {
 
     static async getTopDevices(count: number) : Promise<Device[]> {
         const deviceList = await DevicesApi.getDevices();
-        return deviceList.sort((a, b) => a.meta.qtyUses - b.meta.qtyUses).slice(0, count);
+        return deviceList.sort((a, b) => b.meta.qtyUses - a.meta.qtyUses).slice(0, count);
     }
 
     static async getDeviceById(deviceId: string) : Promise<Device> {

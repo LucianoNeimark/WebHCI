@@ -3,7 +3,7 @@
   import { DevicesApi } from '@/api/devices.api';
   import DeviceTypePicker from "@/components/modals/AddDeviceModal/DeviceTypePicker.vue"; 
 
-  const emit = defineEmits(['updateDialog'])
+  const emit = defineEmits(['update:dialog'])
 
   const props = defineProps({
     dialog: {
@@ -16,13 +16,12 @@
   const room = ref()
   const type = ref()
   
-  
   const show = computed({
       get() {
         return props.dialog
       },
       set(value) {
-        emit('updateDialog', value)
+        emit('update:dialog', value)
       }
   })
 
@@ -43,7 +42,7 @@
       if (room.value) { // TODO
           // await RoomsApi.addDevice(room.value, device)
       }
-      emit('updateDialog', false)
+      emit('update:dialog', false)
   }
 
 </script>
@@ -63,7 +62,7 @@
                 <VCardActions>
                     <VSpacer></VSpacer>
                     <VBtn
-                        @click="emit('updateDialog', false)"
+                        @click="emit('update:dialog', false)"
                         class="mr-3"
                     >
                         <VIcon icon="mdi:mdi-close" size="2vw"></VIcon>
