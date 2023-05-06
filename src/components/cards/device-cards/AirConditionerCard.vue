@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FrameCard from "@/components/FrameCard.vue"
+import FrameCard from "@/components/cards/FrameCard.vue"
 import AirConditionerSVG from "@/assets/device-icons/device/air-conditioner.svg"
 import { ref } from 'vue'
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";

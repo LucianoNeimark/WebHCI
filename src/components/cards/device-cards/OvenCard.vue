@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FrameCard from "@/components/FrameCard.vue"
+import FrameCard from "@/components/cards/FrameCard.vue"
 import OvenSVG from "@/assets/device-icons/device/oven.svg"
 import {ref} from "vue";
 import {SizesEnum} from "@/enums/enums";

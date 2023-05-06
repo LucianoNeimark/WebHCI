@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FrameCard from "@/components/FrameCard.vue"
+import FrameCard from "@/components/cards/FrameCard.vue"
 import LightbulbSVG from "@/assets/device-icons/device/lightbulb.svg"
 import {computed, type PropType, reactive, watch} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";

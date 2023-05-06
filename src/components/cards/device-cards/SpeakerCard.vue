@@ -1,5 +1,5 @@
 <script setup>
-import FrameCard from "@/components/FrameCard.vue"
+import FrameCard from "@/components/cards/FrameCard.vue"
 import SpeakerSVG from "@/assets/device-icons/device/speaker.svg"
 
 import {ref} from "vue";

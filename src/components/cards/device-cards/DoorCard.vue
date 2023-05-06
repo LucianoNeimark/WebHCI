@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FrameCard from "@/components/FrameCard.vue"
+import FrameCard from "@/components/cards/FrameCard.vue"
 import ToggleButton from "@/components/custom-inputs/ToggleButton.vue";
 import OpenDoorSVG from "@/assets/device-icons/device/door-open.svg"
 import {ref} from "vue";

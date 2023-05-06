@@ -1,0 +1,53 @@
+<script setup lang="ts">
+
+
+import { useDeviceTypesStore } from "@/stores/deviceTypes.store";
+import {computed} from "vue";
+
+const props = defineProps({
+    id: String,
+    name : String,
+    icon:{
+        type: String,
+        required: true,
+    },
+    types:{
+        type: Array,
+        required: true,
+    }
+})
+
+const typesLimited = computed(() => props.types.slice(0, 5))
+console.log("types", props.types)
+
+const { deviceTypes } = useDeviceTypesStore()
+</script>
+
+<template>
+    <VCard class="ma-3" color="tertiary" rounded="xl" height="20vh" width="30%">
+        <VContainer>
+            <VRow>
+                <div>{{name}}</div>
+            </VRow>
+            <VRow align-conent="center">
+                <VCol cols="9" class="pl-0 pt-3" align-self="center">
+                    <VCard rounded="lg" color="surface" height="9vh" width="auto" class="alinear">
+                        <VIcon v-for="(device, i) in typesLimited" :key="i" :icon="deviceTypes[device].icon" size="3vw"/>
+                    </VCard>
+                </VCol>
+                <VCol cols="3" align-self="center">
+                   <VIcon :icon="icon" size="4vw"/>
+                </VCol>
+            </VRow>
+        </VContainer>
+    </VCard>
+</template>
+
+<style scoped lang="scss">
+    @import '@/assets/variables';
+
+    .alinear{
+        display: flex;
+        align-items: center;
+    }
+</style>

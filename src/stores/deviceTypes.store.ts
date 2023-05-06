@@ -8,11 +8,11 @@ import OvenSVG from "@/assets/device-icons/device/oven.svg";
 import CloseDoorSVG from "@/assets/device-icons/device/door-close.svg";
 import FridgeSVG from "@/assets/device-icons/device/refrigerator.svg";
 
-import AirConditionerCard from "@/components/device-cards/AirConditionerCard.vue";
-import DoorCard from "@/components/device-cards/DoorCard.vue";
-import OvenCard from "@/components/device-cards/OvenCard.vue";
-import LightCard from "@/components/device-cards/LightCard.vue";
-import SpeakerCard from "@/components/device-cards/SpeakerCard.vue";
+import AirConditionerCard from "@/components/cards/device-cards/AirConditionerCard.vue";
+import DoorCard from "@/components/cards/device-cards/DoorCard.vue";
+import OvenCard from "@/components/cards/device-cards/OvenCard.vue";
+import LightCard from "@/components/cards/device-cards/LightCard.vue";
+import SpeakerCard from "@/components/cards/device-cards/SpeakerCard.vue";
 
 import LightInfo from "@/components/device-pages/LightInfo.vue";
 import ACInfo from "@/components/device-pages/ACInfo.vue";
@@ -25,7 +25,7 @@ export const useDeviceTypesStore = defineStore('deviceTypes', () => {
   const deviceTypes = reactive({
         // TODO: Poner iconos bien
         'li6cbv5sdlatti0j': { name: 'AC', img: AirConditionerSVG, icon: null, card: AirConditionerCard, info: ACInfo},
-        'go46xmbqeomjrsjr': { name: 'Lámpara', img: LightbulbSVG, icon: 'mdi:mdi-lightbulb', card: LightCard, info: LightInfo},
+        'go46xmbqeomjrsjr': { name: 'Lámpara', img: LightbulbSVG, icon: 'mdi:mdi-lightbulb', card: LightCard, info: LightInfo},        
         'c89b94e8581855bc': { name: 'Parlante', img: SpeakerSVG, icon: null , card: SpeakerCard, info: SpeakerInfo},
         'eu0v2xgprrhhg41g': { name: 'Persiana', img: CurtainSVG, icon: null, card: null, info: null},
         'mxztsyjzsrq7iaqc': { name: 'Alarma', img: null, icon: "mdi:mdi-alarm-light-outline", card: null, info: null},
