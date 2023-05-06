@@ -17,32 +17,44 @@ const topRoutines = reactive<{routines: Routine[]}>({
   routines: []
 })
 
+
 const { deviceTypes } = useDeviceTypesStore()
 
 onMounted(async () => {
   topDevices.devices = await DevicesApi.getTopDevices(3)
-  console.log(topDevices.devices)
   topRoutines.routines = await RoutinesApi.getTopRoutines(6)
-  console.log(topRoutines.routines)
 })
 
 </script>
 
 <template>
-  <p> Pagina Principal </p>
-    <VRow class="ma-3">
-        <!-- TODO: Sacar IDs y names para usar device en todos-->
-         <component v-for="device in topDevices.devices" :key="device.id" :device="device" :id="device.id" :name="device.name"
-         :is="deviceTypes[device.type.id].card" class="pa-3" />
-    </VRow>
-    <VRow class="ma-3">
-        <RoutineCard v-for="routine in topRoutines.routines" :key="routine.id" :routine="routine" :id="routine.id" :name="routine.name" class="pa-3" />
-    </VRow>
-
+    <VContainer>
+        <VRow class="pt-3 justify-space-between">
+            <h2 class="bold pl-10">Dispositivos mas utilizados</h2>
+            <VListItem class="more-devices" :to="`devices/`">Ver mas dispositivos <VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
+        </VRow>
+        <VRow class="ml-2 align-content-center">
+            <!-- TODO: Sacar IDs y names para usar device en todos-->
+            <component v-for="device in topDevices.devices" :key="device.id" :device="device" :id="device.id" :name="device.name"
+                       :is="deviceTypes[device.type.id].card" class="pa-3 pb-2" />
+        </VRow>
+    </VContainer>
+    <VContainer>
+        <VRow class="justify-space-between">
+            <h2 class="justify-center bold pl-10">Rutinas mas utilizadas</h2>
+            <VListItem class="more-devices" :to="`routines/`">Ver mas rutinas<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
+        </VRow>
+        <VRow class="ml-2">
+            <RoutineCard v-for="routine in topRoutines.routines" :key="routine.id" :routine="routine" :id="routine.id" :name="routine.name" class="pa-3" />
+        </VRow>
+    </VContainer>
 </template>
 
 <style scoped>
 
+.more-devices{
+    margin-right: 3%;
+}
 </style>
 
 

@@ -24,7 +24,7 @@ const { deviceTypes } = useDeviceTypesStore()
 </script>
 
 <template>
-    <VCard class="ma-3" color="tertiary" rounded="xl" height="20vh" width="30%">
+    <VCard class="ma-3" color="tertiary" rounded="xl" height="20vh" width="25vw">
         <VContainer>
             <VRow>
                 <div>{{name}}</div>
