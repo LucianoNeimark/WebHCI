@@ -2,7 +2,7 @@
 </script>
 
 <template>
-
+ACInfo
 </template>
 
 <style scoped>

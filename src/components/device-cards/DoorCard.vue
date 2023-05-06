@@ -1,9 +1,8 @@
-<script setup>
+<script setup lang="ts">
 import FrameCard from "@/components/FrameCard.vue"
 import ToggleButton from "@/components/custom-inputs/ToggleButton.vue";
 import OpenDoorSVG from "@/assets/device-icons/device/door-open.svg"
 import {ref} from "vue";
-import {SizesEnum} from "@/enums/enums";
 
 defineProps({
     id: String,

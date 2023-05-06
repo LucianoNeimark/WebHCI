@@ -2,7 +2,7 @@
 </script>
 
 <template>
-
+  OvenInfo
 </template>
 
 <style scoped>

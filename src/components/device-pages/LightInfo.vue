@@ -1,14 +1,9 @@
 <script setup lang="ts">
 
-import {computed, ref, toRefs} from "vue";
+import {computed, type PropType, reactive, watch} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
-import type { Device } from '@/interfaces/device.interface';
 import { toggleLamp, type Lamp, changeLampStatus, changeLampColor, changeLampBrightness} from "@/interfaces/models/lamp";
-import type { PropType } from 'vue';
-import { reactive } from 'vue';
-import { watch } from 'vue';
-import { watchEffect } from 'vue';
 
 const props = defineProps({
     device: {
@@ -18,35 +13,11 @@ const props = defineProps({
 });
 const lamp = reactive(props.device)
 
-/*const status = ref(props.device)
-const color = ref(lamp.state.brightness)
-const brightness = ref(props.brightness)*/
-
-const power = computed(() => {
-    return lamp.state.status === 'on'
-})
+const power = computed(() => lamp.state.status === 'on')
 
 watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
-    if (newStatus !== oldStatus) {
-        console.log("Change lamp status");
-        await changeLampStatus(lamp, newStatus)
-    }
+    if (newStatus !== oldStatus) await changeLampStatus(lamp, newStatus)
 })
-
-watch(() => lamp.state.brightness, async (newBrightness: number, oldBrightness: number) => {
-    if (newBrightness !== oldBrightness){
-        console.log("Change lamp brightness");
-        await changeLampBrightness(lamp, newBrightness)
-    }
-})
-
-watch(() => lamp.state.color, async (newColor: string, oldColor: string) => {
-    if (newColor !== oldColor){
-        console.log("Change lamp status");
-        await changeLampColor(lamp, newColor)
-    }
-})
-
 
 </script>
 
@@ -64,6 +35,7 @@ watch(() => lamp.state.color, async (newColor: string, oldColor: string) => {
                       v-model="lamp.state.brightness"
                       min="0"
                       max="100"
+                      @end="() => changeLampBrightness(lamp, lamp.state.brightness)"
                       step="1"
                       thumb-label
                       track-fill-color="white"
@@ -73,6 +45,7 @@ watch(() => lamp.state.color, async (newColor: string, oldColor: string) => {
                   <template v-slot:append>
                       <VTextField
                               v-model="lamp.state.brightness"
+                              @update:model-value="() => changeLampBrightness(lamp, lamp.state.brightness)"
                               hide-details
                               single-line
                               density="compact"
@@ -85,13 +58,13 @@ watch(() => lamp.state.color, async (newColor: string, oldColor: string) => {
           </VRow>
           <VRow class="justify-center">
               <VColorPicker
-                      v-model="lamp.state.color"
+                      v-model:model-value="lamp.state.color"
+                      @mouseup="() => changeLampColor(lamp, lamp.state.color)"
                       flat
                       hide-canvas
                       hide-inputs
                       mode="hex"
                       color="primary"
-
                       elevation="0"
               ></VColorPicker>
           </VRow>

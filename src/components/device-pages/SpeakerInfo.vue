@@ -2,7 +2,7 @@
 </script>
 
 <template>
-
+  SpeakerInfo
 </template>
 
 <style scoped>

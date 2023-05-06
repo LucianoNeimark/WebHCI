@@ -1,24 +1,32 @@
-<script setup>
+<script setup lang="ts">
 import FrameCard from "@/components/FrameCard.vue"
 import LightbulbSVG from "@/assets/device-icons/device/lightbulb.svg"
-import { ref} from "vue";
+import {computed, type PropType, reactive, watch} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
+import { toggleLamp, type Lamp, changeLampStatus, changeLampColor, changeLampBrightness} from "@/interfaces/models/lamp";
 
-defineProps({
-    id: String,
-    name : String
+const props = defineProps({
+    device: {
+        type: Object as PropType<Lamp>,
+        required: true
+    } 
+});
+const lamp = reactive(props.device)
+
+const power = computed(() => lamp.state.status === 'on')
+
+watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
+    if (newStatus !== oldStatus) await changeLampStatus(lamp, newStatus)
 })
-
-const power = ref(false)
 
 </script>
 
 <template>
-    <FrameCard :id="id" :name="name" :icon="LightbulbSVG">
+    <FrameCard :id="device.id" :name="device.name" :icon="LightbulbSVG">
         <VContainer>
             <VRow class="flex-row justify-center mb-1">
-                <PowerButton :power="power" @click="power = !power" :size="SizesEnum.XLarge"/>
+                <PowerButton :power="power" @click="() => toggleLamp(lamp)" :size="SizesEnum.XLarge"/>
             </VRow>
         </VContainer>
     </FrameCard>

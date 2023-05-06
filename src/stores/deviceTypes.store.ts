@@ -1,4 +1,4 @@
-import { ref, computed, reactive } from 'vue'
+import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 import AirConditionerSVG from "@/assets/device-icons/device/air-conditioner.svg";
 import LightbulbSVG from "@/assets/device-icons/device/lightbulb.svg";

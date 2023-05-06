@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import FrameCard from "@/components/FrameCard.vue"
 import OvenSVG from "@/assets/device-icons/device/oven.svg"
-import {computed, ref} from "vue";
+import {ref} from "vue";
 import {SizesEnum} from "@/enums/enums";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
@@ -28,7 +28,7 @@ const postInfo = () => {
             <VRow>
                 <CardSlider :value="temp" :min="90" :max="240" icon="mdi-thermometer-low"
                 @updateSlider="postInfo"
-                @updateValue="value => temp = value"/>
+                @updateValue="(value: number) => temp = value"/>
             </VRow>
         </VContainer>
     </FrameCard>

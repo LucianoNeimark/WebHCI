@@ -2,7 +2,7 @@
 </script>
 
 <template>
-
+  DoorInfo
 </template>
 
 <style scoped>

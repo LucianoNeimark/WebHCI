@@ -13,7 +13,7 @@ export class DevicesApi {
     static async getDevices() : Promise<Device[]> {
         const res = await Api.get("/devices");
         const { result } = await res.json();
-        const { devices, loadDevice } = useDevicesStore();
+        const { loadDevice } = useDevicesStore();
         result.forEach((device: Device) => loadDevice(device));
         return result;
     }
