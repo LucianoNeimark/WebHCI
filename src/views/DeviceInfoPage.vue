@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import ActionsHistoryTable from "@/components/tables/ActionsHistoryTable.vue";
 import ToRooms from "@/components/ToRooms.vue";
-import { useDevicesStore } from '../stores/device.store';
-import { useRoute } from 'vue-router';
-import { useDeviceTypesStore } from '../stores/deviceTypes.store';
-import {reactive, watchEffect} from 'vue';
-import type { Device } from '../interfaces/device.interface';
+import { useDevicesStore } from '@/stores/device.store';
+import {useRoute, useRouter} from 'vue-router';
+import { useDeviceTypesStore } from '@/stores/deviceTypes.store';
+import {reactive, ref, watchEffect} from 'vue';
+import type { Device } from '@/interfaces/device.interface';
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
 import {DevicesApi} from "@/api/devices.api";
+import ConfirmationModal from "@/components/modals/AddDeviceModal/ConfirmationModal.vue";
 
 
 const route = useRoute()
-const { devices } = useDevicesStore();
+const { devices, removeDevice } = useDevicesStore();
 const { deviceTypes } = useDeviceTypesStore()
+const router = useRouter()
 
 const device = reactive(<Device> devices.items.get(<string> route.params.id))
 
@@ -26,12 +28,27 @@ watchEffect(async () => await DevicesApi.updateDevice(device))
 
 const room = "Cocina"
 
+const deleteDevice = () => {
+    // Show confirmation dialog
+    DevicesApi.deleteDevice(device.id)
+    removeDevice(device.id)
+    router.push('/devices')
+}
+
+const showConfirmationModal = ref(false)
+
+const promptModal = () => {
+    console.log("Hm?")
+    showConfirmationModal.value = true
+}
+
 </script>
 
 <template>
     <VCol>
         <VRow>
             <EditableLabel v-model:value="device.name" :icon="deviceTypes[device.type.id].icon"/>
+            <VIcon icon="mdi-delete-circle" class="delete-button ml-5" @click="promptModal"/>
         </VRow>
         <VRow class="device-row ma-5">
             <component :is="deviceTypes[device.type.id].info" :device="device" class="device mr-10" ></component>
@@ -53,9 +70,16 @@ const room = "Cocina"
             </VExpansionPanels>
         </VRow>
     </VCol>
+    <ConfirmationModal title="¿Estás seguro? Esta opción no puede revertirse"
+                       v-model:show="showConfirmationModal" @confirm="deleteDevice"/>
 </template>
 
 <style>
+.delete-button {
+    align-self: center;
+    font-size: 3rem;
+    cursor: pointer;
+}
 
 .device {
     min-width: 30vw;

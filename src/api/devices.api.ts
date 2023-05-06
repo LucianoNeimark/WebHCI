@@ -29,6 +29,12 @@ export class DevicesApi {
         return result;
     }
 
+    static async deleteDevice(deviceId: string) {
+        const res = await Api.delete(`/devices/${deviceId}`);
+        const { result } = await res.json();
+        return result;
+    }
+
     static async updateDevice(device : Device){
         const res = await Api.put(`/devices/${device.id}`, new DeviceUpdateDTO(device));
         const { result } = await res.json();

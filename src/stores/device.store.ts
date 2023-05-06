@@ -11,5 +11,9 @@ export const useDevicesStore = defineStore('devices', () => {
     devices.items.set(device.id, device)
   }
 
-  return { devices, loadDevice }
+  const removeDevice = (deviceId : string) => {
+    devices.items.delete(deviceId)
+  }
+
+  return { devices, loadDevice, removeDevice }
 })
