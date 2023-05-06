@@ -4,23 +4,25 @@ import ToRooms from "@/components/ToRooms.vue";
 import { useDevicesStore } from '../stores/device.store';
 import { useRoute } from 'vue-router';
 import { useDeviceTypesStore } from '../stores/deviceTypes.store';
-import { reactive } from 'vue';
+import {reactive, watchEffect} from 'vue';
 import type { Device } from '../interfaces/device.interface';
+import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
+import {DevicesApi} from "@/api/devices.api";
 
 
 const route = useRoute()
 const { devices } = useDevicesStore();
 const { deviceTypes } = useDeviceTypesStore()
 
-console.log(devices.items)
 const device = reactive(<Device> devices.items.get(<string> route.params.id))
-console.log(device)
 
 const actions = [
     { id: 1, actionName: 'apagar', params: '', date: '25/03/2023', time: '12:32' },
     // llenar el resto de la tabla
     { id: 2, actionName: 'prender', params: '', date: '25/03/2023', time: '11:22' }
 ]
+
+watchEffect(async () => await DevicesApi.updateDevice(device))
 
 const room = "Cocina"
 
@@ -29,9 +31,7 @@ const room = "Cocina"
 <template>
     <VCol>
         <VRow>
-            <h1 class="ma-5">
-                {{device.name}}
-            </h1>
+            <EditableLabel v-model:value="device.name" :icon="deviceTypes[device.type.id].icon"/>
         </VRow>
         <VRow class="device-row ma-5">
             <component :is="deviceTypes[device.type.id].info" :device="device" class="device mr-10" ></component>
