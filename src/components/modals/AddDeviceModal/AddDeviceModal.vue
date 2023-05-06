@@ -3,7 +3,7 @@
   import { DevicesApi } from '@/api/devices.api';
   import DeviceTypePicker from "@/components/modals/AddDeviceModal/DeviceTypePicker.vue"; 
 
-  const emit = defineEmits(['update:dialog'])
+  const emit = defineEmits(['update:dialog', 'device-added'])
 
   const props = defineProps({
     dialog: {
@@ -43,6 +43,9 @@
           // await RoomsApi.addDevice(room.value, device)
       }
       emit('update:dialog', false)
+      emit('device-added')
+      name.value = ""
+      type.value = ""
   }
 
 </script>

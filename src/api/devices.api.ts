@@ -24,6 +24,13 @@ export class DevicesApi {
         return deviceList.sort((a, b) => b.meta.qtyUses - a.meta.qtyUses).slice(0, count);
     }
 
+    static async reloadDevices() : Promise<void>{
+        const res = await Api.get("/devices");
+        const { result } = await res.json();
+        const { loadDevice } = useDevicesStore();
+        result.forEach((device: Device) => loadDevice(device));
+    }
+
     static async getDeviceById(deviceId: string) : Promise<Device> {
         const res = await Api.get(`/devices/${deviceId}`);
         const { result } = await res.json();

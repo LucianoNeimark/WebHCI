@@ -15,5 +15,15 @@ export const useDevicesStore = defineStore('devices', () => {
     devices.items.delete(deviceId)
   }
 
-  return { devices, loadDevice, removeDevice }
+  const getDevicesGroupByType = () : Map<string,Device[]> => {
+    const result = new Map<string,Device[]>();
+    devices.items.forEach(device => {
+      const devicesByType = result.get(device.type.id) || [];
+      devicesByType.push(device);
+      result.set(device.type.id, devicesByType);
+    });
+    return result;
+  }
+
+  return { devices, loadDevice, removeDevice, getDevicesGroupByType }
 })
