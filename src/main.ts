@@ -12,9 +12,13 @@ import {defaultTheme} from "@/themes";
 import router from './router'
 
 import './assets/main.css'
+import {VDataTableServer} from "vuetify/labs/VDataTable";
 
 const vuetify = createVuetify({
-    components,
+    components: {
+        ...components,
+        VDataTableServer
+    },
     directives,
     theme: {
         defaultTheme: 'defaultTheme',

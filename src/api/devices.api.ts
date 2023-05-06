@@ -3,6 +3,7 @@ import type { Device } from '@/interfaces/device.interface'
 import { DeviceCreationDTO } from '@/dtos/deviceCreation.dto'
 import { DeviceUpdateDTO } from '@/dtos/deviceUpdate.dto'
 import { useDevicesStore } from '@/stores/device.store';
+import type Log from "@/interfaces/log.interface";
 export class DevicesApi {
 
     static async addDevice(typeId: string, name: string) {
@@ -59,4 +60,9 @@ export class DevicesApi {
         return "";
     }
 
+    static async getLogs(deviceId: string, limit: number, offset: number) : Promise<Log[]> {
+        const res = await Api.get(`/devices/${deviceId}/logs/limit/${limit}/offset/${offset}`);
+        const { result } = await res.json();
+        return result;
+    }
 }

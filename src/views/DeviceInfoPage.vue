@@ -38,7 +38,6 @@ const deleteDevice = () => {
 const showConfirmationModal = ref(false)
 
 const promptModal = () => {
-    console.log("Hm?")
     showConfirmationModal.value = true
 }
 
@@ -64,7 +63,7 @@ const promptModal = () => {
                 <VExpansionPanel>
                     <VExpansionPanelTitle>Historial de acciones</VExpansionPanelTitle>
                     <VExpansionPanelText>
-                        <ActionsHistoryTable :actions="actions"/>
+                        <ActionsHistoryTable :deviceId="device.id" :qty-uses="device.meta.qtyUses"/>
                     </VExpansionPanelText>
                 </VExpansionPanel>
             </VExpansionPanels>
@@ -90,12 +89,5 @@ const promptModal = () => {
     font-weight: bold;
 }
 
-.v-table tbody tr:nth-of-type(even) {
-    background-color: rgba(0, 0, 0, .03);
-}
-
-.v-table thead th {
-    background-color: rgba(0, 0, 0, .03);
-}
 
 </style>
