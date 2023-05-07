@@ -4,6 +4,7 @@ import DevicesPage from '../views/DevicesPage.vue'
 import RoomsPage from "@/views/RoomsPage.vue"
 import RoutinesPage from "@/views/RoutinesPage.vue"
 import DeviceInfoPage from "@/views/DeviceInfoPage.vue";
+import RoomInfoPage from "@/views/RoomInfoPage.vue";
 
 
 const router = createRouter({
@@ -35,6 +36,11 @@ const router = createRouter({
           name: 'Habitaciones',
           component: RoomsPage
       },
+      {
+          path: '/rooms/:id',
+          name: 'Habitacion',
+          component: RoomInfoPage
+      }
   ]
 })
 
