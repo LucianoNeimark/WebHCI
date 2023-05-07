@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['decrement', 'increment'])
 
 const props = defineProps({
