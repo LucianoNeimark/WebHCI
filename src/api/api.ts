@@ -18,14 +18,13 @@ export class Api {
         });
     }
 
-    static post(path: string, data: any): Promise<Response> {
+    static post(path: string, data = {}): Promise<Response> {
         return Api.fetchApi(path, {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json; charset=utf8"
             },
             body: JSON.stringify(data)
-
         })
     }
 
