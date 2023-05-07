@@ -9,7 +9,7 @@ defineProps({
 </script>
 
 <template>
-    <VCard class="ma-3" color="tertiary" rounded="xl" width="25vw">
+    <VCard class="ma-3 pa-3 pb-2" color="tertiary" rounded="xl" width="25vw">
         <VContainer>
             <VRow class="flex-row justify-space-between mb-1">
                 <div>{{ name }}</div>
@@ -17,7 +17,7 @@ defineProps({
             </VRow>
 
             <VRow class="slot-content mb-5">
-                <slot></slot>
+                <slot/>
             </VRow>
 
             <VRow class="flex-column mt-5">
@@ -31,6 +31,9 @@ defineProps({
 
 .slot-content {
     height: 20vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }
 
 </style>

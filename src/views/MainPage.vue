@@ -36,7 +36,7 @@ onMounted(async () => {
         <VRow class="ml-2 align-content-center">
             <!-- TODO: Sacar IDs y names para usar device en todos-->
             <component v-for="device in topDevices.devices" :key="device.id" :device="device" :id="device.id" :name="device.name"
-                       :is="deviceTypes[device.type.id].card" class="pa-3 pb-2" />
+                       :is="deviceTypes[device.type.id].card"/>
         </VRow>
         <VRow class="justify-space-between">
             <h2 class="justify-center bold pl-10">Rutinas más utilizadas</h2>
