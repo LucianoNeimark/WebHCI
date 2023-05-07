@@ -56,7 +56,7 @@ export class DevicesApi {
             const actionedDevice = devices.items.get(deviceId);
             if (actionedDevice) {
                 actionedDevice.meta.qtyUses++;
-                this.updateDevice(actionedDevice);
+                await this.updateDevice(actionedDevice);
                 loadDevice(actionedDevice);
             } else {
                 // TODO: Error???
@@ -70,6 +70,6 @@ export class DevicesApi {
     static async getLogs(deviceId: string, limit: number, offset: number) : Promise<Log[]> {
         const res = await Api.get(`/devices/${deviceId}/logs/limit/${limit}/offset/${offset}`);
         const { result } = await res.json();
-        return result;
+        return result.sort((a: Log, b: Log) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
     }
 }

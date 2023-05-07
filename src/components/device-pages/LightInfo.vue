@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {computed, type PropType, reactive, watch, onMounted} from "vue";
+import {computed, type PropType, reactive, watch } from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
 import { toggleLamp, type Lamp, changeLampStatus, changeLampColor, changeLampBrightness} from "@/interfaces/models/lamp";

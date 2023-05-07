@@ -1,5 +1,5 @@
 <script setup>
-import {reactive, ref, toRefs} from "vue";
+import { ref } from "vue";
 import {DevicesApi} from "@/api/devices.api";
 
 const props = defineProps({
@@ -12,7 +12,7 @@ const props = defineProps({
         required: true
     }
 })
-const itemsPerPage = ref(5)
+const itemsPerPage = ref(10)
 const headers = [
     { title: 'Acción', key: 'actionName', align: 'start', sortable: false},
     { title: 'Parámetros', key: 'params', align: 'end', sortable: false},

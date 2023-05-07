@@ -4,7 +4,7 @@ import LightbulbSVG from "@/assets/device-icons/device/lightbulb.svg"
 import {computed, type PropType, reactive, watch} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
-import { toggleLamp, type Lamp, changeLampStatus, changeLampColor, changeLampBrightness} from "@/interfaces/models/lamp";
+import { toggleLamp, type Lamp, changeLampStatus } from "@/interfaces/models/lamp";
 
 const props = defineProps({
     device: {

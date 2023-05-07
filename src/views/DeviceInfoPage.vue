@@ -18,12 +18,6 @@ const router = useRouter()
 
 const device = reactive(<Device> devices.items.get(<string> route.params.id))
 
-const actions = [
-    { id: 1, actionName: 'apagar', params: '', date: '25/03/2023', time: '12:32' },
-    // llenar el resto de la tabla
-    { id: 2, actionName: 'prender', params: '', date: '25/03/2023', time: '11:22' }
-]
-
 watchEffect(async () => await DevicesApi.updateDevice(device))
 
 const room = "Cocina"
