@@ -16,7 +16,9 @@ const door = reactive(props.device)
 const locked = computed(() => door.state.lock === 'locked')
 const status = computed(() => door.state.status === 'closed')
 
-console.log(locked, status)
+console.log(door.state.lock)
+console.log(door.state.status)
+
 
 watch(() => door.state.status, async (newStatus : string, oldStatus : string) => {
   if (newStatus!==oldStatus) await changeDoorOpenClosed(door, newStatus)
@@ -29,9 +31,21 @@ watch(() => door.state.lock, async (newStatus : string, oldStatus : string) => {
 </script>
 
 <template>
-  <ToggleButton :selected="locked" icon-selected="mdi-lock" icon="mdi-lock-open" @click="() => toggleLock(door)"/>
-  <ToggleButton :selected="status" icon-selected="mdi-door-closed" icon="mdi-door-open" @click="toggleStatus(door)"/>
+  <VCard class="d-flex align-center" color="primary" rounded="xl">
+    <VContainer>
+      <VRow class="flex-row justify-center ma-1 doorRow">
+        <ToggleButton class="" :selected="locked" icon-selected="mdi-lock-open" size="140" icon="mdi-lock" @click="() => toggleLock(door)"/>
+        <ToggleButton :selected="status" icon-selected="mdi-door-open" icon="mdi-door-closed" size="140" @click="() => toggleStatus(door)"/>
+      </VRow>
+    </VContainer>
+  </VCard>
+
 </template>
 
 <style scoped>
+
+.doorRow{
+  gap: 5vw;
+}
+
 </style>
