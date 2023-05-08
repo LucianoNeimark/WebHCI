@@ -51,21 +51,19 @@ import {onMounted, reactive} from 'vue'
         <VRow>
             <EditableButton @valueSet="addRoom"/>
         </VRow>
-        <VRow>
-            <VRow v-for="room in roomItems" :key="room.id" class="row-width pt-3 ml-5">
-                <VRow class="justify-space-between pl-3 pb-3 vert-align">
-                    <h2 class="bold">{{room.name}} <span class="span-align qty-devices-font">({{devicesGroupByRoom.countMap.get(room.id) || 0}})</span></h2>
-                    <VListItem v-if="devicesGroupByRoom.countMap.get(room.id) > 0" class="more-devices" :to="`/rooms/${room.id}`">
-                        Ver más dispositivos de la habitación {{room.name}}
-                        <VIcon icon="mdi:mdi-chevron-double-right"/>
-                    </VListItem>
-                </VRow>
-                <VRow class="d-flex flex-wrap mt-0 pb-3">
-                    <component v-for="device in devicesGroupByRoom.value.get(room.id)" :key="device.id" :device="device" :id="device.id" :name="device.name"
-                               :is="deviceTypes[device.type.id].card"/>
-                </VRow>
+        <VCol v-for="room in roomItems" :key="room.id" class="row-width pt-3">
+            <VRow class="justify-space-between pl-3 pb-3 vert-align">
+                <h2 class="bold">{{room.name}} <span class="span-align qty-devices-font">({{devicesGroupByRoom.countMap.get(room.id) || 0}})</span></h2>
+                <VListItem v-if="devicesGroupByRoom.countMap.get(room.id) > 0" class="more-devices" :to="`/rooms/${room.id}`">
+                    Ver más dispositivos de la habitación {{room.name}}
+                    <VIcon icon="mdi:mdi-chevron-double-right"/>
+                </VListItem>
             </VRow>
-        </VRow>
+            <VRow class="d-flex flex-wrap mt-0 pb-3">
+                <component v-for="device in devicesGroupByRoom.value.get(room.id)" :key="device.id" :device="device" :id="device.id" :name="device.name"
+                           :is="deviceTypes[device.type.id].card"/>
+            </VRow>
+        </VCol>
     </VCol>
 </template>
 
