@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {onMounted, reactive, ref, watch, watchEffect} from 'vue'
+import {onMounted, reactive} from 'vue'
     import {useDevicesStore} from "@/stores/device.store";
     import {DevicesApi} from "@/api/devices.api";
     import type { Device} from "@/interfaces/device.interface";
@@ -14,8 +14,9 @@ import {onMounted, reactive, ref, watch, watchEffect} from 'vue'
     const { deviceTypes } = useDeviceTypesStore()
 
 
-    const devicesGroupByRoom  = reactive<{value: Map<string, Device[]>}>({
-            value: new Map<string, Device[]>()
+    const devicesGroupByRoom  = reactive<{value: Map<string, Device[]>, countMap: Map<string, number>}>({
+            value: new Map<string, Device[]>(),
+            countMap: new Map<string, number>()
         }
     )
 
@@ -25,6 +26,7 @@ import {onMounted, reactive, ref, watch, watchEffect} from 'vue'
         devicesGroupByRoom.value = getDevicesGroupByRoom()
 
         devicesGroupByRoom.value.forEach((value, key) => {
+            devicesGroupByRoom.countMap.set(key, value.length)
             devicesGroupByRoom.value.set(key, value.map((value) => value).slice(0, 3))
         })
     }
@@ -50,15 +52,15 @@ import {onMounted, reactive, ref, watch, watchEffect} from 'vue'
             <EditableButton @valueSet="addRoom"/>
         </VRow>
         <VRow>
-            <VRow v-for="room in roomItems" :key="room.id" class="row-width mt-4 ml-5">
-                <VRow v-if="devicesGroupByRoom" class="justify-space-between pl-3 pb-3 row-width">
-                    <h3 class="bold">{{room.name}}</h3>
-                    <VListItem class="more-devices" :to="`devices/`">
-                        Ver mas dispositivos de la habitación {{room.name}}
+            <VRow v-for="room in roomItems" :key="room.id" class="row-width pt-3 ml-5">
+                <VRow class="justify-space-between pl-3 pb-3 vert-align">
+                    <h3 class="bold">{{room.name}} <span class="qty-devices-font">({{devicesGroupByRoom.countMap.get(room.id) || 0}})</span></h3>
+                    <VListItem v-if="devicesGroupByRoom.countMap.get(room.id) > 0" class="more-devices" :to="`/rooms/${room.id}`">
+                        Ver más dispositivos de la habitación {{room.name}}
                         <VIcon icon="mdi:mdi-chevron-double-right"/>
                     </VListItem>
                 </VRow>
-                <VRow class="d-flex flex-wrap mt-0 mb-3">
+                <VRow class="d-flex flex-wrap mt-0 pb-3">
                     <component v-for="device in devicesGroupByRoom.value.get(room.id)" :key="device.id" :device="device" :id="device.id" :name="device.name"
                                :is="deviceTypes[device.type.id].card"/>
                 </VRow>
@@ -75,6 +77,15 @@ import {onMounted, reactive, ref, watch, watchEffect} from 'vue'
 
 .more-devices{
     margin-right: 3%;
+}
+
+.qty-devices-font{
+   font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.vert-align{
+    align-items: baseline;
 }
 
 </style>

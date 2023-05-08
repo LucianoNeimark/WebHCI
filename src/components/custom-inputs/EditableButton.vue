@@ -31,7 +31,7 @@ const rules = [
 <template>
 
   <span>
-      <VBtn v-if="!isEditing" @click="isEditing = true" class="add-button ml-5 mt-5"
+      <VBtn v-if="!isEditing" @click="isEditing = true" class="add-button ml-5 mt-5 mb-3"
             color="surface" rounded="xl">
           Agregar Habitacion
           <VIcon icon="mdi-plus-circle-outline"></VIcon>
