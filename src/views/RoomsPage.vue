@@ -54,8 +54,8 @@ import {onMounted, reactive} from 'vue'
         <VCol v-for="room in roomItems" :key="room.id" class="row-width pt-3">
             <VRow class="justify-space-between pl-3 pb-3 vert-align">
                 <h2 class="bold">{{room.name}} <span class="span-align qty-devices-font">({{devicesGroupByRoom.countMap.get(room.id) || 0}})</span></h2>
-                <VListItem v-if="devicesGroupByRoom.countMap.get(room.id) > 0" class="more-devices" :to="`/rooms/${room.id}`">
-                    Ver más dispositivos de la habitación {{room.name}}
+                <VListItem class="more-devices" :to="`/rooms/${room.id}`">
+                   Ir a {{room.name}}
                     <VIcon icon="mdi:mdi-chevron-double-right"/>
                 </VListItem>
             </VRow>
