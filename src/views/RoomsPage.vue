@@ -54,7 +54,7 @@ import {onMounted, reactive} from 'vue'
         <VRow>
             <VRow v-for="room in roomItems" :key="room.id" class="row-width pt-3 ml-5">
                 <VRow class="justify-space-between pl-3 pb-3 vert-align">
-                    <h3 class="bold">{{room.name}} <span class="qty-devices-font">({{devicesGroupByRoom.countMap.get(room.id) || 0}})</span></h3>
+                    <h2 class="bold">{{room.name}} <span class="span-align qty-devices-font">({{devicesGroupByRoom.countMap.get(room.id) || 0}})</span></h2>
                     <VListItem v-if="devicesGroupByRoom.countMap.get(room.id) > 0" class="more-devices" :to="`/rooms/${room.id}`">
                         Ver más dispositivos de la habitación {{room.name}}
                         <VIcon icon="mdi:mdi-chevron-double-right"/>
@@ -80,12 +80,14 @@ import {onMounted, reactive} from 'vue'
 }
 
 .qty-devices-font{
-   font-size: 0.9rem;
+   font-size: 1.1rem;
     vertical-align: middle;
 }
 
 .vert-align{
-    align-items: baseline;
+    align-items: center;
 }
-
+.span-align{
+    vertical-align: text-bottom;
+}
 </style>
