@@ -11,6 +11,7 @@ import type {Room} from "@/interfaces/room.interface";
 import {RoomsApi} from "@/api/rooms.api";
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
 import ConfirmationModal from "@/components/modals/AddDeviceModal/ConfirmationModal.vue";
+import AddDeviceModal from "@/components/modals/AddDeviceModal/AddDeviceModal.vue";
 
 const route = useRoute()
 
@@ -26,21 +27,18 @@ const { deviceTypes } = useDeviceTypesStore()
 const myRoomData = reactive({room:
         <Room> rooms.items.get(<string> route.params.id) || {id: '', name: '', devices: []}
 })
-console.log('myRoom', myRoomData.room)
 
-onMounted(async () => {
-  await RoomsApi.reloadRooms() // Ver si conviene hacerlo mas eficiente
-  await DevicesApi.reloadDevices() // Ver si conviene hacerlo mas eficiente
-  roomDevices.devices = getDevicesGroupByRoom().get(<string> route.params.id) || [];
-  myRoomData.room = <Room> rooms.items.get(<string> route.params.id)
-    console.log(myRoomData.room)
-})
+onMounted(async () => await load())
 
-const addDevice = () => {
-    console.log("Hello world")
+const load = async () => {
+    await RoomsApi.reloadRooms() // Ver si conviene hacerlo mas eficiente
+    await DevicesApi.reloadDevices() // Ver si conviene hacerlo mas eficiente
+    roomDevices.devices = getDevicesGroupByRoom().get(<string> route.params.id) || [];
+    myRoomData.room = <Room> rooms.items.get(<string> route.params.id)
 }
 
 const showConfirmationModal = ref(false)
+const showAddDeviceModal = ref(false)
 
 const promptModal = () => {
     showConfirmationModal.value = true
@@ -53,39 +51,26 @@ watch(() => myRoomData.room?.name ,async (newValue: string, oldValue: string) =>
 const deleteRoom = () => {
     RoomsApi.deleteRoom(myRoomData.room.id)
     removeRoom(myRoomData.room.id)
-    router.push('/devices')
+    router.push('/rooms')
 }
-
-const roomName = computed({
-  get() {
-      console.log('myRoom', myRoomData.room)
-      return myRoomData.room.name
-  },
-  set(newValue: string) {
-      myRoomData.room.name = newValue
-  }
-})
-
 </script>
 
 <template>
     <VCol>
-<!--        <VRow class="pt-3 justify-space-between">-->
-<!--            <h2 class="bold pl-10">{{myRoom.name || 'Sin habitación'}}</h2>-->
-<!--        </VRow>-->
         <VRow>
-            <EditableLabel v-model:value="roomName"/>
+            <EditableLabel v-model:value="myRoomData.room.name"/>
             <VIcon icon="mdi-delete-circle" class="delete-button ml-5" @click="promptModal"/>
         </VRow>
         <VRow class="ml-2 align-content-center">
             <!-- TODO: Sacar IDs y names para usar device en todos-->
             <component v-for="device in roomDevices.devices" :key="device.id" :device="device" :id="device.id" :name="device.name"
                        :is="deviceTypes[device.type.id].card"/>
-            <AddCard @click="addDevice"/>
+            <AddCard @click="showAddDeviceModal = true"/>
         </VRow>
     </VCol>
     <ConfirmationModal title="¿Estás seguro? Esta opción no puede revertirse"
                        v-model:show="showConfirmationModal" @confirm="deleteRoom"/>
+    <AddDeviceModal v-model:dialog="showAddDeviceModal" @device-added="load"/>
 </template>
 
 <style scoped>

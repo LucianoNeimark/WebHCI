@@ -31,7 +31,7 @@ import {onMounted, reactive, ref} from 'vue'
                 Agregar Dispositivo
                 <VIcon icon="mdi-plus-circle-outline"></VIcon>
             </VBtn>
-            <AddDeviceModal v-model:dialog="dialog" @device-added="loadDevices()"/>
+            <AddDeviceModal v-model:dialog="dialog" @device-added="loadDevices"/>
         </VRow>
         <VRow>
             <VExpansionPanels
