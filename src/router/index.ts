@@ -10,7 +10,6 @@ import RoomInfoPage from "@/views/RoomInfoPage.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-      // route to main page view
       {
           path: '/',
           name: 'Pagina Principal',

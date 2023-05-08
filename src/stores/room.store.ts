@@ -15,5 +15,9 @@ export const useRoomsStore = defineStore('rooms', () => {
         rooms.items.clear()
     }
 
-    return { rooms, loadRoom, clearRooms }
+    const removeRoom = (roomId : string) => {
+        rooms.items.delete(roomId)
+    }
+
+    return { rooms, loadRoom, clearRooms, removeRoom }
 })

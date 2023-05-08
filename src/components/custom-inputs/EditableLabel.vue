@@ -31,11 +31,13 @@ const rules = [
     (v: string) => /^[a-zA-Z0-9_ ]*$/.test(v) || 'El campo solo puede tener letras, números, _ y espacios'
 ];
 
+console.log(props.value)
+
 </script>
 
 <template>
     <span class="ml-5 my-3 editable-row">
-        <VIcon size="x-large" class="mr-2 icon">{{icon}}</VIcon>
+        <VIcon size="x-large" class="mr-2 icon" v-if="icon">{{icon}}</VIcon>
         <h1 v-if="!isEditing" @click="isEditing = true" class="title">
             {{ value }}
             <VIcon v-if="!isEditing" class="pencil">mdi-pencil</VIcon>

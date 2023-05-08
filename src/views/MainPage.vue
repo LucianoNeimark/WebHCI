@@ -46,7 +46,7 @@ onMounted(async () => {
             <VListItem class="more-devices" :to="`routines/`">Ver más rutinas<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
         </VRow>
         <VRow class="ml-2">
-            <RoutineCard v-for="routine in topRoutines.routines" :key="routine.id" :routine="routine" :id="routine.id" :name="routine.name" class="pa-3" />
+            <RoutineCard v-for="routine in topRoutines.routines" :key="routine.id" :routine="routine" class="pa-3" />
         </VRow>
     </VCol>
 </template>

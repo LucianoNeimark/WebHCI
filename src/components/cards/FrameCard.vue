@@ -21,7 +21,7 @@ defineProps({
             </VRow>
 
             <VRow class="flex-column mt-5">
-                <VBtn bottom rounded="xl" size="small" color="lightSurface" class="align-self-center" :to="`devices/${id}`">Mas opciones</VBtn>
+                <VBtn bottom rounded="xl" size="small" color="lightSurface" class="align-self-center" :to="`/devices/${id}`">Mas opciones</VBtn>
             </VRow>
         </VContainer>
     </VCard>
