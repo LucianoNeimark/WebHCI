@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
-    import {onMounted, reactive, ref} from 'vue'
-    import AddDeviceModal from "@/components/modals/AddDeviceModal/AddDeviceModal.vue";
+import {onMounted, reactive, ref, watch, watchEffect} from 'vue'
     import {useDevicesStore} from "@/stores/device.store";
     import {DevicesApi} from "@/api/devices.api";
     import type { Device} from "@/interfaces/device.interface";
@@ -9,8 +8,7 @@
     import { RoomsApi } from '@/api/rooms.api';
     import { computed } from 'vue';
     import { useDeviceTypesStore } from '@/stores/deviceTypes.store';
-    const dialog = ref(false)
-    const panel = ref();
+    import EditableButton from "@/components/custom-inputs/EditableButton.vue";
     const { rooms } = useRoomsStore()
     const { getDevicesGroupByRoom } = useDevicesStore()
     const { deviceTypes } = useDeviceTypesStore()
@@ -25,53 +23,58 @@
         await RoomsApi.reloadRooms()
         await DevicesApi.reloadDevices()
         devicesGroupByRoom.value = getDevicesGroupByRoom()
-        console.log(rooms.items)
+
+        devicesGroupByRoom.value.forEach((value, key) => {
+            devicesGroupByRoom.value.set(key, value.map((value) => value).slice(0, 3))
+        })
     }
 
     const roomItems = computed(() => {
         return rooms.items.values()
     })
-   
+
     onMounted(loadPage)
 
+    const addRoom = async (name : string) => {
+        await RoomsApi.addRoom(name)
+        await RoomsApi.reloadRooms()
+        await DevicesApi.reloadDevices()
+        devicesGroupByRoom.value = getDevicesGroupByRoom()
+    }
 
 </script>
 
 <template>
+    <VCol>
         <VRow>
-            <VBtn class="ma-5 add-button"
-                color="surface" rounded="xl"
-                @click="dialog = true"
-            >
-                Agregar Habitación
-                <VIcon icon="mdi-plus-circle-outline"></VIcon>
-            </VBtn>
-            <AddDeviceModal v-model:dialog="dialog" @device-added="loadPage()"/>
+            <EditableButton @valueSet="addRoom"/>
         </VRow>
         <VRow>
-            <VExpansionPanels
-                v-model="panel" multiple variant="accordion"
-            >
-                <VExpansionPanel
-                    v-for="(room, roomId) in roomItems" :key="roomId" class="width-auto"
-                    color="background" bg-color="background" elevation="0"
-                >
-                    <VExpansionPanelTitle>
-                        {{room.name}}
-                    </VExpansionPanelTitle>
-                    <VExpansionPanelText>
-                        <VSheet class="d-flex flex-wrap justify-start height-auto" color="background">
-                            <component v-for="device in devicesGroupByRoom.value.get(room.id)" :key="device.id" :device="device" :id="device.id" :name="device.name"
-                                   :is="deviceTypes[device.type.id].card"/>
-                        </VSheet>
-                    </VExpansionPanelText>
-                </VExpansionPanel>
-            </VExpansionPanels>
+            <VRow v-for="room in roomItems" :key="room.id" class="row-width mt-4 ml-5">
+                <VRow v-if="devicesGroupByRoom" class="justify-space-between pl-3 pb-3 row-width">
+                    <h3 class="bold">{{room.name}}</h3>
+                    <VListItem class="more-devices" :to="`devices/`">
+                        Ver mas dispositivos de la habitación {{room.name}}
+                        <VIcon icon="mdi:mdi-chevron-double-right"/>
+                    </VListItem>
+                </VRow>
+                <VRow class="d-flex flex-wrap mt-0 mb-3">
+                    <component v-for="device in devicesGroupByRoom.value.get(room.id)" :key="device.id" :device="device" :id="device.id" :name="device.name"
+                               :is="deviceTypes[device.type.id].card"/>
+                </VRow>
+            </VRow>
         </VRow>
+    </VCol>
 </template>
 
 <style scoped>
-.add-button{
 
+.row-width{
+    width: 100%;
 }
+
+.more-devices{
+    margin-right: 3%;
+}
+
 </style>
