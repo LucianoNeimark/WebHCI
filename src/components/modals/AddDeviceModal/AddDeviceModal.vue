@@ -1,7 +1,10 @@
 <script setup lang="ts">
   import {computed, ref} from "vue";
   import { DevicesApi } from '@/api/devices.api';
-  import DeviceTypePicker from "@/components/modals/AddDeviceModal/DeviceTypePicker.vue"; 
+  import DeviceTypePicker from "@/components/modals/AddDeviceModal/DeviceTypePicker.vue";
+  import RoomComboBox from "@/components/custom-inputs/RoomComboBox.vue";
+  import {RoomsApi} from "@/api/rooms.api";
+  import type {Room} from "@/interfaces/room.interface";
 
   const emit = defineEmits(['update:dialog', 'device-added'])
 
@@ -13,7 +16,7 @@
   })
 
   const name = ref()
-  const room = ref()
+  const room = ref<Room | String>()
   const type = ref()
   
   const show = computed({
@@ -37,8 +40,11 @@
   const formReady = computed(() => inputErrorMessage.value === '' && name.value && type.value)
 
   const addDevice = async () => {
-      const result = await DevicesApi.addDevice(type.value, name.value)
-      console.log(result)
+     await DevicesApi.addDevice(type.value, name.value)
+      if(typeof room.value === "string") {
+          room.value = await RoomsApi.addRoom(room.value) as Room
+          await RoomsApi.reloadRooms()
+      }
       if (room.value) { // TODO
           // await RoomsApi.addDevice(room.value, device)
       }
@@ -47,6 +53,8 @@
       name.value = ""
       type.value = ""
   }
+
+
 
 </script>
 
@@ -91,14 +99,7 @@
                             </VRow>
                             <VRow  class="mb-2">Habitacion</VRow>
                             <VRow>
-                                <VSelect
-                                        :items="['Cocina', 'Living', 'Cuarto Roberta', 'Patio']"
-                                        label="Habitación"
-                                        required
-                                        placeholder="Sin habitacion"
-                                        bg-color="lightSurface"
-                                        theme="light"
-                                ></VSelect>
+                                <RoomComboBox v-model="room"/>
                             </VRow>
                         </VCol>
                         <VCol cols="6" class="justify-center">

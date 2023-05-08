@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import ActionsHistoryTable from "@/components/tables/ActionsHistoryTable.vue";
-import ToRooms from "@/components/ToRooms.vue";
 import { useDevicesStore } from '@/stores/device.store';
 import {useRoute, useRouter} from 'vue-router';
 import { useDeviceTypesStore } from '@/stores/deviceTypes.store';
-import {reactive, ref, watchEffect} from 'vue';
+import {onMounted, reactive, ref, watchEffect} from 'vue';
 import type { Device } from '@/interfaces/device.interface';
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
 import {DevicesApi} from "@/api/devices.api";
 import ConfirmationModal from "@/components/modals/AddDeviceModal/ConfirmationModal.vue";
-
+import RoomComboBox from "@/components/custom-inputs/RoomComboBox.vue";
+import {RoomsApi} from "@/api/rooms.api";
+import type {Room} from "@/interfaces/room.interface";
 
 const route = useRoute()
 const { devices, removeDevice } = useDevicesStore();
@@ -20,11 +21,8 @@ const device = reactive(<Device> devices.items.get(<string> route.params.id))
 
 watchEffect(async () => await DevicesApi.updateDevice(device))
 
-const room = "Cocina"
-
-const deleteDevice = () => {
-    // Show confirmation dialog
-    DevicesApi.deleteDevice(device.id)
+const deleteDevice = async () => {
+    await DevicesApi.deleteDevice(device.id)
     removeDevice(device.id)
     router.push('/devices')
 }
@@ -35,6 +33,30 @@ const promptModal = () => {
     showConfirmationModal.value = true
 }
 
+const changingRoom = ref(false)
+const room = ref<Room | string | null>(device.room || null)
+const startChangeRoomAction = () => { changingRoom.value = true }
+const changeRoom = async () => {
+    changingRoom.value = false
+    if(typeof room.value === "string") {
+        room.value = await RoomsApi.addRoom(room.value) as Room
+        await RoomsApi.reloadRooms()
+    }
+    if(room.value !== device.room) {
+        if(device.room !== undefined){
+            await RoomsApi.removeDeviceFromRoom(device.id)
+        }
+        if(room.value !== null) {
+            await RoomsApi.addDeviceToRoom(room.value.id, device.id)
+        }
+    }
+    await DevicesApi.reloadDevices()
+}
+
+onMounted(async () => {
+        await DevicesApi.reloadDevices()
+        await RoomsApi.reloadRooms()
+})
 </script>
 
 <template>
@@ -45,7 +67,27 @@ const promptModal = () => {
         </VRow>
         <VRow class="device-row ma-5">
             <component :is="deviceTypes[device.type.id].info" :device="device" class="device mr-10" ></component>
-            <ToRooms :room="room" class="ml-10" />
+            <VCol cols="7">
+                <VRow>
+                    <VBtn class="mb-3" :disabled="changingRoom">
+                        Ir a la habitacion
+                        <VIcon>mdi-arrow-right</VIcon>
+                    </VBtn>
+                </VRow>
+                <VRow class="align-content-center">
+                    <VCol class="px-0">
+                        <RoomComboBox v-model="room" :disabled="!changingRoom" />
+                    </VCol>
+                    <VCol class="px-0">
+                        <VBtn v-if="!changingRoom" @click="startChangeRoomAction" rounded="circle" class="changeButton">
+                            <VIcon>mdi-pencil</VIcon>
+                        </VBtn>
+                        <VBtn v-if="changingRoom" @click="changeRoom" rounded="circle" class="changeButton">
+                            <VIcon>mdi-check</VIcon>
+                        </VBtn>
+                    </VCol>
+                </VRow>
+            </VCol>
         </VRow>
         <VRow>
             <VExpansionPanels multiple class="ma-5">
@@ -67,7 +109,7 @@ const promptModal = () => {
                        v-model:show="showConfirmationModal" @confirm="deleteDevice"/>
 </template>
 
-<style>
+<style scoped>
 .delete-button {
     align-self: center;
     font-size: 3rem;
@@ -79,9 +121,10 @@ const promptModal = () => {
     min-height: 35vh;
 }
 
-.v-expansion-panel-title {
-    font-weight: bold;
+.changeButton{
+    width: 3vw;
+    height: 3vw;
+    margin-left: 1vw;
 }
-
 
 </style>

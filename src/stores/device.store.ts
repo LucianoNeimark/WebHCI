@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { reactive} from 'vue'
-import type { Device } from '../interfaces/device.interface'
-import { CONSTANTS } from '../constants/constants'
+import { reactive } from 'vue'
+import type { Device } from '@/interfaces/device.interface'
+import { CONSTANTS } from '@/utils/constants'
 
 export const useDevicesStore = defineStore('devices', () => {
   const devices = reactive<{items: Map<string, Device>}>({
