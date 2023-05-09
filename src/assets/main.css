@@ -61,3 +61,8 @@
     min-width: 9vw !important;
     min-height: 9vw !important;
 }
+.delete-button {
+    align-self: center;
+    font-size: 3rem;
+    cursor: pointer;
+}

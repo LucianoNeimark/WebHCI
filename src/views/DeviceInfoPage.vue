@@ -115,12 +115,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.delete-button {
-    align-self: center;
-    font-size: 3rem;
-    cursor: pointer;
-}
-
 .device {
     min-width: 30vw;
     min-height: 35vh;
