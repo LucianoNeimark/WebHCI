@@ -34,7 +34,7 @@ const {show} = toRefs(props)
 @import '@/assets/variables';
 
 .modal {
-  width:  30%;
+  width:  40%;
 }
 
 .headline {
