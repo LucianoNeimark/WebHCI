@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import FrameCard from "@/components/cards/FrameCard.vue"
-import OvenSVG from "@/assets/device-icons/device/oven.svg"
-import {reactive, ref} from "vue";
+import {reactive} from "vue";
 import {SizesEnum} from "@/enums/enums";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
@@ -34,7 +33,7 @@ watch(() => oven.state.temperature, async (newStatus : number, oldStatus : numbe
 
 </script>
 <template>
-    <FrameCard :id="oven.id" :name="oven.name" :icon="OvenSVG">
+    <FrameCard :id="oven.id" :name="oven.name" icon="mdi-toaster-oven">
         <VContainer>
             <VRow class="flex-row justify-center">
                 <PowerButton :power="status" @click="() => {toggleOven(oven)}" :size="SizesEnum.Large"/>

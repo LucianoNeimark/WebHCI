@@ -13,7 +13,7 @@ defineProps({
         <VContainer>
             <VRow class="flex-row justify-space-between mb-1">
                 <div>{{ name }}</div>
-                <img :src=icon alt="device-icon" width="35" height="35"/>
+                <VIcon :icon=icon size="2.5vw"/>
             </VRow>
 
             <VRow class="slot-content mb-5">

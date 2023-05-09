@@ -5,7 +5,6 @@ import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
 // import { toggleLamp, type Lamp, changeLampStatus, changeLampColor, changeLampBrightness} from "@/interfaces/models/lamp";
 import { type AC, changeTemperature, changeOnOf, toggleAC, changeAcMode, setMode, setTemperature, changeAngle, changeFanSpeed, setVertical, setHorizontal, setFanSpeed }  from "@/interfaces/models/ac"
-import AirConditionerSVG from "@/assets/device-icons/air-conditioner.svg"
 import NumericController from "@/components/custom-inputs/NumericController.vue";
 import ModeToggle from "@/components/custom-inputs/ModeToggle.vue";
 import dropDownBtn from "../custom-inputs/dropDownBtn.vue";

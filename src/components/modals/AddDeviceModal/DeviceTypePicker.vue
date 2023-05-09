@@ -28,7 +28,6 @@ const { deviceTypes } = useDeviceTypesStore()
           :key="typeId" class="width-auto">
           <VRow>
               <VBtn color="surface" class="device-type mx-3 my-2" rounded="circle" :value="typeId" elevation="8" selected-class="selected">
-                  <img v-if="type.img" :src="type.img" :alt="type.name" width="43" height="43"/>
                   <VIcon v-if="type.icon" :icon="type.icon" size="2.5vw"/>
               </VBtn>
           </VRow>

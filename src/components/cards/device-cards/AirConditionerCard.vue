@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import FrameCard from "@/components/cards/FrameCard.vue"
-import AirConditionerSVG from "@/assets/device-icons/device/air-conditioner.svg"
 import { reactive, ref, watch, type PropType } from 'vue'
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
@@ -46,7 +45,7 @@ watch(() => ac.state.status, async (newStatus : string, oldStatus : string) => {
 </script>
 
 <template>
-    <FrameCard :id="ac.id" :name="ac.name" :icon="AirConditionerSVG">
+    <FrameCard :id="ac.id" :name="ac.name" icon="mdi-air-conditioner">
             <VRow>
                 <VCol class="d-flex justify-center" align-self="center">
                     <NumericController :val="actemperature" suffix="º" :min="18" :max="38" @increment="setTemperature(ac, ac.state.temperature+1)" @decrement="setTemperature(ac, ac.state.temperature-1)"/>

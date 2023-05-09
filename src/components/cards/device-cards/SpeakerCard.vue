@@ -1,6 +1,5 @@
 <script setup>
 import FrameCard from "@/components/cards/FrameCard.vue"
-import SpeakerSVG from "@/assets/device-icons/device/speaker.svg"
 
 import {ref} from "vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
@@ -34,7 +33,7 @@ const togglePlay = () => {
 
 </script>
 <template>
-    <FrameCard :id="id" :name="name" :icon="SpeakerSVG">
+    <FrameCard :id="id" :name="name" icon="mdi-volume-high">
         <VContainer>
             <VRow class="align-content-center justify-space-evenly mb-1">
                 <SpeakerPlayer :playing="playing" @prev="prev" @next="next" @togglePlay="togglePlay"/>

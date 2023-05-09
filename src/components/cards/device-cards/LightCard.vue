@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import FrameCard from "@/components/cards/FrameCard.vue"
-import LightbulbSVG from "@/assets/device-icons/device/lightbulb.svg"
 import {computed, type PropType, reactive, watch} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
@@ -23,7 +22,7 @@ watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
 </script>
 
 <template>
-    <FrameCard :id="device.id" :name="device.name" :icon="LightbulbSVG">
+    <FrameCard :id="device.id" :name="device.name" icon="mdi-lightbulb-outline">
         <VContainer>
             <VRow class="flex-row justify-center mb-1">
                 <PowerButton :power="power" @click="() => toggleLamp(lamp)" :size="SizesEnum.XLarge"/>
