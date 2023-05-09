@@ -1,34 +1,47 @@
 <script setup lang="ts">
 import FrameCard from "@/components/cards/FrameCard.vue"
 import OvenSVG from "@/assets/device-icons/device/oven.svg"
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import {SizesEnum} from "@/enums/enums";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
-defineProps({
-    id: String,
-    name : String
+import {type Oven, toggleOven, changeOnOf, changeOvenTemp, setTemp} from "@/interfaces/models/oven"
+import { type PropType, computed, watch } from "vue"; 
+
+const props = defineProps({
+  device: {
+    type: Object as PropType<Oven>,
+    required: true
+  }
 })
 
-const temp = ref(90)
+const oven = reactive(props.device)
 
-const power = ref(false)
+const temp = computed(() => {
+    oven.state.temperature
+})
 
-const postInfo = () => {
-    console.log("Soy una api call! Cambiando el valor a ...", temp.value)
-}
+const status = computed(() => oven.state.status === 'on')
+
+watch(() => oven.state.status, async (newStatus : string, oldStatus : string) => {
+  if (newStatus!==oldStatus) await changeOnOf(oven, newStatus)
+})
+
+watch(() => oven.state.temperature, async (newStatus : number, oldStatus : number) => {
+  if (newStatus!==oldStatus) await changeOvenTemp(oven, newStatus)
+})
+
 
 </script>
 <template>
-    <FrameCard :id="id" :name="name" :icon="OvenSVG">
+    <FrameCard :id="oven.id" :name="oven.name" :icon="OvenSVG">
         <VContainer>
             <VRow class="flex-row justify-center">
-                <PowerButton :power="power" @click="power = !power" :size="SizesEnum.Large"/>
+                <PowerButton :power="status" @click="() => {toggleOven(oven)}" :size="SizesEnum.Large"/>
             </VRow>
             <VRow>
-                <CardSlider :value="temp" :min="90" :max="240" icon="mdi-thermometer-low"
-                @updateSlider="postInfo"
-                @updateValue="(value: number) => temp = value"/>
+                <CardSlider :value="oven.state.temperature" :min="90" :max="230" icon="mdi-thermometer-low"
+                @updateValue="(value: number) => setTemp(oven, value)"/>
             </VRow>
         </VContainer>
     </FrameCard>

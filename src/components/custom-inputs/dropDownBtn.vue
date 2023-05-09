@@ -1,19 +1,19 @@
 <script setup lang="ts">
 
+import type { PropType} from 'vue'
+
 const props = defineProps({
   items: { type: Array<string>, required: true },
-  icon: { type: String, required: true}
+  icon: { type: String, required: true },
+  selected: {type: String, required: true}
 })
 
-const handleClick = (item: string) => {
-    console.log(item)
-}
 
 </script>
 
 <template>
     <div class="text-center">
-        <v-menu :close-on-content-click="false">
+        <v-menu >
             
             <template v-slot:activator="{ props }">
               <v-btn size="4vw" :icon="icon" v-bind="props"></v-btn>
@@ -21,9 +21,10 @@ const handleClick = (item: string) => {
 
             <v-list>
               <v-list-item
+                :active="item === selected"
                 v-for="(item, i) in items"
                 :key="i"
-                @click="handleClick(item)"
+                @click="$emit('itemClicked', item)"
               >
                 <v-list-item-title>{{ item }}</v-list-item-title>
               </v-list-item>

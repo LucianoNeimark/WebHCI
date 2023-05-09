@@ -16,9 +16,6 @@ const door = reactive(props.device)
 const locked = computed(() => door.state.lock === 'locked')
 const status = computed(() => door.state.status === 'closed')
 
-console.log(door.state.lock)
-console.log(door.state.status)
-
 
 watch(() => door.state.status, async (newStatus : string, oldStatus : string) => {
   if (newStatus!==oldStatus) await changeDoorOpenClosed(door, newStatus)

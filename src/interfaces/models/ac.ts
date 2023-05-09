@@ -28,6 +28,18 @@ export const setTemperature = (ac: AC, temperature : number) => {
     ac.state.temperature = temperature
 }
 
+export const setVertical = (ac: AC, angle : string) => {
+    ac.state.verticalSwing = angle
+}
+
+export const setHorizontal = (ac: AC, angle : string) => {
+    ac.state.horizontalSwing = angle
+}
+
+export const setFanSpeed = (ac: AC, speed : string) => {
+    ac.state.fanSpeed = speed
+}
+
 export const changeAcMode = (ac: AC, mode: string) : Promise <string> => {
    return DevicesApi.executeAction(ac.id, 'setMode', [mode])
 }
