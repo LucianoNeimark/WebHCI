@@ -25,7 +25,7 @@ const { getDevicesGroupByRoom } = useDevicesStore()
 const { deviceTypes } = useDeviceTypesStore()
 
 const myRoomData = reactive({room:
-        <Room> rooms.items.get(<string> route.params.id) || {id: '', name: '', devices: []}
+        <Room> rooms.items.get(<string> route.params.id) || {id: '', name: ''}
 })
 
 onMounted(async () => await load())
@@ -70,7 +70,7 @@ const deleteRoom = () => {
     </VCol>
     <ConfirmationModal title="¿Estás seguro? Esta opción no puede revertirse"
                        v-model:show="showConfirmationModal" @confirm="deleteRoom"/>
-    <AddDeviceModal v-model:dialog="showAddDeviceModal" @device-added="load"/>
+    <AddDeviceModal v-model:dialog="showAddDeviceModal" :room="myRoomData.room" @device-added="load"/>
 </template>
 
 <style scoped>

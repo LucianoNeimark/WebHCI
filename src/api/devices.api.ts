@@ -7,7 +7,9 @@ import type Log from "@/interfaces/log.interface";
 export class DevicesApi {
     static async addDevice(typeId: string, name: string) {
         const device = new DeviceCreationDTO(typeId, name);
-        return await Api.post("/devices", device);
+        const res = await Api.post("/devices", device)
+        const { result } = await res.json()
+        return result
     }
 
     static async reloadDevices() : Promise<void> {

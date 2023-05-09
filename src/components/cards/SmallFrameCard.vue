@@ -18,7 +18,6 @@ const props = defineProps({
 })
 
 const typesLimited = computed(() => props.types.slice(0, 5))
-console.log("types", props.types)
 
 const { deviceTypes } = useDeviceTypesStore()
 </script>

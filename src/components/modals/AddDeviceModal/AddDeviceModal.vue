@@ -1,10 +1,11 @@
 <script setup lang="ts">
-  import {computed, ref} from "vue";
+import {computed, type PropType, ref} from "vue";
   import { DevicesApi } from '@/api/devices.api';
   import DeviceTypePicker from "@/components/modals/AddDeviceModal/DeviceTypePicker.vue";
   import RoomComboBox from "@/components/custom-inputs/RoomComboBox.vue";
   import {RoomsApi} from "@/api/rooms.api";
   import type {Room} from "@/interfaces/room.interface";
+  import type {Device} from "@/interfaces/device.interface";
 
   const emit = defineEmits(['update:dialog', 'device-added'])
 
@@ -12,11 +13,12 @@
     dialog: {
         type: Boolean,
         required: true
-    }
+    },
+    room: Object as PropType<Room>
   })
 
   const name = ref()
-  const room = ref<Room | String>()
+  const room = ref<Room | String | undefined>(props.room)
   const type = ref()
   
   const show = computed({
@@ -40,18 +42,24 @@
   const formReady = computed(() => inputErrorMessage.value === '' && name.value && type.value)
 
   const addDevice = async () => {
-     await DevicesApi.addDevice(type.value, name.value)
+      const newDevice = await DevicesApi.addDevice(type.value, name.value) as Device
       if(typeof room.value === "string") {
           room.value = await RoomsApi.addRoom(room.value) as Room
           await RoomsApi.reloadRooms()
       }
-      if (room.value) { // TODO
-          // await RoomsApi.addDevice(room.value, device)
+      if (room.value) {
+          if(typeof room.value === "string") {
+              room.value = await RoomsApi.addRoom(room.value) as Room
+              await RoomsApi.reloadRooms()
+              await RoomsApi.addDeviceToRoom(room.value.id, newDevice.id)
+          }
+          await RoomsApi.addDeviceToRoom((room.value as Room).id, newDevice.id)
       }
       emit('update:dialog', false)
       emit('device-added')
       name.value = ""
       type.value = ""
+      room.value = props.room || undefined
   }
 
 

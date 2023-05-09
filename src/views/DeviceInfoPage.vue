@@ -3,7 +3,7 @@ import ActionsHistoryTable from "@/components/tables/ActionsHistoryTable.vue";
 import { useDevicesStore } from '@/stores/device.store';
 import {useRoute, useRouter} from 'vue-router';
 import { useDeviceTypesStore } from '@/stores/deviceTypes.store';
-import {onMounted, reactive, ref, watchEffect} from 'vue';
+import {computed, onMounted, reactive, ref, watchEffect} from 'vue';
 import type { Device } from '@/interfaces/device.interface';
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
 import {DevicesApi} from "@/api/devices.api";
@@ -17,13 +17,15 @@ const { devices, removeDevice } = useDevicesStore();
 const { deviceTypes } = useDeviceTypesStore()
 const router = useRouter()
 
-const device = reactive(<Device> devices.items.get(<string> route.params.id))
+const device = reactive({
+    value : <Device> devices.items.get(<string> route.params.id)
+})
 
-watchEffect(async () => await DevicesApi.updateDevice(device))
+watchEffect(async () => await DevicesApi.updateDevice(device.value))
 
 const deleteDevice = async () => {
-    await DevicesApi.deleteDevice(device.id)
-    removeDevice(device.id)
+    await DevicesApi.deleteDevice(device.value.id)
+    removeDevice(device.value.id)
     router.push('/devices')
 }
 
@@ -34,7 +36,7 @@ const promptModal = () => {
 }
 
 const changingRoom = ref(false)
-const room = ref<Room | string | null>(device.room || null)
+const room = ref<Room | string | null>(device.value.room || null)
 const startChangeRoomAction = () => { changingRoom.value = true }
 const changeRoom = async () => {
     changingRoom.value = false
@@ -42,16 +44,19 @@ const changeRoom = async () => {
         room.value = await RoomsApi.addRoom(room.value) as Room
         await RoomsApi.reloadRooms()
     }
-    if(room.value !== device.room) {
-        if(device.room !== undefined){
-            await RoomsApi.removeDeviceFromRoom(device.id)
+    if(room.value !== device.value.room) {
+        if(device.value.room !== undefined){
+            await RoomsApi.removeDeviceFromRoom(device.value.id)
         }
         if(room.value !== null) {
-            await RoomsApi.addDeviceToRoom(room.value.id, device.id)
+            await RoomsApi.addDeviceToRoom(room.value.id, device.value.id)
         }
     }
     await DevicesApi.reloadDevices()
+    device.value = <Device> devices.items.get(<string> route.params.id)
 }
+
+const goToButtonDisabled = computed(() => changingRoom.value || device.value.room === undefined )
 
 onMounted(async () => {
         await DevicesApi.reloadDevices()
@@ -62,14 +67,14 @@ onMounted(async () => {
 <template>
     <VCol>
         <VRow>
-            <EditableLabel v-model:value="device.name" :icon="deviceTypes[device.type.id].icon"/>
+            <EditableLabel v-model:value="device.value.name" :icon="deviceTypes[device.value.type.id].icon"/>
             <VIcon icon="mdi-delete-circle" class="delete-button ml-5" @click="promptModal"/>
         </VRow>
         <VRow class="device-row ma-5">
-            <component :is="deviceTypes[device.type.id].info" :device="device" class="device mr-10" ></component>
+            <component :is="deviceTypes[device.value.type.id].info" :device="device.value" class="device mr-10" ></component>
             <VCol cols="7">
                 <VRow>
-                    <VBtn class="mb-3" :disabled="changingRoom">
+                    <VBtn class="mb-3" :disabled="goToButtonDisabled" :to="`/rooms/${device.value.room?.id}`">
                         Ir a la habitacion
                         <VIcon>mdi-arrow-right</VIcon>
                     </VBtn>
@@ -99,7 +104,7 @@ onMounted(async () => {
                 <VExpansionPanel>
                     <VExpansionPanelTitle>Historial de acciones</VExpansionPanelTitle>
                     <VExpansionPanelText>
-                        <ActionsHistoryTable :deviceId="device.id" :qty-uses="device.meta.qtyUses"/>
+                        <ActionsHistoryTable :deviceId="device.value.id" :qty-uses="device.value.meta.qtyUses"/>
                     </VExpansionPanelText>
                 </VExpansionPanel>
             </VExpansionPanels>
