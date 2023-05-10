@@ -1,14 +1,7 @@
+import type {Device} from "@/interfaces/device.interface";
+
 export interface Action {
-    device:{
-        id: string;
-        name: string;
-        type:{
-            id: string;
-            name: string;
-            powerUsage: number;
-        }
-        meta?: any;
-    };
+    device: Device
     actionName: string;
     params: any;
     meta?: any;
