@@ -38,7 +38,7 @@ export class DevicesApi {
         return result;
     }
 
-    static async executeAction(deviceId: string, actionName: string, params?: any) : Promise<string> {
+    static async executeAction(deviceId: string, actionName: string, params?: any) : Promise<any> {
         const res = await Api.put(`/devices/${deviceId}/${actionName}`, params);
         if (res.ok) {
             const { devices, loadDevice } = useDevicesStore();

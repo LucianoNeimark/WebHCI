@@ -72,7 +72,7 @@ onMounted(async () => {
         </VRow>
         <VRow class="device-row ma-5">
             <component :is="deviceTypes[device.value.type.id].info" :device="device.value" class="device mr-10" ></component>
-            <VCol cols="7">
+            <VCol>
                 <VRow>
                     <VBtn class="mb-3" :disabled="goToButtonDisabled" :to="`/rooms/${device.value.room?.id}`">
                         Ir a la habitacion

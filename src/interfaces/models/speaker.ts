@@ -10,7 +10,16 @@ export interface Speaker extends Device {
     genre: string;
     status: string;
     volume: number;
+    song: SpeakerSong;
   }
+}
+
+export interface SpeakerSong {
+  title: string;
+  artist: string;
+  album: string;
+  duration: string;
+  progress: string;
 }
 
 export const changeVolumeSpeaker = (speaker: Speaker, volume: number) => {
@@ -21,13 +30,14 @@ export const playSpeaker = (speaker: Speaker) => {
   return DevicesApi.executeAction(speaker.id, 'play')
 }
 
-export const toggleSpeaker = (speaker: Speaker) => {
+export const toggleSpeaker = async (speaker: Speaker) => {
   let res
+  await resumeSpeaker(speaker)
   if (speaker.state.status === 'playing') {
-    res = pauseSpeaker(speaker)
+    res = await pauseSpeaker(speaker)
     speaker.state.status = 'paused'
   } else {
-    res = playSpeaker(speaker)
+    res = await playSpeaker(speaker)
     speaker.state.status = 'playing'
   }
   return res
@@ -57,6 +67,8 @@ export const setGenreSpeaker = (speaker: Speaker, genre: string) => {
   return DevicesApi.executeAction(speaker.id, 'setGenre', [ genre ])
 }
 
-export const getPlaylistSpeaker = (speaker: Speaker) => {
+export const getPlaylistSpeaker = (speaker: Speaker) : Promise<SpeakerSong[]> => {
   return DevicesApi.executeAction(speaker.id, 'getPlaylist')
 }
+
+
