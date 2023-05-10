@@ -1,7 +1,6 @@
 import type { Device } from '@/interfaces/device.interface';
 import type { DeviceType } from '@/interfaces/deviceType.interface';
-import { DevicesApi } from '../../api/devices.api';
-import { setTemperature } from './ac';
+import { DevicesApi } from '@/api/devices.api';
 
 export interface Oven extends Device {
     id: string;

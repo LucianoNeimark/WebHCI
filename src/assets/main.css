@@ -42,9 +42,10 @@
 }
 
 .btn-x-small {
-    min-width: 2vw !important;
-    min-height: 2vw !important;
+    min-width: 1vw !important;
+    min-height: 1vw !important;
 }
+
 .btn-small {
     min-width: 3vw !important;
     min-height: 3vw !important;

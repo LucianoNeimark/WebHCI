@@ -39,7 +39,7 @@ watch(() => oven.state.temperature, async (newStatus : number, oldStatus : numbe
                 <PowerButton :power="status" @click="() => {toggleOven(oven)}" :size="SizesEnum.Large"/>
             </VRow>
             <VRow>
-                <CardSlider :value="oven.state.temperature" :min="90" :max="230" icon="mdi-thermometer-low"
+                <CardSlider :v-model:value="oven.state.temperature" :min="90" :max="230" icon="mdi-thermometer-low"
                 @updateValue="(value: number) => setTemp(oven, value)"/>
             </VRow>
         </VContainer>

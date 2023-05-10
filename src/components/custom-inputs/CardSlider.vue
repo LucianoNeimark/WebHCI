@@ -9,14 +9,14 @@ const props = defineProps({
     icon: String
 })
 
-const emit = defineEmits(['updateValue', 'updateSlider'])
+const emit = defineEmits(['update:value', 'updateSlider'])
 
 const value = computed({
     get() {
         return props.value
     },
     set(state) {
-        emit('updateValue', state)
+        emit('update:value', state)
     }
 })
 </script>

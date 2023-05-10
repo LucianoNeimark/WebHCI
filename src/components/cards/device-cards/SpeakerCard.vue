@@ -39,7 +39,7 @@ const togglePlay = () => {
                 <SpeakerPlayer :playing="playing" @prev="prev" @next="next" @togglePlay="togglePlay"/>
             </VRow>
             <VRow>
-                <CardSlider :value="volume" :min="0" :max="100" icon="mdi-volume-high"
+                <CardSlider :v-model:value="volume" :min="0" :max="100" icon="mdi-volume-high"
                             @updateSlider="postInfo"
                             @updateValue="value => volume = value"/>
             </VRow>
