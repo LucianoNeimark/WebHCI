@@ -1,52 +1,73 @@
-<script setup>
+<script setup lang="ts">
 import FrameCard from "@/components/cards/FrameCard.vue"
 
-import {ref} from "vue";
+import {ref, computed, reactive, type PropType} from "vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
 import SpeakerPlayer from "@/components/custom-inputs/SpeakerPlayer.vue";
-defineProps({
-    id: String,
-    name : String
+import type { Device } from '@/interfaces/models/device'
+import {type Speaker, previousSongSpeaker, nextSongSpeaker, toggleSpeaker, changeVolumeSpeaker} from "@/interfaces/models/speaker";
+import {DevicesApi} from "@/api/devices.api";
+
+
+const props = defineProps({
+    device: {
+        type: Object as PropType<Speaker>,
+        required: true
+    } 
 })
 
-const volume = ref(50)
-const playing = ref(true)
+const speaker = reactive<Device>(props.device)
 
-const postInfo = () => {
-    console.log("Soy una api call! Cambiando el valor a ...", volume.value)
+
+const prev = async () => {
+    await previousSongSpeaker(speaker)
+    const { state: {song: {title}}}= await DevicesApi.getDeviceById(speaker.id)
+    speaker.state.song.title = title
 }
 
-const prev = () => {
-    console.log("Previous song")
-    playing.value = true
+const next = async () => {
+    await nextSongSpeaker(speaker)
+    const { state: {song: {title}}}= await DevicesApi.getDeviceById(speaker.id)
+    speaker.state.song.title = title
 }
 
-const next = () => {
-    console.log("Next song")
-    playing.value = true
+const togglePlay = async () => {
+    await toggleSpeaker(speaker)
 }
 
-const togglePlay = () => {
-    console.log("Play/pause")
-    playing.value = !playing.value
+const updateVolume = async () => {
+  await changeVolumeSpeaker(speaker, speaker.state.volume)
 }
+
+const playing = computed(() => speaker.state.status === 'playing')
+
+console.log(speaker.state.volume)
+console.log("props", props.device)
 
 </script>
 <template>
-    <FrameCard :id="id" :name="name" icon="mdi-volume-high">
+    <FrameCard :id="device.id" :name="device.name" icon="mdi-volume-high">
         <VContainer>
+            <VRow class="song-title">
+                {{ speaker.state?.song?.title || '' }}
+            </VRow>
             <VRow class="align-content-center justify-space-evenly mb-1">
                 <SpeakerPlayer :playing="playing" @prev="prev" @next="next" @togglePlay="togglePlay"/>
             </VRow>
             <VRow>
-                <CardSlider :v-model:value="volume" :min="0" :max="100" icon="mdi-volume-high"
-                            @updateSlider="postInfo"
-                            @updateValue="value => volume = value"/>
+                <CardSlider v-model:value="speaker.state.volume" :min="0" :max="10" icon="mdi-volume-high"
+                            @updateSlider="updateVolume"/>
             </VRow>
         </VContainer>
     </FrameCard>
 </template>
 
 <style scoped>
+.song-title {
+    font-weight: bold;
+    align-content: center;
+    margin-bottom: 2%;
+    justify-content: center !important;
+}
 
 </style>

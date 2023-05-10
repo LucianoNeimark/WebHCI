@@ -32,12 +32,11 @@ export const playSpeaker = (speaker: Speaker) => {
 
 export const toggleSpeaker = async (speaker: Speaker) => {
   let res
-  await resumeSpeaker(speaker)
   if (speaker.state.status === 'playing') {
     res = await pauseSpeaker(speaker)
     speaker.state.status = 'paused'
   } else {
-    res = await playSpeaker(speaker)
+    res = await resumeSpeaker(speaker)
     speaker.state.status = 'playing'
   }
   return res

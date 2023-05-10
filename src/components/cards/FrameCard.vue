@@ -11,7 +11,7 @@ defineProps({
 <template>
     <VCard class="ma-3 pa-3 pb-2" color="tertiary" rounded="xl" width="25vw">
         <VContainer>
-            <VRow class="flex-row justify-space-between mb-1">
+            <VRow class="flex-row justify-space-between">
                 <div>{{ name }}</div>
                 <VIcon :icon=icon size="2.5vw"/>
             </VRow>
@@ -30,7 +30,7 @@ defineProps({
 <style scoped>
 
 .slot-content {
-    height: 20vh;
+    height: 22vh;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;

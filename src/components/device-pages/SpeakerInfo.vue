@@ -112,9 +112,9 @@ const progress = computed(() => {
               <div class="title">{{ speaker.device?.state?.song?.title || 'Sin tiulo'}}</div>
               <div class="artist">{{ speaker.device?.state?.song?.artist || 'Sin artista'}}</div>
               <div class="album">{{ speaker.device?.state?.song?.album || 'Sin album'}}</div>
-              <VRow class="pt-3">
+              <VRow class="pa-3 my-1">
                 <VCol class="px-0" cols="10">
-                  <VProgressLinear class="progress-bar" rounded="xl" height="5" :model-value="progress" color="lightSurface" background-color="primary"/>
+                  <VProgressLinear bg-color="secondary" class="progress-bar" rounded="xl" height="5" :model-value="progress" color="lightSurface" background-color="primary"/>
                 </VCol>
                 <VCol class="pa-0">
                   {{ speaker.device?.state?.song?.progress || 'Comienzo'}} / {{ speaker.device?.state?.song?.duration || 'Fin'}}
@@ -146,7 +146,9 @@ const progress = computed(() => {
       </VCard>
 </template>
 
-<style scoped>
+<style lang="scss">
+
+@import '@/assets/variables';
 .card-speaker{
   width: 45%;
 }
