@@ -16,20 +16,15 @@ const props = defineProps({
 
 const oven = reactive(props.device)
 
-const temp = computed(() => {
-    oven.state.temperature
-})
-
 const status = computed(() => oven.state.status === 'on')
 
 watch(() => oven.state.status, async (newStatus : string, oldStatus : string) => {
   if (newStatus!==oldStatus) await changeOnOf(oven, newStatus)
 })
 
-watch(() => oven.state.temperature, async (newStatus : number, oldStatus : number) => {
-  if (newStatus!==oldStatus) await changeOvenTemp(oven, newStatus)
-})
-
+const setTemp = async () => {
+  await changeOvenTemp(oven, oven.state.temperature)
+}
 
 </script>
 <template>
@@ -39,8 +34,8 @@ watch(() => oven.state.temperature, async (newStatus : number, oldStatus : numbe
                 <PowerButton :power="status" @click="() => {toggleOven(oven)}" :size="SizesEnum.Large"/>
             </VRow>
             <VRow>
-                <CardSlider :v-model:value="oven.state.temperature" :min="90" :max="230" icon="mdi-thermometer-low"
-                @updateValue="(value: number) => setTemp(oven, value)"/>
+                <CardSlider v-model:value="oven.state.temperature" :min="90" :max="230" icon="mdi-thermometer-low"
+                @updateSlider="setTemp"/>
             </VRow>
         </VContainer>
     </FrameCard>
