@@ -80,8 +80,8 @@ onMounted(async () => {
 
 const initTimer = () => {
   if (interv.value) clearInterval(interv.value)
-  const [m1, s1] = speaker.device.state.song.progress.split(':').map(Number) 
-  const [m2, s2] = speaker.device.state.song.duration.split(':').map(Number) 
+  const [m1, s1] = speaker.device.state.song?.progress?.split(':').map(Number) || [0, 0]
+  const [m2, s2] = speaker.device.state.song?.duration?.split(':').map(Number) || [0, 0]
   progressTime.value = s1 + (m1 * 60)
   progressDuration.value = s2 + (m2 * 60) 
   if (!playing.value) return; // Si esta en pausa no empieza el timer
