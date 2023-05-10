@@ -1,55 +1,57 @@
 <script setup lang="ts">
 
-import {onMounted, reactive} from 'vue'
-    import {useDevicesStore} from "@/stores/device.store";
-    import {DevicesApi} from "@/api/devices.api";
-    import type { Device} from "@/interfaces/device.interface";
-    import { useRoomsStore } from '@/stores/room.store';
-    import { RoomsApi } from '@/api/rooms.api';
-    import { computed } from 'vue';
-    import { useDeviceTypesStore } from '@/stores/deviceTypes.store';
-    import EditableButton from "@/components/custom-inputs/EditableButton.vue";
-    const { rooms } = useRoomsStore()
-    const { getDevicesGroupByRoom } = useDevicesStore()
-    const { deviceTypes } = useDeviceTypesStore()
+import { onMounted, reactive } from 'vue'
+import { useDevicesStore } from "@/stores/device.store";
+import { DevicesApi } from "@/api/devices.api";
+import type { Device } from "@/interfaces/device.interface";
+import { useRoomsStore } from '@/stores/room.store';
+import { RoomsApi } from '@/api/rooms.api';
+import { computed } from 'vue';
+import { useDeviceTypesStore } from '@/stores/deviceTypes.store';
+import EditableButton from "@/components/custom-inputs/EditableButton.vue";
+const { rooms } = useRoomsStore()
+const { getDevicesGroupByRoom } = useDevicesStore()
+const { deviceTypes } = useDeviceTypesStore()
+import { useToast } from 'vue-toast-notification';
 
+const $toast = useToast()
+const devicesGroupByRoom = reactive<{ value: Map<string, Device[]>, countMap: Map<string, number> }>({
+    value: new Map<string, Device[]>(),
+    countMap: new Map<string, number>()
+})
 
-    const devicesGroupByRoom  = reactive<{value: Map<string, Device[]>, countMap: Map<string, number>}>({
-            value: new Map<string, Device[]>(),
-            countMap: new Map<string, number>()
-        }
-    )
+const loadPage = async () => {
+    await RoomsApi.reloadRooms()
+    await DevicesApi.reloadDevices()
+    devicesGroupByRoom.value = getDevicesGroupByRoom()
 
-    const loadPage = async () => {
-        await RoomsApi.reloadRooms()
-        await DevicesApi.reloadDevices()
-        devicesGroupByRoom.value = getDevicesGroupByRoom()
-
-        devicesGroupByRoom.value.forEach((value, key) => {
-            devicesGroupByRoom.countMap.set(key, value.length)
-            devicesGroupByRoom.value.set(key, value.map((value) => value).slice(0, 3))
-        })
-    }
-
-    const roomItems = computed(() => {
-        return rooms.items.values()
+    devicesGroupByRoom.value.forEach((value, key) => {
+        devicesGroupByRoom.countMap.set(key, value.length)
+        devicesGroupByRoom.value.set(key, value.map((value) => value).slice(0, 3))
     })
+}
 
-    onMounted(loadPage)
+const roomItems = computed(() => {
+    return rooms.items.values()
+})
 
-    const addRoom = async (name : string) => {
-        await RoomsApi.addRoom(name)
-        await RoomsApi.reloadRooms()
-        await DevicesApi.reloadDevices()
-        devicesGroupByRoom.value = getDevicesGroupByRoom()
-    }
+onMounted(loadPage)
+
+const addRoom = async (name: string) => {
+    const addedRoom = await RoomsApi.addRoom(name)
+    if (!addedRoom) return
+    await RoomsApi.reloadRooms()
+    await DevicesApi.reloadDevices()
+    devicesGroupByRoom.value = getDevicesGroupByRoom()
+    $toast.success('Habitación cargada exitosamente', { position: 'top-right' })
+}
 
 </script>
 
 <template>
     <VCol>
         <VRow>
-            <EditableButton @valueSet="addRoom"/>
+            <EditableButton message="Agregar habitación" @valueSet="addRoom"/>
         </VRow>
         <VCol v-for="room in roomItems" :key="room.id" class="row-width pt-3">
             <VRow class="justify-space-between pl-3 pb-3 vert-align">

@@ -67,3 +67,6 @@
     font-size: 3rem;
     cursor: pointer;
 }
+.v-toast {
+    z-index: 100000 !important;
+}

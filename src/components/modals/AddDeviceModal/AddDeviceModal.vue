@@ -43,17 +43,20 @@ import {computed, type PropType, ref} from "vue";
 
   const addDevice = async () => {
       const newDevice = await DevicesApi.addDevice(type.value, name.value) as Device
+      if (!newDevice) return;
       if(typeof room.value === "string") {
           room.value = await RoomsApi.addRoom(room.value) as Room
+          if (!room.value) return;
           await RoomsApi.reloadRooms()
       }
       if (room.value) {
           if(typeof room.value === "string") {
               room.value = await RoomsApi.addRoom(room.value) as Room
+              if (!room.value) return;
               await RoomsApi.reloadRooms()
-              await RoomsApi.addDeviceToRoom(room.value.id, newDevice.id)
           }
-          await RoomsApi.addDeviceToRoom((room.value as Room).id, newDevice.id)
+          const addedDevice = await RoomsApi.addDeviceToRoom((room.value as Room).id, newDevice.id)
+          if (!addedDevice) return;
       }
       emit('update:dialog', false)
       emit('device-added')

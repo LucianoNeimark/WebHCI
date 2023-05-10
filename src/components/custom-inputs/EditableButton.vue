@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+defineProps({
+    message: {
+        type: String,
+        required: true
+    }
+})
+
 const value = ref('')
 const valid = ref(true);
 const isEditing = ref(false);
@@ -33,7 +40,7 @@ const rules = [
   <span>
       <VBtn v-if="!isEditing" @click="isEditing = true" class="add-button ml-5 mt-5 mb-3"
             color="surface" rounded="xl">
-          Agregar Habitacion
+            {{ message }}
           <VIcon icon="mdi-plus-circle-outline"></VIcon>
       </VBtn>
       <VForm class="ml-7 mt-3" v-model="valid">
