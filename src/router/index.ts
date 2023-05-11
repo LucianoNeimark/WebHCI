@@ -7,6 +7,7 @@ import DeviceInfoPage from "@/views/DeviceInfoPage.vue";
 import RoomInfoPage from "@/views/RoomInfoPage.vue";
 import {useRoomsStore} from "@/stores/room.store";
 import {useDevicesStore} from "@/stores/device.store";
+import CreateRoutinePage from "@/views/CreateRoutinePage.vue";
 
 
 const router = createRouter({
@@ -47,6 +48,11 @@ const router = createRouter({
               name: () => "Rutinas",
               ancestors: []
           }
+      },
+      {
+          path: '/routines/create',
+          name: 'Crear Rutina',
+          component: CreateRoutinePage
       },
       {
           path: '/rooms',

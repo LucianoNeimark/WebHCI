@@ -1,16 +1,15 @@
 import { Api } from '@/api/api'
 import type { Routine } from '@/interfaces/routine.interface'
 import { useRoutinesStore } from "@/stores/routine.store";
+import type {Action} from "@/interfaces/action.interface";
+import {RoutineCreationDTO} from "@/dtos/routineCreation.dto";
 
 export class RoutinesApi{
-    static async addRoutine(id : String, name : String, meta : String){
-
-        const data = {
-            "name": name,
-            "meta": meta
-        }
-
-        await Api.post("/routines", JSON.stringify(data))
+    static async addRoutine(name : string, actions : Action[]){
+        const routine = new RoutineCreationDTO(name, actions)
+        const res = await Api.post("/routines", routine)
+        const { result } = await res.json()
+        return result
     }
 
     static async reloadRoutines() : Promise<void> {
