@@ -5,8 +5,6 @@ import {computed, type PropType, reactive, watch} from "vue";
 import { type Refrigerator, changeTemperatureRefrigerator, changeFreezerTemperatureRefrigerator} from "@/interfaces/models/refrigerator";
 import type { Device } from '@/interfaces/models/device'
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
-import ModeToggle from "@/components/custom-inputs/ModeToggle.vue";
-
 
 const props = defineProps({
   device: {
