@@ -37,7 +37,6 @@ onMounted(async () => {
             <VListItem class="more-devices" :to="`devices/`">Ver más dispositivos <VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
         </VRow>
         <VRow class="ml-2 align-content-center">
-            <!-- TODO: Sacar IDs y names para usar device en todos-->
             <component v-for="device in topDevices.devices" :key="device.id" :device="device" :is="deviceTypes[device.type.id].card"/>
         </VRow>
         <VRow class="justify-space-between">
