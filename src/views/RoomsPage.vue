@@ -7,12 +7,12 @@ import type { Device } from "@/interfaces/device.interface";
 import { useRoomsStore } from '@/stores/room.store';
 import { RoomsApi } from '@/api/rooms.api';
 import { computed } from 'vue';
-import { useDeviceTypesStore } from '@/stores/deviceTypes.store';
 import EditableButton from "@/components/custom-inputs/EditableButton.vue";
+
 const { rooms } = useRoomsStore()
 const { getDevicesGroupByRoom } = useDevicesStore()
-const { deviceTypes } = useDeviceTypesStore()
 import { useToast } from 'vue-toast-notification';
+import {deviceTypes} from "@/utils/constants";
 
 const $toast = useToast()
 const devicesGroupByRoom = reactive<{ value: Map<string, Device[]>, countMap: Map<string, number> }>({

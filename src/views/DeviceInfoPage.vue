@@ -2,7 +2,6 @@
 import ActionsHistoryTable from "@/components/tables/ActionsHistoryTable.vue";
 import { useDevicesStore } from '@/stores/device.store';
 import {useRoute, useRouter} from 'vue-router';
-import { useDeviceTypesStore } from '@/stores/deviceTypes.store';
 import {computed, onMounted, reactive, ref, watch, watchEffect} from 'vue';
 import type { Device } from '@/interfaces/device.interface';
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
@@ -11,10 +10,10 @@ import ConfirmationModal from "@/components/modals/AddDeviceModal/ConfirmationMo
 import RoomComboBox from "@/components/custom-inputs/RoomComboBox.vue";
 import {RoomsApi} from "@/api/rooms.api";
 import type {Room} from "@/interfaces/room.interface";
+import {deviceTypes} from "@/utils/constants";
 
 const route = useRoute()
 const { devices, removeDevice, setCurrentDevice, currentDevice } = useDevicesStore();
-const { deviceTypes } = useDeviceTypesStore()
 const router = useRouter()
 
 const device = reactive({

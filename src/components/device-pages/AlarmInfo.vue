@@ -65,6 +65,7 @@ const rules = [
     <VCard class="pa-3" color="primary" rounded="xl">
         <VContainer class="container" >
             <VCol class="d-flex flex-column" v-if="!changingCode">
+                <VForm>
                     <VRow class="-center pa-5 mb-1">
                         <VTextField v-model="code"
                                     :error="manualError"
@@ -73,6 +74,7 @@ const rules = [
                                     type="password"
                                     hide-details="auto"
                                     :rules="rules"
+                                    autocomplete="on"
                                     bg-color="surface"/>
                     </VRow>
                     <VRow class="flex-row justify-center mb-6">
@@ -81,6 +83,7 @@ const rules = [
                     <VRow justify="center">
                         <VBtn @click="changingCode = true" color="secondary">Ingresar nuevo código</VBtn>
                     </VRow>
+                </VForm>
             </VCol>
             <VCol class="d-flex flex-column" v-if="changingCode">
                 <VForm v-model="valid">
@@ -92,6 +95,7 @@ const rules = [
                                     type="password"
                                     hide-details="auto"
                                     :rules="rules"
+                                    autocomplete="on"
                                     bg-color="surface"/>
                     </VRow>
                     <VRow class="-center pa-5 mb-1">
@@ -102,6 +106,7 @@ const rules = [
                                     type="password"
                                     hide-details="auto"
                                     :rules="rules"
+                                    autocomplete="on"
                                     bg-color="surface"/>
                     </VRow>
                     <VRow class="button-panel">

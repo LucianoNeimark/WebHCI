@@ -4,7 +4,6 @@ import type {Device} from "@/interfaces/device.interface";
 import {useDevicesStore} from "@/stores/device.store";
 import {useRoute, useRouter} from "vue-router";
 import {DevicesApi} from "@/api/devices.api";
-import {useDeviceTypesStore} from "@/stores/deviceTypes.store";
 import AddCard from "@/components/cards/AddCard.vue";
 import {useRoomsStore} from "@/stores/room.store";
 import type {Room} from "@/interfaces/room.interface";
@@ -12,6 +11,7 @@ import {RoomsApi} from "@/api/rooms.api";
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
 import ConfirmationModal from "@/components/modals/AddDeviceModal/ConfirmationModal.vue";
 import AddDeviceModal from "@/components/modals/AddDeviceModal/AddDeviceModal.vue";
+import {deviceTypes} from "@/utils/constants";
 
 const route = useRoute()
 
@@ -22,7 +22,6 @@ const roomDevices = reactive<{devices: Device[]}>({
 const router = useRouter()
 const { rooms, removeRoom, setCurrentRoom, currentRoom } = useRoomsStore()
 const { getDevicesGroupByRoom } = useDevicesStore()
-const { deviceTypes } = useDeviceTypesStore()
 
 const myRoomData = reactive({room:
         //<Room> rooms.items.get(<string> route.params.id) || {id: '', name: ''}

@@ -4,11 +4,11 @@ import { DevicesApi } from '@/api/devices.api'
 import { RoutinesApi } from '@/api/routines.api'
 
 import {onMounted, reactive} from 'vue'
-import { useDeviceTypesStore } from '@/stores/deviceTypes.store'
 import { useDevicesStore } from '@/stores/device.store'
 import type { Device } from '@/interfaces/device.interface'
 import type { Routine } from "@/interfaces/routine.interface";
 import RoutineCard from "@/components/cards/RoutineCard.vue";
+import {deviceTypes} from "@/utils/constants";
 
 const topDevices = reactive<{devices: Device[]}>({
   devices: []
@@ -20,7 +20,6 @@ const topRoutines = reactive<{routines: Routine[]}>({
 
 
 const { getTopDevices } = useDevicesStore()
-const { deviceTypes } = useDeviceTypesStore()
 
 onMounted(async () => {
   await DevicesApi.reloadDevices()

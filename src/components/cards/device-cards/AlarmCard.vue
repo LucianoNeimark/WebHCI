@@ -43,18 +43,21 @@ const rules = [
   <FrameCard :id="alarm.id" :name="alarm.name" icon="mdi-alarm-light-outline">
     <VContainer class="container">
         <VCol>
-            <VRow class="flex-row justify-center mt-5 mb-1">
-                  <VTextField v-model="code"
-                              label="Código"
-                              placeholder="1234"
-                              type="password"
-                              bg-color="surface"
-                              :rules="rules"
-                              outlined/>
-            </VRow>
-            <VRow class="flex-row justify-center mb-2">
-                <ModeToggle :icons="alarmIcons" :toggle="toggle" @updateToggle="updateMode"/>
-            </VRow>
+            <VForm>
+                <VRow class="flex-row justify-center mb-1">
+                    <VTextField v-model="code"
+                                label="Código"
+                                placeholder="1234"
+                                type="password"
+                                bg-color="surface"
+                                :rules="rules"
+                                autocomplete="on"
+                                outlined/>
+                </VRow>
+                <VRow class="flex-row justify-center mb-2">
+                    <ModeToggle :icons="alarmIcons" :toggle="toggle" @updateToggle="updateMode"/>
+                </VRow>
+            </VForm>
         </VCol>
     </VContainer>
   </FrameCard>

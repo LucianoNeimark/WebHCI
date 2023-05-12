@@ -1,17 +1,15 @@
 <script setup lang="ts">
-
 import { onMounted, reactive, ref } from 'vue'
 import AddDeviceModal from "@/components/modals/AddDeviceModal/AddDeviceModal.vue";
-import { useDeviceTypesStore } from "@/stores/deviceTypes.store";
 import { useDevicesStore } from "@/stores/device.store";
 import { DevicesApi } from "@/api/devices.api";
 import type { Device } from "@/interfaces/device.interface";
 import { useToast } from 'vue-toast-notification';
+import {deviceTypes} from "@/utils/constants";
 
 const $toast = useToast()
 const dialog = ref(false)
 const panel = ref();
-const { deviceTypes } = useDeviceTypesStore()
 const { getDevicesGroupByType } = useDevicesStore()
 const devicesGroupByType = reactive<{ value: Map<string, Device[]> }>({ value: new Map<string, Device[]>() })
 
