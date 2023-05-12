@@ -5,3 +5,4 @@ export enum SizesEnum {
     Large = 'large',
     XLarge = 'x-large'
 }
+

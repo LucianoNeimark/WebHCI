@@ -2,9 +2,8 @@
 
 import {computed, type PropType, reactive, watch} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
-import {SizesEnum} from "@/enums/enums";
-// import { toggleLamp, type Lamp, changeLampStatus, changeLampColor, changeLampBrightness} from "@/interfaces/models/lamp";
-import { type AC, changeTemperature, changeOnOf, toggleAC, changeAcMode, setMode, setTemperature, changeAngle, changeFanSpeed, setVertical, setHorizontal, setFanSpeed }  from "@/interfaces/models/ac"
+import { SizesEnum } from "@/enums/enums";
+import { type AC, changeTemperature, changeOnOf, toggleAC, changeAcMode, acModes, changeAngle, changeFanSpeed, speedOpts, verticalOpts, horizontalOpts, iconArray}  from "@/interfaces/models/ac"
 import NumericController from "@/components/custom-inputs/NumericController.vue";
 import ModeToggle from "@/components/custom-inputs/ModeToggle.vue";
 import dropDownBtn from "../custom-inputs/dropDownBtn.vue";
@@ -19,19 +18,12 @@ const props = defineProps({
 const ac = reactive(props.device)
 
 const power = computed(() => ac.state.status === 'on')
+
 const actemperature = computed(() => ac.state.temperature)
 
 const toggle = computed(() => {
-    return modes.indexOf(ac.state.mode)
+    return Object.values(acModes).indexOf(ac.state.mode)
 })
-
-const verticalOpts = ["auto", "22", "45", "67", "90"]
-const horizontalOpts = ["auto", "-90", "-45", "0", "45", "90"]
-const speedOpts = ["auto", "25", "50", "75", "100"]
-
-const modes = ['heat', 'cool', 'ventilation']
-
-const iconArray = [ "mdi-white-balance-sunny",  "mdi-snowflake", "mdi-weather-windy" ]
 
 watch(() => ac.state.status, async (newStatus: string, oldStatus: string) => {
     if (newStatus !== oldStatus) await changeOnOf(ac, newStatus)
@@ -46,11 +38,11 @@ watch(() => ac.state.temperature, async (newStatus : number, oldStatus : number)
 })
 
 watch(() => ac.state.horizontalSwing, async (newStatus : string, oldStatus : string) => {
-    if (newStatus!=oldStatus) await changeAngle(ac, 'Horizontal', newStatus)
+    if (newStatus!=oldStatus) await changeAngle(ac, 'Horizontal', newStatus.substring(0, newStatus.length-1))
 })
 
 watch(() => ac.state.verticalSwing, async (newStatus : string, oldStatus : string) => {
-    if (newStatus!=oldStatus) await changeAngle(ac, 'Vertical', newStatus)
+    if (newStatus!=oldStatus) await changeAngle(ac, 'Verical', newStatus.substring(0, newStatus.length-1))
 })
 
 watch(() => ac.state.fanSpeed, async (newStatus : string, oldStatus : string) => {
@@ -60,31 +52,28 @@ watch(() => ac.state.fanSpeed, async (newStatus : string, oldStatus : string) =>
 </script>
 
 <template>
-     <VCard class="d-flex " color="primary" rounded="xl">
+     <VCard class="d-flex" color="primary" rounded="xl">
         <VContainer>
-            <VRow>
+            <VRow class="mt-2 mb-4">
                 <VCol class="d-flex justify-center" align-self="center">
-                    <NumericController :val="actemperature" suffix="º" :min="18" :max="38" @increment="() => setTemperature(ac, ac.state.temperature+1)" @decrement="() => setTemperature(ac, ac.state.temperature-1)"/>
+                    <NumericController :val="actemperature" suffix="º" :min="18" :max="38" @increment="ac.state.temperature++ " @decrement="ac.state.temperature--"/>
                 </VCol>
                 <VCol align-self="center" class="d-flex justify-center">
                     <PowerButton :power="power" @click="() => toggleAC(ac)" :size="SizesEnum.Small"/>
                 </VCol>
             </VRow>
             <VRow class="mx-2">
-           
-                <ModeToggle :icons="iconArray" :toggle="toggle" @updateToggle="(index: number) => setMode(ac, modes[index])"/>
+                <ModeToggle :icons="iconArray" :toggle="toggle" @updateToggle="(index: number) => ac.state.mode = Object.values(acModes)[index]"/>
             </VRow>
-            <VRow class ="my-10">
+            <VRow class="mt-10 mb-3">
                 <VCol class="d-flex justify-center">
-                    <dropDownBtn :selected="ac.state.fanSpeed" :items="speedOpts" icon="mdi:mdi-wind-power" @itemClicked="(item) => {setFanSpeed(ac,item)}"  />
+                    <dropDownBtn :selected="ac.state.fanSpeed" :items="speedOpts" text="Velocidad Ventilador" @itemClicked="(value : string) => ac.state.fanSpeed = value" />
                 </VCol>
-
                 <VCol class="d-flex justify-center">
-                    <dropDownBtn :selected="ac.state.verticalSwing" :items="verticalOpts" icon="mdi:mdi-reorder-vertical" @itemClicked="(item) => {setVertical(ac,item)}" />
+                    <dropDownBtn :selected="ac.state.verticalSwing" :items="verticalOpts" text="Aspas verticales"  @itemClicked="(value : string) => ac.state.verticalSwing = value" />
                 </VCol>
-
                 <VCol class="d-flex justify-center">
-                    <dropDownBtn :selected="ac.state.horizontalSwing" :items="horizontalOpts" icon="mdi:mdi-reorder-horizontal" @itemClicked="(item) => {setHorizontal(ac,item)}" />
+                    <dropDownBtn :selected="ac.state.horizontalSwing" :items="horizontalOpts" text="Aspas horizontales" @itemClicked="(value : string) => ac.state.horizontalSwing = value" />
                 </VCol>
             </VRow>
         </VContainer>

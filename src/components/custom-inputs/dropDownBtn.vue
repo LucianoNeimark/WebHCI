@@ -1,34 +1,39 @@
 <script setup lang="ts">
 
 import type { PropType} from 'vue'
+import type { VMenu } from 'vuetify/lib/components';
 
 const props = defineProps({
   items: { type: Array<string>, required: true },
-  icon: { type: String, required: true },
+  text: { type: String, required: true },
   selected: {type: String, required: true}
 })
 
+console.log(props.text)
 
 </script>
 
 <template>
-    <div class="text-center">
-        <v-menu >
-            
+    <div>
+        <VMenu>
             <template v-slot:activator="{ props }">
-              <v-btn size="4vw" :icon="icon" v-bind="props"></v-btn>
+                <VBtn rounded="xl" v-bind="props" class="hola"> 
+                  {{ text }}
+                </VBtn>
             </template>
-
-            <v-list>
-              <v-list-item
+            <VList>
+              <VListItem
                 :active="item === selected"
                 v-for="(item, i) in items"
                 :key="i"
-                @click="$emit('itemClicked', item)"
-              >
-                <v-list-item-title>{{ item }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+                @click="$emit('itemClicked', item)">
+                <VListItemTitle>{{ item }}</VListItemTitle>
+              </VListItem>
+            </VList>
+          </VMenu>
     </div>
   </template>
+
+<style scoped>
+
+</style>
