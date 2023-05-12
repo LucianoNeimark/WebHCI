@@ -1,26 +1,35 @@
 <script setup lang="ts">
-const emit = defineEmits(['decrement', 'increment'])
+const emit = defineEmits(['update:value'])
 
 const props = defineProps({
     suffix: String,
-    val: Number,
-    max: Number,
-    min: Number
+    value: {
+        type: Number,
+        required: true
+    },
+    max: {
+        type: Number,
+        required: true
+    },
+    min: {
+        type: Number,
+        required: true
+    } 
 })
 const decrement = () => {
-    if (props.val > props.min) emit('decrement')
+    if (props.value > props.min) emit('update:value', props.value - 1)
 }
 
 const increment = () => {
-    if (props.val < props.max) emit('increment')
+    if (props.value < props.max) emit('update:value', props.value + 1)
 }
 
 </script>
 
 <template>
-    <VBtn :disabled="val <= min" color="lightSurface" class="temperature" icon="mdi-minus" @click="decrement"/>
-    <span class="temperature-size px-2 align-self-center">{{val}}{{suffix}}</span>
-    <VBtn :disabled="val >= max" color="lightSurface" class="temperature" icon="mdi-plus" @click="increment"/>
+    <VBtn :disabled="value <= min" color="lightSurface" class="temperature" icon="mdi-minus" @click="decrement"/>
+    <span class="temperature-size px-2 align-self-center">{{value}}{{suffix}}</span>
+    <VBtn :disabled="value >= max" color="lightSurface" class="temperature" icon="mdi-plus" @click="increment"/>
 
 </template>
 

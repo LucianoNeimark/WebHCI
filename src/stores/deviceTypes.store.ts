@@ -8,7 +8,7 @@ import LightCard from "@/components/cards/device-cards/LightCard.vue";
 import SpeakerCard from "@/components/cards/device-cards/SpeakerCard.vue";
 
 import LightInfo from "@/components/device-pages/LightInfo.vue";
-import ACInfo from "@/components/device-pages/ACInfo.vue";
+import AirConditionerInfo from "@/components/device-pages/AirConditionerInfo.vue";
 import SpeakerInfo from "@/components/device-pages/SpeakerInfo.vue";
 import OvenInfo from "@/components/device-pages/OvenInfo.vue";
 import DoorInfo from "@/components/device-pages/DoorInfo.vue";
@@ -19,7 +19,7 @@ import AlarmInfo from "@/components/device-pages/AlarmInfo.vue";
 export const useDeviceTypesStore = defineStore('deviceTypes', () => {
   const deviceTypes = reactive({
         // TODO: Poner iconos bien
-        'li6cbv5sdlatti0j': { name: 'AC', icon: 'mdi-air-conditioner', card: AirConditionerCard, info: ACInfo},
+        'li6cbv5sdlatti0j': { name: 'AC', icon: 'mdi-air-conditioner', card: AirConditionerCard, info: AirConditionerInfo},
         'go46xmbqeomjrsjr': { name: 'Lámpara', icon: 'mdi-lightbulb-outline', card: LightCard, info: LightInfo},        
         'c89b94e8581855bc': { name: 'Parlante', icon: 'mdi-volume-high' , card: SpeakerCard, info: SpeakerInfo},
         'eu0v2xgprrhhg41g': { name: 'Persiana', icon: "mdi-blinds-horizontal", card: null, info: null},

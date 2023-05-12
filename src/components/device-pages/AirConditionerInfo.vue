@@ -6,7 +6,7 @@ import { SizesEnum } from "@/enums/enums";
 import { type AC, changeTemperature, changeOnOf, toggleAC, changeAcMode, acModes, changeAngle, changeFanSpeed, speedOpts, verticalOpts, horizontalOpts, iconArray}  from "@/interfaces/models/ac"
 import NumericController from "@/components/custom-inputs/NumericController.vue";
 import ModeToggle from "@/components/custom-inputs/ModeToggle.vue";
-import dropDownBtn from "../custom-inputs/dropDownBtn.vue";
+import DropDownBtn from "@/components/custom-inputs/DropDownBtn.vue";
 
 const props = defineProps({
     device: {
@@ -19,11 +19,7 @@ const ac = reactive(props.device)
 
 const power = computed(() => ac.state.status === 'on')
 
-const actemperature = computed(() => ac.state.temperature)
-
-const toggle = computed(() => {
-    return Object.values(acModes).indexOf(ac.state.mode)
-})
+const toggle = computed(() => Object.values(acModes).indexOf(ac.state.mode))
 
 watch(() => ac.state.status, async (newStatus: string, oldStatus: string) => {
     if (newStatus !== oldStatus) await changeOnOf(ac, newStatus)
@@ -38,11 +34,11 @@ watch(() => ac.state.temperature, async (newStatus : number, oldStatus : number)
 })
 
 watch(() => ac.state.horizontalSwing, async (newStatus : string, oldStatus : string) => {
-    if (newStatus!=oldStatus) await changeAngle(ac, 'Horizontal', newStatus.substring(0, newStatus.length-1))
+    if (newStatus!=oldStatus) await changeAngle(ac, 'Horizontal', newStatus)
 })
 
 watch(() => ac.state.verticalSwing, async (newStatus : string, oldStatus : string) => {
-    if (newStatus!=oldStatus) await changeAngle(ac, 'Verical', newStatus.substring(0, newStatus.length-1))
+    if (newStatus!=oldStatus) await changeAngle(ac, 'Vertical', newStatus)
 })
 
 watch(() => ac.state.fanSpeed, async (newStatus : string, oldStatus : string) => {
@@ -56,10 +52,10 @@ watch(() => ac.state.fanSpeed, async (newStatus : string, oldStatus : string) =>
         <VContainer>
             <VRow class="mt-2 mb-4">
                 <VCol class="d-flex justify-center" align-self="center">
-                    <NumericController :val="actemperature" suffix="º" :min="18" :max="38" @increment="ac.state.temperature++ " @decrement="ac.state.temperature--"/>
+                    <NumericController v-model:value="ac.state.temperature" suffix="º" :min="18" :max="38"/>
                 </VCol>
                 <VCol align-self="center" class="d-flex justify-center">
-                    <PowerButton :power="power" @click="() => toggleAC(ac)" :size="SizesEnum.Small"/>
+                    <PowerButton :power="power" @click="toggleAC(ac)" :size="SizesEnum.Small"/>
                 </VCol>
             </VRow>
             <VRow class="mx-2">
@@ -67,13 +63,13 @@ watch(() => ac.state.fanSpeed, async (newStatus : string, oldStatus : string) =>
             </VRow>
             <VRow class="mt-10 mb-3">
                 <VCol class="d-flex justify-center">
-                    <dropDownBtn :selected="ac.state.fanSpeed" :items="speedOpts" text="Velocidad Ventilador" @itemClicked="(value : string) => ac.state.fanSpeed = value" />
+                    <DropDownBtn :selected="ac.state.fanSpeed" :items="speedOpts" text="Velocidad Ventilador" @itemClicked="(value : string) => ac.state.fanSpeed = value" />
                 </VCol>
                 <VCol class="d-flex justify-center">
-                    <dropDownBtn :selected="ac.state.verticalSwing" :items="verticalOpts" text="Aspas verticales"  @itemClicked="(value : string) => ac.state.verticalSwing = value" />
+                    <DropDownBtn :selected="ac.state.verticalSwing" :items="verticalOpts" text="Aspas verticales"  @itemClicked="(value : string) => ac.state.verticalSwing = value" />
                 </VCol>
                 <VCol class="d-flex justify-center">
-                    <dropDownBtn :selected="ac.state.horizontalSwing" :items="horizontalOpts" text="Aspas horizontales" @itemClicked="(value : string) => ac.state.horizontalSwing = value" />
+                    <DropDownBtn :selected="ac.state.horizontalSwing" :items="horizontalOpts" text="Aspas horizontales" @itemClicked="(value : string) => ac.state.horizontalSwing = value" />
                 </VCol>
             </VRow>
         </VContainer>

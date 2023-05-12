@@ -22,8 +22,8 @@ export enum acModes {
     Fan = 'fan'
 }
 
-export const verticalOpts = ["auto", "22º", "45º", "67º", "90º"]
-export const horizontalOpts = ["auto", "-90º", "-45º", "0º", "45º", "90º"]
+export const verticalOpts = ["auto", "22", "45", "67", "90"]
+export const horizontalOpts = ["auto", "-90", "-45", "0", "45", "90"]
 export const speedOpts = ["auto", "25", "50", "75", "100"]
 export const iconArray = [ "mdi-white-balance-sunny",  "mdi-snowflake", "mdi-weather-windy" ]
 
