@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import  { RoutinesApi } from "@/api/routines.api";
   import SmallFrameCard from "@/components/cards/SmallFrameCard.vue";
   import type { Routine } from "@/interfaces/routine.interface";
   import type { PropType } from "vue";
@@ -14,10 +15,14 @@
   const devicesList = computed(() => props.routine.actions.map(action => action.device.type.id))
   const routine = reactive(props.routine)
 
+  const action = async () => {
+    await RoutinesApi.executeRutine(props.routine.id)
+  }
+
 </script>
 
 <template>
-    <SmallFrameCard :name="routine.name" :types="devicesList" icon="mdi-play-circle"/>
+    <SmallFrameCard :name="routine.name" :types="devicesList" icon="mdi-play-circle" @routine = "action()"/>
 </template>
 
 <style scoped>

@@ -2,6 +2,7 @@
 import {computed} from "vue";
 import {deviceTypes} from "@/utils/constants";
 
+
 const props = defineProps({
     id: String,
     name : String,
@@ -31,7 +32,9 @@ const typesLimited = computed(() => props.types.slice(0, 5))
                     </VCard>
                 </VCol>
                 <VCol cols="3" align-self="center">
-                   <VIcon :icon="icon" size="4vw"/>
+                    <VBtn size="4vw" :rounded="true" variant="text" @click="$emit('routine')">
+                        <VIcon :icon="icon" size="4vw"/>
+                    </VBtn>
                 </VCol>
             </VRow>
         </VContainer>

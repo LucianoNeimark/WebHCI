@@ -11,5 +11,9 @@ export const useRoutinesStore = defineStore('routines', () => {
         routines.items.set(routine.id, routine)
     }
 
-    return { routines, loadRoutine }
+    const getTopRoutines = (count: number) : Routine[] => {
+        return [...routines.items.values()].sort((a, b) => b.meta.qtyUses - a.meta.qtyUses).slice(0, count);
+    }
+
+    return { routines, loadRoutine, getTopRoutines }
 })

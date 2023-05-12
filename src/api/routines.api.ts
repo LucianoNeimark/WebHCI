@@ -13,17 +13,17 @@ export class RoutinesApi{
         await Api.post("/routines", JSON.stringify(data))
     }
 
-    static async getRoutines() : Promise<Routine[]> {
+    static async reloadRoutines() : Promise<void> {
         const res = await Api.get("/routines");
         const { result } = await res.json();
         const { loadRoutine } = useRoutinesStore();
         result.forEach((routine: Routine) => loadRoutine(routine));
-        return result;
     }
 
-    static async getTopRoutines(count: number) : Promise<Routine[]> {
-        const routineList = await RoutinesApi.getRoutines();
-        return routineList.sort((a, b) => b.meta.qtyUses - a.meta.qtyUses).slice(0, count);
+    static async executeRutine(id : String, params? : String) : Promise<string>{
+        const res = await Api.put(`/routines/${id}/execute`, params)
+        const { result } = await res.json();
+        return result;
     }
 }
 
