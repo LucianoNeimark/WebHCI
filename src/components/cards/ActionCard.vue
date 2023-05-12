@@ -9,6 +9,7 @@ import type {Parameter} from "@/interfaces/actionParam.interface";
 import type {Action} from "@/interfaces/action.interface";
 import ParameterInput from "@/components/custom-inputs/ParameterInput.vue";
 import {useDeviceTypesStore} from "@/stores/deviceTypes.store";
+import {requiredRule} from "@/utils/rules";
 
 const props = defineProps({
   action : {
@@ -20,6 +21,7 @@ const showParameters = ref(true)
 const action = reactive<Partial<Action>>(Object.assign({},props.action))
 action.params = []
 const actionValid = ()  => {
+    console.log(action.params)
     return action.device && action.actionName && action.params && !action.params.some(param => param === null || param === undefined || param === "")
 }
 const requestActionUpdate = () => {
@@ -85,12 +87,12 @@ const deviceIcon = computed(() => {
         <VCol cols="6">
           <VAutocomplete v-model="action.device" :prepend-inner-icon="deviceIcon"
                 variant="solo-filled" label="Dispositivo" no-data-text="No hay dispositivos"
-                :items="deviceList" item-title="name" return-object hide-details="auto"
+                :items="deviceList" item-title="name" return-object hide-details="auto" :rules="[requiredRule]"
           />
         </VCol>
         <VCol cols="3">
             <VAutocomplete v-model="actionTemplate" :disabled="!action.device" variant="solo-filled" label="Acción"
-                    :items="actionTemplateList" item-title="name" return-object hide-details="auto"
+                    :items="actionTemplateList" item-title="name" return-object hide-details="auto" :rules="[requiredRule]"
             />
         </VCol>
         <VCol cols="1" class="align-center d-flex">

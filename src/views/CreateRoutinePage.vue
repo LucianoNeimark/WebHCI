@@ -6,11 +6,12 @@ import {DevicesApi} from "@/api/devices.api";
 import ActionCard from "@/components/cards/ActionCard.vue";
 import type {Action} from "@/interfaces/action.interface";
 import {RoutinesApi} from "@/api/routines.api";
+import {validNameRules} from "@/utils/rules";
 
-
+const valid = ref(false)
 const name = ref("")
 const actionId = ref(1)
-const actions = reactive<{ id : Number, value : Action | undefined}[]>([{id : actionId.value, action : undefined}])
+const actions = reactive<{ id : Number, value : Action | undefined}[]>([{id : actionId.value, value : undefined}])
 const addAction = () => {
     actionId.value++
     actions.push({id : actionId.value, value : undefined})
@@ -21,7 +22,7 @@ const routineIsValid = computed<Boolean>(() : Boolean => {
 })
 
 const saveChangesColor = computed(() => {
-    return routineIsValid.value ? "secondary" : "gray"
+    return valid.value? "secondary" : "gray"
 })
 const saveChanges = async () => {
     if(routineIsValid.value) {
@@ -45,29 +46,33 @@ onMounted(async () => {
 
 <template>
   <VContainer class="mx-0">
-    <VRow class="align-start ma-3">
-      <VTextField class="name-input required" v-model="name" autofocus placeholder="Nueva Rutina" label="nombre" variant="solo-filled" hide-details="auto"/>
-      <VSpacer/>
-      <VBtn class="save-changes" rounded="xl" @click="saveChanges" :disabled="!routineIsValid" :color="saveChangesColor">
-          <VIcon icon="mdi-plus" class="mx-2"/>
-          <span class="mx-2">Agregar Rutina</span>
-      </VBtn>
-    </VRow>
-    <TransitionGroup name="action-card-list" tag="div">
-      <ActionCard class="ma-2"
-        v-for="({id, value}, index) in actions" :key="id" :action="value" @update:action="onActionupdate($event, index)" @delete:action="actions.splice(index, 1)"
-      />
-    </TransitionGroup>
-    <VContainer class="d-flex justify-center align-end">
-      <VBtn rounded="xl" class="add-action-btn" @click="addAction">Agregar Acción</VBtn>
-    </VContainer>
+    <VForm v-model="valid">
+      <VRow class="align-start ma-3 d-flex">
+        <VTextField class="name-input" v-model="name" autofocus placeholder="Nueva Rutina" label="nombre" variant="solo-filled"
+                    :rules="validNameRules"
+        />
+        <VSpacer/>
+        <VBtn class="save-changes" rounded="xl" @click="saveChanges" :disabled="!valid" :color="saveChangesColor">
+            <VIcon icon="mdi-plus" class="mx-2"/>
+            <span class="mx-2">Agregar Rutina</span>
+        </VBtn>
+      </VRow>
+      <TransitionGroup name="action-card-list" tag="div">
+        <ActionCard class="ma-2"
+          v-for="({id, value}, index) in actions" :key="id" :action="value" @update:action="onActionupdate($event, index)" @delete:action="actions.splice(index, 1)"
+        />
+      </TransitionGroup>
+      <VContainer class="d-flex justify-center align-end">
+        <VBtn rounded="xl" class="add-action-btn" @click="addAction">Agregar Acción</VBtn>
+      </VContainer>
+    </VForm>
   </VContainer>
 </template>
 
 
 <style scoped>
 .name-input{
-  width: auto !important;
+  width: 10vw !important;
 }
 .save-changes{
   height: 3vw !important;
