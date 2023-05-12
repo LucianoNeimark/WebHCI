@@ -12,7 +12,7 @@ const props = defineProps({
         required : true
     }
 })
-const emit = defineEmits(["update:modelValue"])
+const emit = defineEmits(["update:value"])
 
 const paramType = computed<string>(() => {
     return props.param.type === "integer"? "number" : props.param.type
@@ -24,15 +24,15 @@ if (paramType.value === "number" && props.param.minValue !== undefined && props.
 }
 const newValue = ref(props.value)
 watch(newValue, () => {
-    emit('update:modelValue', newValue.value)
+    emit("update:value", newValue.value)
 })
 </script>
 <template>
-    <VAutocomplete v-if="param.supportedValues" variant="solo-filled"  hide-details="auto" :rules="[requiredRule]"
+    <VAutocomplete v-if="param.supportedValues" variant="solo-filled" :rules="[requiredRule]"
         :items="param.supportedValues" v-model="newValue" :label="param.name"
     />
     <VTextField v-else :label="param.name" v-model="newValue" :type="paramType" :min="param.minValue" :max="param.maxValue"
-                    outlined dense  hide-details="auto" variant="solo-filled" :rules="rules"
+                    outlined dense variant="solo-filled" :rules="rules"
     />
 </template>
 

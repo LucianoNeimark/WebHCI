@@ -8,29 +8,26 @@ import type {Action} from "@/interfaces/action.interface";
 import {RoutinesApi} from "@/api/routines.api";
 import {validNameRules} from "@/utils/rules";
 
-const valid = ref(false)
 const name = ref("")
+const validName = ref(false)
 const actionId = ref(1)
-const actions = reactive<{ id : Number, value : Action | undefined}[]>([{id : actionId.value, value : undefined}])
+const actions = reactive<{ id : Number, value : Action | undefined, valid : boolean}[]>([{id : actionId.value, value : undefined, valid : false}])
+
+const validRoutines = computed(() : boolean => validName.value && actions.length > 0 && !actions.some(action => !action.valid))
+
 const addAction = () => {
     actionId.value++
-    actions.push({id : actionId.value, value : undefined})
+    actions.push({id : actionId.value, value : undefined, valid : false})
 }
 
-const routineIsValid = computed<Boolean>(() : Boolean => {
-    return !!(name.value) && actions.length > 0 && !actions.some(action => action.value === undefined)
-})
-
-const saveChangesColor = computed(() => {
-    return valid.value? "secondary" : "gray"
-})
+const saveChangesColor = computed(() => validRoutines.value? "success" : "gray")
 const saveChanges = async () => {
-    if(routineIsValid.value) {
+    if(validRoutines.value) {
         const actionList = actions.map(action => action.value) as Action[]
         await RoutinesApi.addRoutine(name.value, actionList)
     }
 }
-const onActionupdate = (action : Action, index : number) => {
+const onActionUpdate = (action : Action, index : number) => {
   actions[index].value = Object.assign({}, {
     device : action.device,
     actionName : action.actionName,
@@ -46,33 +43,33 @@ onMounted(async () => {
 
 <template>
   <VContainer class="mx-0">
-    <VForm v-model="valid">
-      <VRow class="align-start ma-3 d-flex">
+    <VRow class="align-start ma-3 d-flex">
+      <VForm v-model="validName" class="name-form">
         <VTextField class="name-input" v-model="name" autofocus placeholder="Nueva Rutina" label="nombre" variant="solo-filled"
                     :rules="validNameRules"
         />
-        <VSpacer/>
-        <VBtn class="save-changes" rounded="xl" @click="saveChanges" :disabled="!valid" :color="saveChangesColor">
-            <VIcon icon="mdi-plus" class="mx-2"/>
-            <span class="mx-2">Agregar Rutina</span>
-        </VBtn>
-      </VRow>
-      <TransitionGroup name="action-card-list" tag="div">
-        <ActionCard class="ma-2"
-          v-for="({id, value}, index) in actions" :key="id" :action="value" @update:action="onActionupdate($event, index)" @delete:action="actions.splice(index, 1)"
-        />
-      </TransitionGroup>
-      <VContainer class="d-flex justify-center align-end">
-        <VBtn rounded="xl" class="add-action-btn" @click="addAction">Agregar Acción</VBtn>
-      </VContainer>
-    </VForm>
+      </VForm>
+      <VSpacer/>
+      <VBtn class="save-changes" rounded="xl" @click="saveChanges" :disabled="!validRoutines" :color="saveChangesColor">
+          <VIcon icon="mdi-plus" class="mx-2"/>
+          <span class="mx-2">Agregar Rutina</span>
+      </VBtn>
+    </VRow>
+    <TransitionGroup name="action-card-list" tag="div">
+      <ActionCard class="ma-2"
+        v-for="(action, index) in actions" :key="action.id" :action="action.value" @update:action="onActionUpdate($event, index)" @delete:action="actions.splice(index, 1)"
+        :valid="action.valid" @update:valid="actions[index].valid = $event"
+      />
+    </TransitionGroup>
+    <VContainer class="d-flex justify-center align-end">
+      <VBtn rounded="xl" class="add-action-btn" @click="addAction">Agregar Acción</VBtn>
+    </VContainer>
   </VContainer>
 </template>
 
-
 <style scoped>
 .name-input{
-  width: 10vw !important;
+  width: 40vw  !important;
 }
 .save-changes{
   height: 3vw !important;

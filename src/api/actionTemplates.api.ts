@@ -1,11 +1,10 @@
 import { Api } from '@/api/api'
 import { useActionsStore} from "@/stores/actions.store";
-import { useDeviceTypesStore } from "@/stores/deviceTypes.store";
 import type {ActionTemplate} from "@/interfaces/actionTemplate.interface";
+import {deviceTypes} from "@/utils/constants";
 
 export class ActionTemplatesApi {
     static async reloadActionTypes() : Promise<void> {
-        const { deviceTypes } = useDeviceTypesStore()
         const { loadActionType, clearActionTypes } = useActionsStore();
         clearActionTypes();
 
