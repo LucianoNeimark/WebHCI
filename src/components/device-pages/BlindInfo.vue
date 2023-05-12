@@ -2,9 +2,10 @@
 <script setup lang="ts">
 import {type PropType} from "vue";
 import { type Blind, openBlind, changeBlindLevel, closeBlind} from "@/interfaces/models/blind";
-import { reactive, computed } from "vue";
-import CardSlider from "@/components/custom-inputs/CardSlider.vue";
-
+import { reactive, inject, type Ref, watch, computed } from "vue";
+import { CONSTANTS } from "@/utils/constants";
+import {useDevicesStore} from "@/stores/device.store";
+import type { Event } from "@/interfaces/event.interface";
 const props = defineProps({
   device: {
     type: Object as PropType<Blind>,
@@ -19,27 +20,30 @@ const updateLevel = async () => {
 }
 
 const open = async () => {
-  blind.state.currentLevel = blind.state.level
   await openBlind(blind)
 }
 
 const close = async () => {
-  // blind.state.currentLevel = 0
   await closeBlind(blind)
 }
 
+const { devices } = useDevicesStore()
+
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+
+watch(() => MSG?.value, async (newMSG) => {
+    if (newMSG && newMSG.deviceId === blind.id)
+        ({...blind.state} = {...(devices.items.get(blind.id) as Blind)?.state} || {...blind.state})
+})
 
 </script>
 
 <template>
   <VCard color="primary" rounded="xl">
     <VContainer>
-      <VRow class="mt-3 mb-10 buttons-align justify-space-evenly">
+      <VRow class="mt-3 mb-5 buttons-align justify-space-evenly">
         <VBtn rounded="xl" class="btn-large" @click="open"><VIcon icon="mdi-blinds-horizontal" size="4.5vw"/></VBtn>
         <VBtn rounded="xl" class="btn-large" @click="close"><VIcon icon="mdi-blinds-horizontal-closed" size="4.5vw"/></VBtn>
-      </VRow>
-      <VRow>
-        <VProgressLinear :model-value="blind.state.currentLevel"></VProgressLinear>
       </VRow>
       <VRow>
         <VSlider
@@ -54,6 +58,9 @@ const close = async () => {
             thumb-color="white"
             append-icon="mdi-blinds"
         />
+      </VRow>
+      <VRow class="mx-4 mb-5">
+        <VProgressLinear :model-value="blind.state.currentLevel"></VProgressLinear>
       </VRow>
     </VContainer>
   </VCard>
