@@ -33,6 +33,8 @@
 /*    !*padding: 0 2rem;*!*/
 /*  }*/
 /*}*/
+
+@import "variables.scss";
 .bold {
     font-weight: bold;
 }
@@ -78,4 +80,14 @@
 }
 .required label::after {
     content: "*";
+}
+.v-breadcrumbs-item {
+    display: inline-block;
+    white-space: nowrap;
+}
+.v-breadcrumbs-item:not(.v-breadcrumbs-item--link):not(:only-child) {
+    color: $secondary;
+}
+.email-link {
+    color: $tertiary;
 }

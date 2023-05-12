@@ -81,7 +81,7 @@ onMounted(async () => {
             <VCol>
                 <VRow>
                     <VBtn class="mb-3" :disabled="goToButtonDisabled" :to="`/rooms/${device.value.room?.id}`">
-                        Ir a la habitacion
+                        Ir a la habitación
                         <VIcon>mdi-arrow-right</VIcon>
                     </VBtn>
                 </VRow>
@@ -102,11 +102,6 @@ onMounted(async () => {
         </VRow>
         <VRow>
             <VExpansionPanels multiple class="ma-5">
-                <VExpansionPanel>
-                    <VExpansionPanelTitle>Consumo electrico</VExpansionPanelTitle>
-                    <VExpansionPanelText>
-                    </VExpansionPanelText>
-                </VExpansionPanel>
                 <VExpansionPanel>
                     <VExpansionPanelTitle>Historial de acciones</VExpansionPanelTitle>
                     <VExpansionPanelText>

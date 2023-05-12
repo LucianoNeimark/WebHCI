@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import {computed} from "vue";
 import {useRoute} from "vue-router";
 
 
 const route = useRoute()
 
 
-const search = ref('')
-
 const items = computed(() => {
     const defaultFunc = () => ""
     const title = (route.meta.name || defaultFunc)()
-    return [...(route.meta.ancestors || []), { title: title, disabled: true }]
+    return [...(route.meta.ancestors || []), { title: title, disabled: false }]
 })
 </script>
 
@@ -23,17 +21,6 @@ const items = computed(() => {
                 <VIcon icon="mdi-chevron-right"></VIcon>
             </template>
         </VBreadcrumbs>
-
-        <VSpacer></Vspacer>
-            <VTextField
-                v-model="search"
-                append-icon="mdi-magnify"
-                label="Buscar"
-                single-line
-                hide-details
-                class="mr-7"
-            >
-            </VTextField>
     </VToolbar>
 </template>
 

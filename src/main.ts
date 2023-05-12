@@ -12,7 +12,7 @@ import {defaultTheme} from "@/themes";
 import router from '@/router'
 import locale from '@/locales/es'
 
-import './assets/main.css'
+import '@/assets/main.scss'
 import {VDataTableServer} from "vuetify/labs/VDataTable";
 import { createI18n, useI18n }  from 'vue-i18n'
 import { createVueI18nAdapter } from 'vuetify/locale/adapters/vue-i18n'
@@ -20,7 +20,7 @@ import { createVueI18nAdapter } from 'vuetify/locale/adapters/vue-i18n'
 //import ToastPlugin from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 
-const i18n = new createI18n({
+const i18n = createI18n({
     legacy: false,
     locale: 'es',
     fallbackLocale: 'en',

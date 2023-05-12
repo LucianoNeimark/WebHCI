@@ -8,7 +8,7 @@
         dark
     >
             <VCol cols="4">
-                Contactenos por <a>smart@itba.edu.ar</a>
+                Contactenos por <a href="mailto:smart@itba.edu.ar" class="email-link">smart@itba.edu.ar</a>
             </VCol>
             <VCol class="copyright" cols="4">
                 &copy; {{ new Date().getFullYear() }} Copyright — Grupo 2
