@@ -15,6 +15,24 @@ export interface Oven extends Device {
     };
 }
 
+export enum convModes {
+    Normal = 'normal',
+    Eco = 'eco',
+    Off = 'off'
+}
+
+export enum grillModes {
+    Large = 'large',
+    Eco = 'eco',
+    Off = 'off'
+}
+export enum heatModes{
+    Conventional = 'conventional',
+    Bottom = 'bottom',
+    Top = 'top'
+}
+
+
 export const toggleOven = (oven: Oven) => {
     oven.state.status = oven.state.status === 'on' ? 'off' : 'on';
 }
