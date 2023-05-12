@@ -20,7 +20,8 @@ export const CONSTANTS = {
     LATINA: 'latina',
     POP: 'pop',
     ROCK: 'rock'
-  }
+  },
+  EVENT : 'event'
 }
 
 export const deviceTypes = {

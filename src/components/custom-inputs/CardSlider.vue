@@ -36,7 +36,6 @@ const value = computed({
             width
     />
 </template>
-
 <style scoped>
 
 </style>

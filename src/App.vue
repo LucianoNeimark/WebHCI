@@ -3,6 +3,7 @@
   import VerticalNavBar from "@/components/VerticalNavBar.vue"
   import Footer from "@/components/StaticFooter.vue"
   import StaticHeader from "@/components/StaticHeader.vue";
+  import EventsHandler from './EventsHandler.vue';
 </script>
 
 <template>
@@ -11,7 +12,7 @@
                 <VerticalNavBar/>
                 <VMain>
                     <StaticHeader/>
-                    <router-view/>
+                    <EventsHandler/>                    
                 </VMain>
                 <Footer/>
             </VLayout>

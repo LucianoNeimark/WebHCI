@@ -4,7 +4,9 @@ import {computed, type PropType, reactive, watch} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
 import { toggleLamp, type Lamp, changeLampStatus } from "@/interfaces/models/lamp";
-
+import { inject, type Ref, onMounted } from "vue";
+import { CONSTANTS } from "@/utils/constants";
+import type { Event } from "@/interfaces/event.interface";
 const props = defineProps({
     device: {
         type: Object as PropType<Lamp>,
@@ -17,6 +19,19 @@ const power = computed(() => lamp.state.status === 'on')
 
 watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
     if (newStatus !== oldStatus) await changeLampStatus(lamp, newStatus)
+})
+
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+
+watch(() => MSG?.value, (newMSG) => {
+    if (newMSG) {
+        const msg = newMSG as Event
+        console.log(msg as Event, (msg as Event).deviceId, msg.event, lamp.id)   
+        if (newMSG.deviceId === lamp.id){
+            console.log("me apagaron")
+            lamp.state.status = newMSG.args.status
+        }
+    }
 })
 
 </script>
