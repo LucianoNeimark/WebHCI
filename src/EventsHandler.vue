@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, provide, reactive } from 'vue'
+import { ref, provide } from 'vue'
 import { DevicesApi } from '@/api/devices.api'
 import { CONSTANTS } from '@/utils/constants'
 import type { Event } from '@/interfaces/event.interface'
 import {useDevicesStore} from "@/stores/device.store";
+import {Api} from "@/api/api";
 
-const baseUrl = 'http://127.0.0.1:8080/api/devices'
-const source = new EventSource(`${baseUrl}/events`)
+const source = new EventSource(Api.getDevicesEventsUrl())
 const MSG = ref<Event>()
 
 const { devices } = useDevicesStore()
@@ -18,14 +18,7 @@ source.onmessage = async (event) => {
         MSG.value = msg
     }
 } 
-
-const clearMSG = () => {
-    MSG.value = undefined
-    DevicesApi.reloadDevices()
-}
-
 provide(CONSTANTS.EVENT, MSG)
-
 </script>
 
 <template>

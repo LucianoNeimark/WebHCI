@@ -5,6 +5,10 @@ export class Api {
         return `${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT}/api` 
     }
 
+    static getDevicesEventsUrl() {
+        return `${Api.baseUrl}/devices/events`
+    }
+
     static fetchApi(path: string | URL, init = {}): Promise<Response> {
         try {
             return fetch(new URL(`${Api.baseUrl}${path}`), init)
