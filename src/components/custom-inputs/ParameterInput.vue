@@ -2,7 +2,8 @@
 import type {PropType} from "vue";
 import type {Parameter} from "@/interfaces/actionParam.interface";
 import {computed, ref, watch} from "vue";
-import {minMaxRule, requiredRule} from "@/utils/rules";
+import {colorRule, minMaxRule, requiredRule} from "@/utils/rules";
+import {isColor} from "@/utils/utils";
 const props = defineProps({
     param: {
        type : Object as PropType<Parameter>,
@@ -15,16 +16,35 @@ const props = defineProps({
 const emit = defineEmits(["update:value"])
 
 const paramType = computed<string>(() => {
-    return props.param.type === "integer"? "number" : props.param.type
+    if (props.param.type === "integer") return "number"
+    if (props.param.name === "color") return "color"
+    return props.param.type
 })
 
 const rules : ((v:string)=>boolean|string)[] = [requiredRule]
 if (paramType.value === "number" && props.param.minValue !== undefined && props.param.maxValue !== undefined){
     rules.push(minMaxRule(Number(props.param.minValue), Number(props.param.maxValue)))
 }
+if (paramType.value === "color"){
+    rules.push(colorRule)
+}
+
 const newValue = ref(props.value)
-watch(newValue, () => {
-    emit("update:value", newValue.value)
+if (paramType.value === "color") {
+    if (isColor(newValue.value as string))
+        newValue.value = "#" + (props.value as string)
+    else {
+        newValue.value = "#000000" as string
+        emit("update:value", (newValue.value as string).slice(1).toUpperCase())
+    }
+}
+
+watch(newValue, (value) => {
+    if (paramType.value === "color" && (value as string).startsWith("#")) {
+        emit("update:value", (value as string).slice(1).toUpperCase())
+    } else {
+        emit("update:value", newValue.value)
+    }
 })
 </script>
 <template>

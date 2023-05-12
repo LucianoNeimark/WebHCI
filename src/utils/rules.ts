@@ -2,6 +2,8 @@ export const requiredRule = (v : string) => !!v || 'Este campo es obligatorio'
 export const minMaxRule = (min : number, max : number) => {
     return (v : string) => (Number(v) >= min && Number(v) <= max) || `El campo debe estar entre ${min} y ${max}`
 }
+
+export const colorRule = (v : string) => /^#[0-9A-F]{6}$/i.test(v) || 'El campo debe ser un color hexadecimal'
 export const validNameRules = [
     requiredRule,
     (v : string) => (v.length >=3 && v.length <= 60) || 'El campo debe tener entre de 3 y 60 caracteres',
