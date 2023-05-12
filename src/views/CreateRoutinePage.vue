@@ -8,21 +8,29 @@ import type {Action} from "@/interfaces/action.interface";
 import {RoutinesApi} from "@/api/routines.api";
 
 
-const actions = reactive<Array<Action | undefined>>([undefined])
 const name = ref("")
+const actionId = ref(1)
+const actions = reactive<{ id : Number, value : Action | undefined}[]>([{id : actionId.value, action : undefined}])
 const addAction = () => {
-  actions.push(undefined)
+    actionId.value++
+    actions.push({id : actionId.value, value : undefined})
 }
 
 const routineIsValid = computed<Boolean>(() : Boolean => {
-    return !!(name.value) && actions.length > 0 && !actions.some(action => action === undefined)
+    return !!(name.value) && actions.length > 0 && !actions.some(action => action.value === undefined)
+})
+
+const saveChangesColor = computed(() => {
+    return routineIsValid.value ? "secondary" : "gray"
 })
 const saveChanges = async () => {
-    if(routineIsValid.value)
-      await RoutinesApi.addRoutine(name.value, actions as Action[])
+    if(routineIsValid.value) {
+        const actionList = actions.map(action => action.value) as Action[]
+        await RoutinesApi.addRoutine(name.value, actionList)
+    }
 }
 const onActionupdate = (action : Action, index : number) => {
-  actions[index] = Object.assign({}, {
+  actions[index].value = Object.assign({}, {
     device : action.device,
     actionName : action.actionName,
     params : Array.from(action.params)
@@ -38,17 +46,18 @@ onMounted(async () => {
 <template>
   <VContainer class="mx-0">
     <VRow class="align-start ma-3">
-      <VTextField class="name-input" v-model="name" autofocus placeholder="Nueva Rutina" label="nombre" variant="solo-filled"></VTextField>
+      <VTextField class="name-input required" v-model="name" autofocus placeholder="Nueva Rutina" label="nombre" variant="solo-filled" hide-details="auto"/>
       <VSpacer/>
-      <VBtn class="save-changes" rounded="xl" @click="saveChanges" :disabled="!routineIsValid">
-          <VIcon icon="mdi-content-save" class="mx-2"/>
-          Guardar Cambios
+      <VBtn class="save-changes" rounded="xl" @click="saveChanges" :disabled="!routineIsValid" :color="saveChangesColor">
+          <VIcon icon="mdi-plus" class="mx-2"/>
+          <span class="mx-2">Agregar Rutina</span>
       </VBtn>
     </VRow>
-    <ActionCard class="ma-2"
-      v-for="(action, index) in actions" :key="index" :action="action" @update:action="onActionupdate($event, index)"
-    />
-
+    <TransitionGroup name="action-card-list" tag="div">
+      <ActionCard class="ma-2"
+        v-for="({id, value}, index) in actions" :key="id" :action="value" @update:action="onActionupdate($event, index)" @delete:action="actions.splice(index, 1)"
+      />
+    </TransitionGroup>
     <VContainer class="d-flex justify-center align-end">
       <VBtn rounded="xl" class="add-action-btn" @click="addAction">Agregar Acción</VBtn>
     </VContainer>
@@ -64,6 +73,18 @@ onMounted(async () => {
   height: 3vw !important;
 }
 .add-action-btn{
-  min-height: 4vw !important;
+  min-height: 3vw !important;
+}
+.action-card-list-enter-active,
+.action-card-list-leave-active {
+    transition: all 0.75s ease;
+}
+.action-card-list-enter-from{
+    opacity: 0;
+    transform: translateY(3vw);
+}
+.action-card-list-leave-to {
+    opacity: 0;
+    transform: translateX(10vw);
 }
 </style>
