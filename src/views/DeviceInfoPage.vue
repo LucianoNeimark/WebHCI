@@ -3,7 +3,7 @@ import ActionsHistoryTable from "@/components/tables/ActionsHistoryTable.vue";
 import { useDevicesStore } from '@/stores/device.store';
 import {useRoute, useRouter} from 'vue-router';
 import { useDeviceTypesStore } from '@/stores/deviceTypes.store';
-import {computed, onMounted, reactive, ref, watchEffect} from 'vue';
+import {computed, onMounted, reactive, ref, watch, watchEffect} from 'vue';
 import type { Device } from '@/interfaces/device.interface';
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
 import {DevicesApi} from "@/api/devices.api";
@@ -13,20 +13,23 @@ import {RoomsApi} from "@/api/rooms.api";
 import type {Room} from "@/interfaces/room.interface";
 
 const route = useRoute()
-const { devices, removeDevice } = useDevicesStore();
+const { devices, removeDevice, setCurrentDevice, currentDevice } = useDevicesStore();
 const { deviceTypes } = useDeviceTypesStore()
 const router = useRouter()
 
 const device = reactive({
-    value : <Device> devices.items.get(<string> route.params.id)
+    //value : <Device> devices.items.get(<string> route.params.id)
+    value: {} as Device
 })
 
-watchEffect(async () => await DevicesApi.updateDevice(device.value))
+watch(() => device.value.name, async () => {
+    if (device.value?.name) await DevicesApi.updateDevice(device.value)
+})
 
 const deleteDevice = async () => {
     await DevicesApi.deleteDevice(device.value.id)
     removeDevice(device.value.id)
-    router.push('/devices')
+    await router.push('/devices')
 }
 
 const showConfirmationModal = ref(false)
@@ -53,7 +56,9 @@ const changeRoom = async () => {
         }
     }
     await DevicesApi.reloadDevices()
-    device.value = <Device> devices.items.get(<string> route.params.id)
+    //device.value = <Device> devices.items.get(<string> route.params.id)
+    setCurrentDevice(<string> route.params.id)
+    device.value = currentDevice.value
 }
 
 const goToButtonDisabled = computed(() => changingRoom.value || device.value.room === undefined )
@@ -61,11 +66,13 @@ const goToButtonDisabled = computed(() => changingRoom.value || device.value.roo
 onMounted(async () => {
         await DevicesApi.reloadDevices()
         await RoomsApi.reloadRooms()
+        setCurrentDevice(<string> route.params.id)
+        device.value = currentDevice.value
 })
 </script>
 
 <template>
-    <VCol>
+    <VCol v-if="device.value.id">
         <VRow>
             <EditableLabel v-model:value="device.value.name" :icon="deviceTypes[device.value.type.id].icon"/>
             <VIcon icon="mdi-delete-circle" class="delete-button ml-5" @click="promptModal"/>

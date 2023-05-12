@@ -20,12 +20,13 @@ const roomDevices = reactive<{devices: Device[]}>({
 })
 
 const router = useRouter()
-const { rooms, removeRoom } = useRoomsStore()
+const { rooms, removeRoom, setCurrentRoom, currentRoom } = useRoomsStore()
 const { getDevicesGroupByRoom } = useDevicesStore()
 const { deviceTypes } = useDeviceTypesStore()
 
 const myRoomData = reactive({room:
-        <Room> rooms.items.get(<string> route.params.id) || {id: '', name: ''}
+        //<Room> rooms.items.get(<string> route.params.id) || {id: '', name: ''}
+        <Room> {id: '', name: ''}
 })
 
 onMounted(async () => await load())
@@ -33,8 +34,10 @@ onMounted(async () => await load())
 const load = async () => {
     await RoomsApi.reloadRooms() // Ver si conviene hacerlo mas eficiente
     await DevicesApi.reloadDevices() // Ver si conviene hacerlo mas eficiente
+    setCurrentRoom(<string> route.params.id)
     roomDevices.devices = getDevicesGroupByRoom().get(<string> route.params.id) || [];
-    myRoomData.room = <Room> rooms.items.get(<string> route.params.id)
+    //myRoomData.room = <Room> rooms.items.get(<string> route.params.id)
+    myRoomData.room = currentRoom.value
 }
 
 const showConfirmationModal = ref(false)
@@ -63,7 +66,7 @@ const deleteRoom = () => {
         </VRow>
         <VRow class="ml-2 align-content-center">
             <!-- TODO: Sacar IDs y names para usar device en todos-->
-            <component v-for="device in roomDevices.devices" :key="device.id" :device="device" :id="device.id" :name="device.name"
+            <component v-for="device in roomDevices.devices" :key="device.id" :device="device"
                        :is="deviceTypes[device.type.id].card"/>
             <AddCard @click="showAddDeviceModal = true"/>
         </VRow>

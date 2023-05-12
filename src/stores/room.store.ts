@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
+import {reactive, ref} from 'vue'
 import type { Room } from "@/interfaces/room.interface";
 
 export const useRoomsStore = defineStore('rooms', () => {
     const rooms = reactive<{items: Map<string, Room>}>({
         items: new Map<string, Room>()
     })
+
+    const currentRoom = reactive<{value: Room}>({value: {} as Room})
 
     const loadRoom = (room : Room) => {
         rooms.items.set(room.id, room)
@@ -19,5 +21,9 @@ export const useRoomsStore = defineStore('rooms', () => {
         rooms.items.delete(roomId)
     }
 
-    return { rooms, loadRoom, clearRooms, removeRoom }
+    const setCurrentRoom = (roomId: string) => {
+        currentRoom.value = rooms.items.get(roomId) as Room
+    }
+
+    return { rooms, loadRoom, clearRooms, removeRoom, setCurrentRoom, currentRoom }
 })

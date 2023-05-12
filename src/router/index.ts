@@ -5,6 +5,8 @@ import RoomsPage from "@/views/RoomsPage.vue"
 import RoutinesPage from "@/views/RoutinesPage.vue"
 import DeviceInfoPage from "@/views/DeviceInfoPage.vue";
 import RoomInfoPage from "@/views/RoomInfoPage.vue";
+import {useRoomsStore} from "@/stores/room.store";
+import {useDevicesStore} from "@/stores/device.store";
 
 
 const router = createRouter({
@@ -12,33 +14,57 @@ const router = createRouter({
   routes: [
       {
           path: '/',
-          name: 'Pagina Principal',
-          component: MainPage
+          name: 'Pagina principal',
+          component: MainPage,
+          meta: {
+              name: () => "Página principal",
+              ancestors: []
+          }
       },
       {
           path: '/devices',
           name: 'Dispositivos',
-          component: DevicesPage
+          component: DevicesPage,
+          meta: {
+              name: () => "Dispositivos",
+              ancestors: []
+          }
       },
       {
           path: '/devices/:id',
           name: 'Dispositivo',
-          component: DeviceInfoPage
+          component: DeviceInfoPage,
+          meta: {
+              name: () => useDevicesStore()?.currentDevice?.value.name || "Dispositivo",
+              ancestors: [{ title: 'Dispositivos', href: '/devices', disabled: false }]
+          }
       },
       {
           path: '/routines',
           name: 'Rutinas',
-          component: RoutinesPage
+          component: RoutinesPage,
+          meta: {
+              name: () => "Rutinas",
+              ancestors: []
+          }
       },
       {
           path: '/rooms',
           name: 'Habitaciones',
-          component: RoomsPage
+          component: RoomsPage,
+          meta: {
+              name: () => "Habitaciones",
+              ancestors: []
+          }
       },
       {
           path: '/rooms/:id',
-          name: 'Habitacion',
-          component: RoomInfoPage
+          name: 'Habitación',
+          component: RoomInfoPage,
+          meta: {
+              name: () => useRoomsStore()?.currentRoom?.value.name || "Habitación",
+              ancestors: [{ title: 'Habitaciones', href: '/rooms', disabled: false }]
+          }
       }
   ]
 })

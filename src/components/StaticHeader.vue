@@ -8,9 +8,11 @@ const route = useRoute()
 
 const search = ref('')
 
-const items = computed(() =>
-    [{ title: route.name, disabled: false, href: route.path }]
-)
+const items = computed(() => {
+    const defaultFunc = () => ""
+    const title = (route.meta.name || defaultFunc)()
+    return [...(route.meta.ancestors || []), { title: title, disabled: true }]
+})
 </script>
 
 

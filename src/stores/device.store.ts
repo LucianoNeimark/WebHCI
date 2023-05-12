@@ -6,7 +6,9 @@ import { CONSTANTS } from '@/utils/constants'
 export const useDevicesStore = defineStore('devices', () => {
   const devices = reactive<{items: Map<string, Device>}>({
     items: new Map<string, Device>() 
-  }) 
+  })
+
+  const currentDevice = reactive<{value: Device}>({value: {} as Device})
 
   const loadDevice = (device : Device) => {
     devices.items.set(device.id, device)
@@ -45,5 +47,19 @@ export const useDevicesStore = defineStore('devices', () => {
       return [...devices.items.values()].sort((a, b) => b.meta.qtyUses - a.meta.qtyUses).slice(0, count);
   }
 
-  return { devices, loadDevice, removeDevice, getDevicesGroupByType, clearDevices, getTopDevices, getDevicesGroupByRoom }
+  const setCurrentDevice = (deviceId: string) => {
+    currentDevice.value = devices.items.get(deviceId) as Device
+  }
+
+  return {
+      devices,
+      currentDevice,
+      setCurrentDevice,
+      loadDevice,
+      removeDevice,
+      getDevicesGroupByType,
+      clearDevices,
+      getTopDevices,
+      getDevicesGroupByRoom
+  }
 })
