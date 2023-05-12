@@ -51,6 +51,7 @@ const type = computed(() => show.value ? 'text' : 'password')
                 :rules="rules"
                 autocomplete="on"
                 clearable
+                class="required"
                 @click:append="show = !show"
                 outlined/>
 </template>

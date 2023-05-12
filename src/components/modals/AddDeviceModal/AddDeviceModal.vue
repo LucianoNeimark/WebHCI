@@ -95,7 +95,9 @@ import {computed, type PropType, ref} from "vue";
                 <VContainer>
                     <VRow>
                         <VCol cols="6">
-                            <VRow class="mb-2">Nombre</VRow>
+                            <VRow class="mb-2 required">
+                                <label>Nombre</label>
+                            </VRow>
                             <VRow>
                                 <VTextField
                                         v-model="name"
@@ -108,14 +110,16 @@ import {computed, type PropType, ref} from "vue";
                                         bg-color="lightSurface"
                                 ></VTextField>
                             </VRow>
-                            <VRow  class="mb-2">Habitacion</VRow>
+                            <VRow  class="mb-2">
+                                <label>Habitacion</label>
+                            </VRow>
                             <VRow>
                                 <RoomComboBox v-model="room"/>
                             </VRow>
                         </VCol>
                         <VCol cols="6" class="justify-center">
-                            <VRow>
-                                <span class="ml-6">Tipo de dispositivo</span>
+                            <VRow class="required">
+                                <label class="ml-6">Tipo de dispositivo</label>
                             </VRow>
                             <VRow>
                                 <DeviceTypePicker :selectedTypeId="type" @pick="(value: string) => type = value"/>

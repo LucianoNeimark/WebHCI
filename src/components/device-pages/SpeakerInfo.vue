@@ -58,7 +58,7 @@ const volumeDown = () => {
   updateVolume()
 }
 
-const genres = ref(Object.values(CONSTANTS.MUSIC_GENRES))
+const genres = Object.values(CONSTANTS.MUSIC_GENRES)
 
 
 watch(() => speaker.device.state.genre, async (newGenre, oldGenre) => {
@@ -128,17 +128,15 @@ const progress = computed(() => {
               <VBtn rounded="xl" size="x-small" color="lightSurface" stacked @click="volumeDown">
                 <VIcon icon="mdi:mdi-minus" size="2vw"></VIcon>
               </VBtn> 
-              <!-- TODO: Ver de cambiara v-model-->
               <CardSlider class="slider-position" v-model:value="speaker.device.state.volume" :min="0" :max="10" icon="mdi-volume-high"
                           @updateSlider="updateVolume"/>
-                  
               <VBtn rounded="xl" size="x-small" color="lightSurface" stacked @click="volumeUp">
                 <VIcon icon="mdi:mdi-plus" size="2vw"></VIcon>
               </VBtn>
             </VRow>
-            <VSelect label="Género" v-model="speaker.device.state.genre" :items="genres"/>
+            <VSelect label="Género" v-model="speaker.device.state.genre" :item-title="item => $t(item as string)"  :item-value="item => item" :items="genres"/>
             <VList rounded="xl" v-if="!stopped">
-                <VListItem v-for="song in playlist">
+                <VListItem v-for="song in playlist" :key="song">
                   <VListItemTitle :class="song.title === speaker.device?.state?.song?.title ? 'bold' : ''">{{ song.title }} </VListItemTitle>
                 </VListItem>
             </VList>  

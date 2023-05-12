@@ -9,7 +9,7 @@ import type { Device } from '@/interfaces/device.interface'
 import type { Routine } from "@/interfaces/routine.interface";
 import RoutineCard from "@/components/cards/RoutineCard.vue";
 import {deviceTypes} from "@/utils/constants";
-import { useRoutinesStore } from '../stores/routine.store'
+import { useRoutinesStore } from '@/stores/routine.store'
 
 const topDevices = reactive<{devices: Device[]}>({
   devices: []
