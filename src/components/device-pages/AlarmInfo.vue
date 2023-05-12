@@ -65,9 +65,6 @@ const rules = [
     <VCard class="pa-3" color="primary" rounded="xl">
         <VContainer class="container" >
             <VCol class="d-flex flex-column" v-if="!changingCode">
-                    <VRow class="flex-row justify-center mb-2">
-                        <ModeToggle :icons="alarmIcons" :toggle="toggle" @updateToggle="updateMode"/>
-                    </VRow>
                     <VRow class="-center pa-5 mb-1">
                         <VTextField v-model="code"
                                     :error="manualError"
@@ -77,6 +74,9 @@ const rules = [
                                     hide-details="auto"
                                     :rules="rules"
                                     bg-color="surface"/>
+                    </VRow>
+                    <VRow class="flex-row justify-center mb-6">
+                        <ModeToggle :icons="alarmIcons" :toggle="toggle" @updateToggle="updateMode"/>
                     </VRow>
                     <VRow justify="center">
                         <VBtn @click="changingCode = true" color="secondary">Ingresar nuevo código</VBtn>
