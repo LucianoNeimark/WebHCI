@@ -17,18 +17,25 @@ const props = defineProps({
 const $toast = useToast()
 
 const alarm = reactive(props.device)
+const code = ref('')
 
 const toggle = computed(() => Object.values(alarmType).indexOf(alarm.state.status))
 
 const updateMode = async (index: number) => {
     const newState = Object.values(alarmType)[index]
-    const success = await changeStatusAlarm(alarm, newState)
+    const success = await changeStatusAlarm(alarm, newState, code.value)
     if (success) {
         alarm.state.status = newState
     } else {
         $toast.error('El código ingresado es incorrecto', {position: 'top-right'})
     }
 }
+
+const rules = [
+    (v: string) => !!v || 'El código es requerido',
+    (v: string) => (v && v.length === 4) || 'El código debe tener 4 dígitos',
+    (v: string) => (v && !isNaN(Number(v))) || 'El código debe ser numérico'
+];
 
 </script>
 
@@ -40,11 +47,12 @@ const updateMode = async (index: number) => {
                 <ModeToggle :icons="alarmIcons" :toggle="toggle" @updateToggle="updateMode"/>
             </VRow>
             <VRow class="flex-row justify-center mt-5 mb-1">
-                  <VTextField v-model="alarm.code"
+                  <VTextField v-model="code"
                               label="Código"
                               placeholder="1234"
                               type="password"
                               bg-color="surface"
+                              :rules="rules"
                               outlined/>
             </VRow>
         </VCol>

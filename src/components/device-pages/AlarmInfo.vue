@@ -16,17 +16,22 @@ const $toast = useToast()
 
 const changingCode = ref(false)
 const alarm = reactive(props.device)
+const code = ref()
 const oldCode = ref()
 const newCode = ref()
+const valid = ref(false)
+const manualError = ref(false)
 
 const toggle = computed(() => Object.values(alarmType).indexOf(alarm.state.status))
 
 const updateMode = async (index: number) => {
     const newState = Object.values(alarmType)[index]
-    const success = await changeStatusAlarm(alarm, newState)
+    const success = await changeStatusAlarm(alarm, newState, code.value)
     if (success) {
+        manualError.value = false;
         alarm.state.status = newState
     } else {
+        manualError.value = true;
         $toast.error('El código ingresado es incorrecto', {position: 'top-right'})
     }
 }
@@ -34,7 +39,7 @@ const updateMode = async (index: number) => {
 const clear = () => {
     oldCode.value = ''
     newCode.value = ''
-    alarm.code = ''
+    code.value = ''
     changingCode.value = false
 }
 
@@ -48,48 +53,62 @@ const done = async () => {
     }
 }
 
+const rules = [
+    (v: string) => !!v || 'El código es requerido',
+    (v: string) => (v && v.length === 4) || 'El código debe tener 4 dígitos',
+    (v: string) => (v && !isNaN(Number(v))) || 'El código debe ser numérico'
+];
+
 </script>
 
 <template>
     <VCard class="pa-3" color="primary" rounded="xl">
         <VContainer class="container" >
             <VCol class="d-flex flex-column" v-if="!changingCode">
-                <VRow class="flex-row justify-center mb-2">
-                    <ModeToggle :icons="alarmIcons" :toggle="toggle" @updateToggle="updateMode"/>
-                </VRow>
-                <VRow class="-center pa-5 mb-1">
-                    <VTextField v-model="alarm.code"
-                                label="Código"
-                                placeholder="1234"
-                                type="password"
-                                hide-details="auto"
-                                bg-color="surface"/>
-                </VRow>
-                <VRow justify="center">
-                    <VBtn @click="changingCode = true" color="secondary">Ingresar nuevo código</VBtn>
-                </VRow>
+                    <VRow class="flex-row justify-center mb-2">
+                        <ModeToggle :icons="alarmIcons" :toggle="toggle" @updateToggle="updateMode"/>
+                    </VRow>
+                    <VRow class="-center pa-5 mb-1">
+                        <VTextField v-model="code"
+                                    :error="manualError"
+                                    label="Código"
+                                    placeholder="1234"
+                                    type="password"
+                                    hide-details="auto"
+                                    :rules="rules"
+                                    bg-color="surface"/>
+                    </VRow>
+                    <VRow justify="center">
+                        <VBtn @click="changingCode = true" color="secondary">Ingresar nuevo código</VBtn>
+                    </VRow>
             </VCol>
             <VCol class="d-flex flex-column" v-if="changingCode">
-                <VRow class="-center pa-5 mb-1">
-                    <VTextField v-model="oldCode"
-                                label="Código anterior"
-                                placeholder="1234"
-                                type="password"
-                                hide-details="auto"
-                                bg-color="surface"/>
-                </VRow>
-                <VRow class="-center pa-5 mb-1">
-                    <VTextField v-model="newCode"
-                                label="Nuevo código"
-                                placeholder="1234"
-                                type="password"
-                                hide-details="auto"
-                                bg-color="surface"/>
-                </VRow>
-                <VRow class="button-panel">
-                    <VBtn @click="clear" color="secondary">Volver</VBtn>
-                    <VBtn @click="done" color="secondary">Actualizar</VBtn>
-                </VRow>
+                <VForm v-model="valid">
+                    <VRow class="-center pa-5 mb-1">
+                        <VTextField v-model="oldCode"
+                                    class="required"
+                                    label="Código anterior"
+                                    placeholder="1234"
+                                    type="password"
+                                    hide-details="auto"
+                                    :rules="rules"
+                                    bg-color="surface"/>
+                    </VRow>
+                    <VRow class="-center pa-5 mb-1">
+                        <VTextField v-model="newCode"
+                                    class="required"
+                                    label="Nuevo código"
+                                    placeholder="1234"
+                                    type="password"
+                                    hide-details="auto"
+                                    :rules="rules"
+                                    bg-color="surface"/>
+                    </VRow>
+                    <VRow class="button-panel">
+                        <VBtn @click="clear" color="secondary">Volver</VBtn>
+                        <VBtn @click="done" color="secondary" :disabled="!valid">Actualizar</VBtn>
+                    </VRow>
+                </VForm>
             </VCol>
         </VContainer>
     </VCard>

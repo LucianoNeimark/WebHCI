@@ -70,3 +70,12 @@
 .v-toast {
     z-index: 100000 !important;
 }
+.v-form {
+    height: 100% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.required label::after {
+    content: "*";
+}
