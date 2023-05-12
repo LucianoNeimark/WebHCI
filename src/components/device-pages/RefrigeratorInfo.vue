@@ -1,11 +1,15 @@
 <script setup lang="ts">
 
 import FrameCard from "@/components/cards/FrameCard.vue"
-import {computed, type PropType, reactive, watch} from "vue";
+import {computed, inject, type Ref, type PropType, reactive, watch} from "vue";
 import { type Refrigerator, changeTemperatureRefrigerator, changeFreezerTemperatureRefrigerator, changeModeRefrigerator, setMode} from "@/interfaces/models/refrigerator";
 import type { Device } from '@/interfaces/models/device'
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
 import ModeToggle from "@/components/custom-inputs/ModeToggle.vue";
+import { CONSTANTS } from "@/utils/constants";
+import type { Event } from "@/interfaces/event.interface";
+import {useDevicesStore} from "@/stores/device.store";
+
 
 const props = defineProps({
     device: {
@@ -37,6 +41,14 @@ const toggle = computed(() => {
     return modes.indexOf(refrigerator.state.mode)
 })
 
+const { devices } = useDevicesStore()
+
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+
+watch(() => MSG?.value, async (newMSG) => {
+    if (newMSG && newMSG.deviceId === refrigerator.id)
+        ({...refrigerator.state} = {...(devices.items.get(refrigerator.id) as Refrigerator)?.state} || {...refrigerator.state})
+})
 
 </script>
 

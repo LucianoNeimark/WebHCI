@@ -10,6 +10,8 @@ import OvenCard from "@/components/cards/device-cards/OvenCard.vue";
 import OvenInfo from "@/components/device-pages/OvenInfo.vue";
 import DoorCard from "@/components/cards/device-cards/DoorCard.vue";
 import DoorInfo from "@/components/device-pages/DoorInfo.vue";
+import RefrigeratorCard from "@/components/cards/device-cards/RefrigeratorCard.vue";
+import RefrigeratorInfo from "@/components/device-pages/RefrigeratorInfo.vue";
 
 export const CONSTANTS = {
   NO_ROOM: 'no_room',
@@ -32,5 +34,5 @@ export const deviceTypes = {
   'mxztsyjzsrq7iaqc': { name: 'Alarma', icon: "mdi-alarm-light-outline", card: AlarmCard, info: AlarmInfo},
   'im77xxyulpegfmv8': { name: 'Horno', icon: "mdi-toaster-oven", card: OvenCard, info: OvenInfo},
   'lsf78ly0eqrjbz91': { name: 'Puerta', icon: 'mdi-door-open', card: DoorCard, info: DoorInfo},
-  'rnizejqr2di0okho': { name: 'Heladera', icon: 'mdi-fridge-outline', card: null, info: null},
+  'rnizejqr2di0okho': { name: 'Heladera', icon: 'mdi-fridge-outline', card: RefrigeratorCard, info: RefrigeratorInfo},
 }

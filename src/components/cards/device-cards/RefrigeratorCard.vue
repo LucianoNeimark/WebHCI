@@ -1,10 +1,13 @@
 <script setup lang="ts">
 
 import FrameCard from "@/components/cards/FrameCard.vue"
-import {computed, type PropType, reactive, watch} from "vue";
+import {computed, inject, type PropType, reactive, watch, type Ref} from "vue";
 import { type Refrigerator, changeTemperatureRefrigerator, changeFreezerTemperatureRefrigerator} from "@/interfaces/models/refrigerator";
 import type { Device } from '@/interfaces/models/device'
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
+import { CONSTANTS } from "@/utils/constants";
+import type { Event } from "@/interfaces/event.interface";
+import {useDevicesStore} from "@/stores/device.store";
 
 const props = defineProps({
   device: {
@@ -13,7 +16,7 @@ const props = defineProps({
   }
 })
 
-const refrigerator = reactive<Device>(props.device)
+const refrigerator = reactive<Refrigerator>(props.device)
 
 const setTemperature = async () => {
   await changeTemperatureRefrigerator(refrigerator, refrigerator.state.temperature)
@@ -22,6 +25,15 @@ const setTemperature = async () => {
 const setFreezerTemperature = async () => {
   await changeFreezerTemperatureRefrigerator(refrigerator, refrigerator.state.freezerTemperature)
 }
+
+const { devices } = useDevicesStore()
+
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+
+watch(() => MSG?.value, async (newMSG) => {
+    if (newMSG && newMSG.deviceId === refrigerator.id)
+        ({...refrigerator.state} = {...(devices.items.get(refrigerator.id) as Refrigerator)?.state} || {...refrigerator.state})
+})
 
 
 </script>
