@@ -12,7 +12,9 @@
                 <VerticalNavBar/>
                 <VMain>
                     <StaticHeader/>
-                    <EventsHandler/>                    
+                    <EventsHandler>
+                        <RouterView/>
+                    </EventsHandler>
                 </VMain>
                 <Footer/>
             </VLayout>

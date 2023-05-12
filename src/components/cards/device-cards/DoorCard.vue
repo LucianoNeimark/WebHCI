@@ -2,7 +2,10 @@
 import FrameCard from "@/components/cards/FrameCard.vue"
 import ToggleButton from "@/components/custom-inputs/ToggleButton.vue";
 import { changeDoorLockedUnlocked, changeDoorOpenClosed, toggleLock, toggleStatus, type Door } from "@/interfaces/models/door";
-import {computed, type PropType, reactive, watch} from "vue";
+import {computed, inject, type PropType, reactive, type Ref, watch} from "vue";
+import {useDevicesStore} from "@/stores/device.store";
+import type {Event} from "@/interfaces/event.interface";
+import {CONSTANTS} from "@/utils/constants";
 
 
 const props = defineProps({
@@ -25,6 +28,12 @@ watch(() => door.state.lock, async (newStatus : string, oldStatus : string) => {
   if (newStatus!==oldStatus) await changeDoorLockedUnlocked(door, newStatus)
 })
 
+const { devices } = useDevicesStore()
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+watch(() => MSG?.value, async (newMSG) => {
+    if (newMSG && newMSG.deviceId === door.id)
+        ({...door.state} = {...(devices.items.get(door.id) as Door)?.state} || {...door.state})
+})
 </script>
 
 <template>

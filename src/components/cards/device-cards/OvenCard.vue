@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import FrameCard from "@/components/cards/FrameCard.vue"
-import {reactive} from "vue";
+import {computed, type PropType, reactive, watch, inject, type Ref} from "vue";
 import {SizesEnum} from "@/enums/enums";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
 import {type Oven, toggleOven, changeOnOf, changeOvenTemp} from "@/interfaces/models/oven"
-import { type PropType, computed, watch } from "vue"; 
+import type {Event} from "@/interfaces/event.interface";
+import {CONSTANTS} from "@/utils/constants";
+import {useDevicesStore} from "@/stores/device.store";
 
 const props = defineProps({
   device: {
@@ -26,6 +28,12 @@ const setTemperature = async () => {
   await changeOvenTemp(oven, oven.state.temperature)
 }
 
+const { devices } = useDevicesStore()
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+watch(() => MSG?.value, async (newMSG) => {
+    if (newMSG && newMSG.deviceId === oven.id)
+        ({...oven.state} = {...(devices.items.get(oven.id) as Oven)?.state} || {...oven.state})
+})
 </script>
 <template>
     <FrameCard :id="oven.id" :name="oven.name" icon="mdi-toaster-oven">

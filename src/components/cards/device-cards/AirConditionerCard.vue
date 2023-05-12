@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import FrameCard from "@/components/cards/FrameCard.vue"
-import { reactive, ref, watch, type PropType } from 'vue'
+import {reactive, watch, type PropType, inject, type Ref, computed} from 'vue'
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
 import ModeToggle from "@/components/custom-inputs/ModeToggle.vue";
 import NumericController from "@/components/custom-inputs/NumericController.vue";
 import { type AC, changeTemperature, changeOnOf, toggleAC, changeAcMode, acModes }  from "@/interfaces/models/ac"
-import { computed } from "@vue/reactivity";
+import {useDevicesStore} from "@/stores/device.store";
+import type {Event} from "@/interfaces/event.interface";
+import {CONSTANTS} from "@/utils/constants";
 
 
 const iconArray = [ "mdi-white-balance-sunny",  "mdi-snowflake", "mdi-weather-windy" ]
@@ -34,6 +36,13 @@ watch(() => ac.state.mode, async (newStatus : string, oldStatus : string) => {
 
 watch(() => ac.state.status, async (newStatus : string, oldStatus : string) => {
   if (newStatus!==oldStatus) await changeOnOf(ac, newStatus)
+})
+
+const { devices } = useDevicesStore()
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+watch(() => MSG?.value, async (newMSG) => {
+    if (newMSG && newMSG.deviceId === ac.id)
+        ({...ac.state} = {...(devices.items.get(ac.id) as AC)?.state} || {...ac.state})
 })
 
 </script>

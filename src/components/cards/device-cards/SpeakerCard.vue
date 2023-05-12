@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import FrameCard from "@/components/cards/FrameCard.vue"
 
-import {ref, computed, reactive, type PropType} from "vue";
+import {computed, reactive, type PropType, inject, type Ref, watch} from "vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
 import SpeakerPlayer from "@/components/custom-inputs/SpeakerPlayer.vue";
-import type { Device } from '@/interfaces/models/device'
 import {type Speaker, previousSongSpeaker, nextSongSpeaker, toggleSpeaker, changeVolumeSpeaker} from "@/interfaces/models/speaker";
 import {DevicesApi} from "@/api/devices.api";
+import {useDevicesStore} from "@/stores/device.store";
+import type {Event} from "@/interfaces/event.interface";
+import {CONSTANTS} from "@/utils/constants";
 
 
 const props = defineProps({
@@ -16,8 +18,7 @@ const props = defineProps({
     } 
 })
 
-const speaker = reactive<Device>(props.device)
-
+const speaker = reactive<Speaker>(props.device)
 
 const prev = async () => {
     await previousSongSpeaker(speaker)
@@ -41,9 +42,14 @@ const updateVolume = async () => {
 
 const playing = computed(() => speaker.state.status === 'playing')
 
-console.log(speaker.state.volume)
-console.log("props", props.device)
-
+const { devices } = useDevicesStore()
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+watch(() => MSG?.value, async (newMSG) => {
+    if (newMSG && newMSG.deviceId === speaker.id) {
+        console.log(speaker.state.song, (devices.items.get(speaker.id) as Speaker)?.state.song);
+        ({...speaker.state} = {...(devices.items.get(speaker.id) as Speaker)?.state} || {...speaker.state});
+    }
+})
 </script>
 <template>
     <FrameCard :id="device.id" :name="device.name" icon="mdi-volume-high">

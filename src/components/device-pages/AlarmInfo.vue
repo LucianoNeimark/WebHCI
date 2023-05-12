@@ -4,6 +4,7 @@ import ModeToggle from "@/components/custom-inputs/ModeToggle.vue";
 import {computed, type PropType, reactive, ref} from "vue";
 import {type Alarm, alarmIcons, alarmType, changeSecurityCode, changeStatusAlarm} from "@/interfaces/models/alarm";
 import {useToast} from "vue-toast-notification";
+import PasswordInput from "@/components/custom-inputs/PasswordInput.vue";
 
 const props = defineProps({
     device: {
@@ -41,6 +42,7 @@ const clear = () => {
     newCode.value = ''
     code.value = ''
     changingCode.value = false
+    manualError.value = false
 }
 
 const done = async () => {
@@ -52,13 +54,6 @@ const done = async () => {
       $toast.error('El código anterior es incorrecto', {position: 'top-right'})
     }
 }
-
-const rules = [
-    (v: string) => !!v || 'El código es requerido',
-    (v: string) => (v && v.length === 4) || 'El código debe tener 4 dígitos',
-    (v: string) => (v && !isNaN(Number(v))) || 'El código debe ser numérico'
-];
-
 </script>
 
 <template>
@@ -66,16 +61,8 @@ const rules = [
         <VContainer class="container" >
             <VCol class="d-flex flex-column" v-if="!changingCode">
                 <VForm>
-                    <VRow class="-center pa-5 mb-1">
-                        <VTextField v-model="code"
-                                    :error="manualError"
-                                    label="Código"
-                                    placeholder="1234"
-                                    type="password"
-                                    hide-details="auto"
-                                    :rules="rules"
-                                    autocomplete="on"
-                                    bg-color="surface"/>
+                    <VRow class="-center pa-5">
+                        <PasswordInput v-model:password="code" :error="manualError"/>
                     </VRow>
                     <VRow class="flex-row justify-center mb-6">
                         <ModeToggle :icons="alarmIcons" :toggle="toggle" @updateToggle="updateMode"/>
@@ -88,26 +75,10 @@ const rules = [
             <VCol class="d-flex flex-column" v-if="changingCode">
                 <VForm v-model="valid">
                     <VRow class="-center pa-5 mb-1">
-                        <VTextField v-model="oldCode"
-                                    class="required"
-                                    label="Código anterior"
-                                    placeholder="1234"
-                                    type="password"
-                                    hide-details="auto"
-                                    :rules="rules"
-                                    autocomplete="on"
-                                    bg-color="surface"/>
+                        <PasswordInput v-model:password="oldCode" label="Código anterior"/>
                     </VRow>
                     <VRow class="-center pa-5 mb-1">
-                        <VTextField v-model="newCode"
-                                    class="required"
-                                    label="Nuevo código"
-                                    placeholder="1234"
-                                    type="password"
-                                    hide-details="auto"
-                                    :rules="rules"
-                                    autocomplete="on"
-                                    bg-color="surface"/>
+                        <PasswordInput v-model:password="newCode" label="Nuevo código"/>
                     </VRow>
                     <VRow class="button-panel">
                         <VBtn @click="clear" color="secondary">Volver</VBtn>

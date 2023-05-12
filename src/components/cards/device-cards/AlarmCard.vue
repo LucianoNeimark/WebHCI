@@ -2,10 +2,14 @@
 
 import FrameCard from "@/components/cards/FrameCard.vue";
 import ModeToggle from "@/components/custom-inputs/ModeToggle.vue";
-import {computed, type PropType, reactive, ref} from "vue";
+import {computed, inject, type PropType, reactive, type Ref, ref, watch} from "vue";
 import type {Alarm} from "@/interfaces/models/alarm";
 import {alarmIcons, alarmType, changeStatusAlarm} from "@/interfaces/models/alarm";
 import {useToast} from "vue-toast-notification";
+import {useDevicesStore} from "@/stores/device.store";
+import type {Event} from "@/interfaces/event.interface";
+import {CONSTANTS} from "@/utils/constants";
+import PasswordInput from "@/components/custom-inputs/PasswordInput.vue";
 
 const props = defineProps({
     device: {
@@ -31,12 +35,13 @@ const updateMode = async (index: number) => {
     }
 }
 
-const rules = [
-    (v: string) => !!v || 'El código es requerido',
-    (v: string) => (v && v.length === 4) || 'El código debe tener 4 dígitos',
-    (v: string) => (v && !isNaN(Number(v))) || 'El código debe ser numérico'
-];
 
+const { devices } = useDevicesStore()
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+watch(() => MSG?.value, async (newMSG) => {
+    if (newMSG && newMSG.deviceId === alarm.id)
+        ({...alarm.state} = {...(devices.items.get(alarm.id) as Alarm)?.state} || {...alarm.state})
+})
 </script>
 
 <template>
@@ -45,14 +50,7 @@ const rules = [
         <VCol>
             <VForm>
                 <VRow class="flex-row justify-center mb-1">
-                    <VTextField v-model="code"
-                                label="Código"
-                                placeholder="1234"
-                                type="password"
-                                bg-color="surface"
-                                :rules="rules"
-                                autocomplete="on"
-                                outlined/>
+                    <PasswordInput v-model:password="code"/>
                 </VRow>
                 <VRow class="flex-row justify-center mb-2">
                     <ModeToggle :icons="alarmIcons" :toggle="toggle" @updateToggle="updateMode"/>
