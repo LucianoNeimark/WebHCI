@@ -9,3 +9,9 @@ export const validNameRules = [
     (v : string) => (v.length >=3 && v.length <= 60) || 'El campo debe tener entre de 3 y 60 caracteres',
     (v: string) => /^[a-zA-Z0-9_ ]*$/.test(v) || 'El campo solo puede tener letras, números, _ y espacios'
 ]
+
+export const codeRules = [
+    (v: string) => !!v || 'El código es requerido',
+    (v: string) => (v && v.length === 4) || 'El código debe tener 4 dígitos',
+    (v: string) => (v && !isNaN(Number(v))) || 'El código debe ser numérico'
+];

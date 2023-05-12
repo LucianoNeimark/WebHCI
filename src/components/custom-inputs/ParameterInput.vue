@@ -2,7 +2,7 @@
 import type {PropType} from "vue";
 import type {Parameter} from "@/interfaces/actionParam.interface";
 import {computed, ref, watch} from "vue";
-import {colorRule, minMaxRule, requiredRule} from "@/utils/rules";
+import {codeRules, colorRule, minMaxRule, requiredRule} from "@/utils/rules";
 import {isColor} from "@/utils/utils";
 const props = defineProps({
     param: {
@@ -24,11 +24,11 @@ const paramType = computed<string>(() => {
 const rules : ((v:string)=>boolean|string)[] = [requiredRule]
 if (paramType.value === "number" && props.param.minValue !== undefined && props.param.maxValue !== undefined){
     rules.push(minMaxRule(Number(props.param.minValue), Number(props.param.maxValue)))
-}
-if (paramType.value === "color"){
+} else if (paramType.value === "color") {
     rules.push(colorRule)
+} else if (props.param?.maxValue === "9999" && props.param?.minValue === "0000") {
+    rules.push(...codeRules)
 }
-
 const newValue = ref(props.value)
 if (paramType.value === "color") {
     if (isColor(newValue.value as string))
@@ -46,6 +46,7 @@ watch(newValue, (value) => {
         emit("update:value", newValue.value)
     }
 })
+
 </script>
 <template>
     <VAutocomplete v-if="param.supportedValues" variant="solo-filled" :rules="[requiredRule]"
