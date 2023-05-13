@@ -19,16 +19,16 @@ import { RoutinesApi } from '../api/routines.api';
 </script>
 
 <template>
-    <VRow class="ma-2">
-        <RoutineCard v-for="routine in routinesList.routines" :key="routine.id" :routine="routine" class="pa-3" />
-    </VRow>
-    <VLayoutItem model-value position="" class="text-end layout">
+    <VRow>
         <VBtn class="ma-5 add-button"
               color="secondary" rounded="xl" to="/routines/create">
             <VIcon icon="mdi-plus" class="px-2"/>
             <span class="px-2">AGREGAR RUTINA</span>
         </VBtn>
-    </VLayoutItem>
+    </VRow>
+    <VRow class="mt-2 ml-2">
+        <RoutineCard v-for="routine in routinesList.routines" :key="routine.id" :routine="routine" class="pa-3" />
+    </VRow>
 </template>
 
 
