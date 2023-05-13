@@ -3,6 +3,8 @@ import es from 'vuetify/lib/locale/es';
 
 export default {
     $vuetify: { ...es },
+    'No hay dispositivos' : 'No hay dispositivos',
+
     //Generos
     country: 'country',
     classical: 'clásica',
@@ -22,16 +24,23 @@ export default {
     setGenre: 'establecer género',
     getPlaylist: 'obtener lista de reproducción',
 
+    //Parametros
+    volume : 'volumen',
+    genre : 'género',
+
     //Persiana
     open: 'abrir',
     close: 'cerrar',
     setLevel: 'establecer nivel',
+    level : 'nivel',
 
     //Lampara
     turnOn: 'encender',
     turnOff: 'apagar',
     setColor: 'establecer color',
     setBrightness: 'establecer brillo',
+    color : 'color',
+    brightness : 'brillo',
 
     //Horno
     // turnOn: 'encender',
@@ -42,6 +51,10 @@ export default {
     setConvection: 'establecer convección',
 
     //Parametros
+    temperature: 'temperatura',
+    heat: 'calor',
+    grill: 'parrilla',
+    convection: 'convección',
     conventional: 'convencional',
     bottom: 'inferior',
     top: 'superior',
@@ -60,8 +73,12 @@ export default {
     setFanSpeed: 'establecer velocidad del ventilador',
    
     //Parametros
+    mode : 'modo',
+    verticalSwing : 'oscilación vertical',
+    horizontalSwing : 'oscilación horizontal',
+    fanSpeed : 'velocidad del ventilador',
     cool: 'frío',
-    heat: 'calor',
+    //heat: 'calor',
     fan: 'ventilador',
 
     //Puerta
@@ -72,6 +89,10 @@ export default {
 
     //Alarma
     changeSecurityCode: 'cambiar código de seguridad',
+    securityCode : 'código de seguridad',
+    SecurityCode : 'código de seguridad',
+    oldSecurityCode : 'anterior código de seguridad',
+    newSecurityCode : 'nuevo código de seguridad',
     armStay: 'activar alarma en casa',
     armAway: 'activar alarma fuera de casa',
     disarm: 'desactivar alarma',

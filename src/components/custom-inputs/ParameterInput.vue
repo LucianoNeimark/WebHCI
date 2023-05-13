@@ -49,10 +49,10 @@ watch(newValue, (value) => {
 
 </script>
 <template>
-    <VAutocomplete v-if="param.supportedValues" variant="solo-filled" :rules="[requiredRule]"
-        :items="param.supportedValues" v-model="newValue" :label="param.name"
+    <VSelect v-if="param.supportedValues" variant="solo-filled" :rules="[requiredRule]" v-model="newValue" :label="$t(param.name)"
+        :items="param.supportedValues" :item-value="item => item"  :item-title="item => `${$t(item as string)}`"
     />
-    <VTextField v-else :label="param.name" v-model="newValue" :type="paramType" :min="param.minValue" :max="param.maxValue"
+    <VTextField v-else :label="$t(param.name)" v-model="newValue" :type="paramType" :min="param.minValue" :max="param.maxValue"
                     outlined dense variant="solo-filled" :rules="rules"
     />
 </template>

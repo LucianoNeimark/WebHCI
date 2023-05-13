@@ -89,13 +89,13 @@ defineExpose({
         <VRow class="align-content-center">
           <VCol cols="6">
             <VAutocomplete v-model="action.device" :prepend-inner-icon="deviceIcon"
-                  variant="solo-filled" label="Dispositivo" no-data-text="No hay dispositivos"
-                  :items="deviceList" item-title="name" return-object hide-details="auto" :rules="[requiredRule]"
+                  variant="solo-filled" label="Dispositivo" no-data-text="No hay dispositivos" hide-details="auto"
+                  :items="deviceList" item-title="name" return-object :rules="[requiredRule]"
             />
           </VCol>
           <VCol cols="3">
-              <VAutocomplete v-model="actionTemplate" :disabled="!action.device" variant="solo-filled" label="Acción"
-                      :items="actionTemplateList" item-title="name" return-object hide-details="auto" :rules="[requiredRule]"
+              <VAutocomplete v-model="actionTemplate" :disabled="!action.device" variant="solo-filled" label="Acción" hide-details="auto"
+                      :items="actionTemplateList" :item-title="item => `${$t(item.name as string)}`" return-object  :rules="[requiredRule]"
               />
           </VCol>
           <VCol cols="1" class="align-center d-flex">
