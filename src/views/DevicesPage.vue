@@ -26,17 +26,7 @@ onMounted(loadDevices)
 </script>
 
 <template>
-        <VRow>
-            <VBtn class="ma-5 add-button"
-                color="secondary" rounded="xl"
-                @click="dialog = true"
-            >
-                <VIcon icon="mdi-plus" class="px-2"/>
-                <span class="px-2">Agregar Dispositivo</span>
-            </VBtn>
-            <AddDeviceModal v-model:dialog="dialog" @device-added="reloadDevices"/>
-        </VRow>
-        <VRow>
+        <VRow class="mt-2">
             <VExpansionPanels multiple variant="accordion">
                 <VExpansionPanel
                     v-for="(type, typeId) in deviceTypes" :key="typeId" class="width-auto"
@@ -54,6 +44,15 @@ onMounted(loadDevices)
                 </VExpansionPanel>
             </VExpansionPanels>
         </VRow>
+        <AddDeviceModal v-model:dialog="dialog" @device-added="reloadDevices"/>
+        <VLayoutItem model-value position class="text-end layout">
+            <VBtn class="ma-5 add-button"
+                color="secondary" rounded="xl"
+                @click="dialog = true">
+                <VIcon icon="mdi-plus" class="px-2"/>
+                <span class="px-2">AGREGAR DISPOSITIVO</span>
+            </VBtn>
+        </VLayoutItem>
 </template>
 
 <style scoped>

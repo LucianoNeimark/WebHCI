@@ -97,4 +97,11 @@
 
 .v-tooltip > .v-overlay__content {
     background: $primary !important;
-  }
+}
+.layout {
+    pointer-events: none;
+    font-size: 2rem;
+    position: fixed !important;
+    top: 84vh !important;
+    left: 12vw !important;
+}
