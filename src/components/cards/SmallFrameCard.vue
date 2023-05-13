@@ -8,15 +8,20 @@ const props = defineProps({
     name : String,
     icon:{
         type: String,
-        required: true,
+        required: false,
     },
     types:{
         type: Array,
         required: true,
+    },
+    emptyMessage:{
+        type: String,
+        required: true   
     }
 })
 
 const typesLimited = computed(() => props.types.slice(0, 5))
+
 </script>
 
 <template>
@@ -26,9 +31,21 @@ const typesLimited = computed(() => props.types.slice(0, 5))
                 <div>{{name}}</div>
             </VRow>
             <VRow align-conent="center">
-                <VCol cols="9" class="pl-0 pt-3" align-self="center">
-                    <VCard rounded="lg" color="surface" height="9vh" width="auto" class="align">
-                        <VIcon v-for="(device, i) in typesLimited" :key="i" :icon="deviceTypes[device].icon" size="3vw"/>
+                <VCol class="pl-0 pt-3" align-self="center">
+                    <VCard rounded="lg" color="surface" height="9vh" width="auto" class="icons">
+                        <VRow v-if="typesLimited?.length" class="ml-2">
+                            <div v-for="(device, i) in typesLimited" height="3vw" width="3vw" :key="i">
+                                <VIcon :icon="deviceTypes[device.typeId]?.icon" size="3vw"/> 
+                                <VTooltip
+                                    content-class="tooltip-content"
+                                    class="tooltip"
+                                    activator="parent"
+                                    location="bottom"
+                                    :text="`${device.name} \r\n ${device.secondaryName || ''}`"
+                                ></VTooltip>     
+                            </div>
+                        </VRow>
+                        <VRow v-else class="ml-2">{{emptyMessage }}</VRow>
                     </VCard>
                 </VCol>
                 <VCol cols="3" align-self="center">
@@ -42,8 +59,13 @@ const typesLimited = computed(() => props.types.slice(0, 5))
 </template>
 
 <style scoped >
-.align {
-    display: flex;
+.icons {
     align-items: center;
+    display: flex;
+}
+
+.tooltip{
+    white-space: pre-line;
+    text-align: center;
 }
 </style>

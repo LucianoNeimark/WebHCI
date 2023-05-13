@@ -3,21 +3,26 @@ import SmallFrameCard from "@/components/cards/SmallFrameCard.vue";
 import type { Room } from "@/interfaces/room.interface";
 import type { PropType } from "vue";
 import {computed, reactive} from "vue";
+import { useDevicesStore } from "@/stores/device.store";
 
 const props = defineProps({
-    routine: {
+    room: {
         type: Object as PropType<Room>,
         required: true
     }
 })
+const { getDevicesGroupByRoom } = useDevicesStore()
 
-const devicesList = computed(() => props.routine.actions.map(action => action.device.type.id))
-const routine = reactive(props.routine)
+const room = reactive(props.room)
 
+const devicesList = getDevicesGroupByRoom().get(room.id)?.map(device => ({
+                        typeId : device.type.id,
+                        name : device.name
+                    })) || []
 </script>
 
 <template>
-    <SmallFrameCard :name="routine.name" :types="devicesList" icon="mdi-play-circle"/>
+    <SmallFrameCard :name="room.name" :types="devicesList" empty-message="Sin dispositivos"/>
 </template>
 
 <style scoped>
