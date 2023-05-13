@@ -50,7 +50,7 @@ onMounted(async () => {
         <VCol>
             <VRow class="justify-space-between">
                 <h2 class="bold pl-4">Dispositivos más utilizados</h2>
-                <VListItem class="more-devices" :to="`devices/`">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
+                <VListItem class="more-devices" to="devices">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
             </VRow>
             <VRow class="align-content-center">
                 <component v-for="device in topDevices.devices" :key="device.id" :device="device" :is="deviceTypes[device.type.id].card"/>
@@ -60,7 +60,7 @@ onMounted(async () => {
         <VCol>
             <VRow class="justify-space-between">
                 <h2 class="justify-center bold pl-4">Habitaciones</h2>
-                <VListItem class="more-devices" :to="`rooms/`">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
+                <VListItem class="more-devices" to="rooms">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
             </VRow>
             <VRow>
                 <RoomCard v-for="room in topRooms.rooms" :key="room.id" :room="room" class="pa-3" />
@@ -70,7 +70,7 @@ onMounted(async () => {
         <VCol>
             <VRow class="justify-space-between">
                 <h2 class="justify-center bold pl-4">Rutinas más utilizadas</h2>
-                <VListItem class="more-devices" :to="`routines/`">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
+                <VListItem class="more-devices" to="routines">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
             </VRow>
             <VRow>
                 <RoutineCard v-for="routine in topRoutines.routines" :key="routine.id" :routine="routine" class="pa-3" />
