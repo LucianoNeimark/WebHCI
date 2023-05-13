@@ -55,7 +55,11 @@ watch(() => MSG?.value, async (newMSG) => {
     <FrameCard :id="device.id" :name="device.name" icon="mdi-volume-high">
         <VContainer>
             <VRow class="song-title">
-                {{ speaker.state?.song?.title || '' }}
+                <span class="marquee">
+                    <span class="track">
+                        {{ speaker.state?.song?.title || '' }}
+                    </span>
+                </span>
             </VRow>
             <VRow class="align-content-center justify-space-evenly mb-1">
                 <SpeakerPlayer :playing="playing" @prev="prev" @next="next" @togglePlay="togglePlay"/>
@@ -74,6 +78,25 @@ watch(() => MSG?.value, async (newMSG) => {
     align-content: center;
     margin-bottom: 2%;
     justify-content: center !important;
+}
+
+.marquee {
+  width: 100vw;
+  max-width: 100%;
+  height: 1.5vw;
+  overflow-x: hidden;
+}
+
+.track {
+  position: absolute;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 11s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(30vw); }
+  to { transform: translateX(-30vw); }
 }
 
 </style>
