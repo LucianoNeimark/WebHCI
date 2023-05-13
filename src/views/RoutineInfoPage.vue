@@ -38,8 +38,8 @@ const deleteRoutine = async () => {
 </script>
 
 <template>
-    <VContainer class="mx-0">
-        <VRow class="align-start ma-3 d-flex">
+    <VContainer class="mx-0 py-1 px-6">
+        <VRow class="ma-3 d-flex align-editable-label">
             <EditableLabel v-model:value="routine.value.name"/>
             <VBtn icon="mdi-delete" class="delete-button ml-5" @click="deleteRoutine"/>
             <VSpacer/>
