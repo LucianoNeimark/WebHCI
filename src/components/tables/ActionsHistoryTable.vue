@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import {DevicesApi} from "@/api/devices.api";
+import {useI18n} from "vue-i18n";
 
 const props = defineProps({
     deviceId: {
@@ -21,14 +22,15 @@ const headers = [
 ]
 const loading = ref(false)
 const actions = ref([])
+const { t } = useI18n()
 const loadItems = async ({page, itemsPerPage}) => {
    loading.value = true
    const logs = await DevicesApi.getLogs(props.deviceId, itemsPerPage, (page - 1)*itemsPerPage)
     actions.value = logs.map((log) => {
         const date = new Date(log.timestamp)
         return {
-            actionName: log.action,
-            params: log.params.join(', '),
+            actionName: t(log.action),
+            params: log.params?.join(', ') || 'Sin parámetros',
             date: date.toLocaleDateString(),
             time: date.toLocaleTimeString()
         }
