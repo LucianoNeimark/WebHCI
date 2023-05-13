@@ -99,9 +99,12 @@
     background: $primary !important;
 }
 .layout {
-    pointer-events: none;
+    pointer-events: none !important;
     font-size: 2rem;
     position: fixed !important;
     top: 84vh !important;
     left: 12vw !important;
+    .add-button {
+        pointer-events: all !important;
+    }
 }
