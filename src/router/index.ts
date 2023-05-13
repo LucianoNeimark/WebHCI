@@ -20,7 +20,7 @@ const router = createRouter({
           name: 'Pagina principal',
           component: MainPage,
           meta: {
-              name: () => "Página principal",
+              name: () => "Inicio",
               ancestors: []
           }
       },
