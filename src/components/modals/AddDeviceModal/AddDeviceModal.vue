@@ -9,6 +9,7 @@ import type { Device } from "@/interfaces/device.interface";
 import { useDevicesStore } from '@/stores/device.store';
 import { useToast } from 'vue-toast-notification';
 import { validNameRules } from '@/utils/rules';
+import { useRoomsStore } from "@/stores/room.store";
 
 const emit = defineEmits(['update:dialog', 'device-added'])
 
@@ -25,6 +26,7 @@ const room = ref<Room | String | undefined>(props.room)
 const type = ref()
 const valid = ref(true)
 const { deviceWithSameNameExists } = useDevicesStore()
+const { roomWithSameNameExists } = useRoomsStore()
 const $toast = useToast()
 
 const show = computed({
@@ -39,6 +41,10 @@ const show = computed({
 const addDevice = async () => {
     if (deviceWithSameNameExists(name.value)) {
         $toast.error('Ya existe un dispositivo con ese nombre', { position: 'top-right' })
+        return;
+    }
+    if (roomWithSameNameExists(room.value as string)) {
+        $toast.error('Ya existe una habitación con ese nombre', { position: 'top-right' })
         return;
     }
     const newDevice = await DevicesApi.addDevice(type.value, name.value) as Device

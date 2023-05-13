@@ -8,8 +8,6 @@ const props = defineProps({
   selected: {type: String, required: true}
 })
 
-console.log(props.text)
-
 </script>
 
 <template>

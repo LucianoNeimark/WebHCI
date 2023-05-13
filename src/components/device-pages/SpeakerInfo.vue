@@ -38,7 +38,6 @@ const togglePlay = async () => {
     await toggleSpeaker(speaker.device)
     if (playing.value)  {
       speaker.device = await DevicesApi.getDeviceById(speaker.device.id)
-      console.log("toggle", speaker.device)
       initTimer()
     }
     else clearInterval(interv.value)

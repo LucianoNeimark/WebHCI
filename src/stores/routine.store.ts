@@ -12,7 +12,9 @@ export const useRoutinesStore = defineStore('routines', () => {
         currentRoutine.value = routines.items.get(routineId) as Routine
     }
     const loadRoutine = (routine : Routine) => {
-        routines.items.set(routine.id, routine)
+        if (!routine.actions.some((action) => !action.device.type?.id)) {
+            routines.items.set(routine.id, routine)
+        }
     }
 
     const getTopRoutines = (count: number) : Routine[] => {

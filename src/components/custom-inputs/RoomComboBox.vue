@@ -6,13 +6,9 @@ import { onMounted } from 'vue'
 import { RoomsApi } from '@/api/rooms.api'
 
 const { rooms } = useRoomsStore()
-const roomList = computed<Room[]>(() => Array.from(rooms.items.values())
-)
-const props = defineProps({
-    modelValue: {
-        type: Object as PropType<Room | String>
-    }
-})
+const roomList = computed<Room[]>(() => Array.from(rooms.items.values()))
+
+const props = defineProps<{ modelValue : Room | String}>()
 const msg = ref("")
 const emit = defineEmits(['update:modelValue'])
 const room = computed({

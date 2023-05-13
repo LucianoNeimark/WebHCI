@@ -39,8 +39,6 @@ onMounted(async () => {
   topDevices.devices = getTopDevices(3)
   topRoutines.routines = getTopRoutines(6)
   topRooms.rooms = Array.from(rooms.items.values()).slice(0, 6) as Room[]
-
-  console.log(topRooms.rooms)
 })
 
 </script>

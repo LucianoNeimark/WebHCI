@@ -46,7 +46,6 @@ const { devices } = useDevicesStore()
 const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
 watch(() => MSG?.value, async (newMSG) => {
     if (newMSG && newMSG.deviceId === speaker.id) {
-        console.log(speaker.state.song, (devices.items.get(speaker.id) as Speaker)?.state.song);
         ({...speaker.state} = {...(devices.items.get(speaker.id) as Speaker)?.state} || {...speaker.state});
     }
 })

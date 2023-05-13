@@ -45,7 +45,6 @@ const addRoom = async (name: string) => {
     await RoomsApi.reloadRooms()
     await DevicesApi.reloadDevices()
     devicesGroupByRoom.value = getDevicesGroupByRoom()
-    $toast.success('Habitación cargada exitosamente', { position: 'top-right' })
 }
 
 </script>

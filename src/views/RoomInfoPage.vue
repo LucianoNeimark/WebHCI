@@ -25,8 +25,6 @@ const { getDevicesGroupByRoom } = useDevicesStore()
 
 const myRoomData = reactive({room: {} as Room })
 
-onMounted(async () => await load())
-
 const load = async () => {
     await RoomsApi.reloadRooms() // Ver si conviene hacerlo mas eficiente
     await DevicesApi.reloadDevices() // Ver si conviene hacerlo mas eficiente
@@ -34,6 +32,7 @@ const load = async () => {
     roomDevices.devices = getDevicesGroupByRoom().get(<string> route.params.id) || [];
     myRoomData.room = currentRoom.value
 }
+await load()
 
 const showConfirmationModal = ref(false)
 const showAddDeviceModal = ref(false)

@@ -19,7 +19,6 @@ const loadDevices = async () => {
 
 const reloadDevices = () => {
     loadDevices()
-    $toast.success('Dispositivo cargado exitosamente', { position: 'top-right' })
 }
 onMounted(loadDevices)
 
