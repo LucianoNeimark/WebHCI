@@ -42,8 +42,10 @@ if (paramType.value === "color") {
 watch(newValue, (value) => {
     if (paramType.value === "color" && (value as string).startsWith("#")) {
         emit("update:value", (value as string).slice(1).toUpperCase())
+    } else if (paramType.value === "number") {
+        emit("update:value", Number(value))
     } else {
-        emit("update:value", newValue.value)
+        emit("update:value", value)
     }
 })
 

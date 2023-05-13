@@ -59,7 +59,7 @@ const typesLimited = computed(() => props.types.slice(0, 5))
                     </VBtn>
                 </VCol>
             </VRow>
-            <VRow class="flex-column my-2">
+            <VRow class="flex-column mb-2">
                 <VBtn bottom rounded="xl" size="small" color="lightSurface" class="align-self-center" :to="`${optionsUrlBase}/${id}`">Mas opciones</VBtn>
             </VRow>
         </VContainer>
