@@ -20,13 +20,13 @@
   const routine = reactive(props.routine)
 
   const action = async () => {
-    await RoutinesApi.executeRutine(props.routine.id)
+    await RoutinesApi.executeRoutine(props.routine.id)
   }
 
 </script>
 
 <template>
-    <SmallFrameCard :name="routine.name" :types="devicesList" icon="mdi-play" @routine = "action" empty-message="Sin dispositivos"/>
+    <SmallFrameCard :name="routine.name" :id="routine.id" :types="devicesList" icon="mdi-play" @routine = "action" empty-message="Sin dispositivos" options-url-base="/routines"/>
 </template>
 
 <style scoped>

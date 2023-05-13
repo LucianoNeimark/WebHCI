@@ -22,7 +22,7 @@ const devicesList = getDevicesGroupByRoom().get(room.id)?.map(device => ({
 </script>
 
 <template>
-    <SmallFrameCard :name="room.name" :types="devicesList" empty-message="Sin dispositivos"/>
+    <SmallFrameCard :name="room.name" :id="room.id" :types="devicesList" empty-message="Sin dispositivos" options-url-base="/rooms"/>
 </template>
 
 <style scoped>
