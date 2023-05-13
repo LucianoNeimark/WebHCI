@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { onMounted, reactive } from 'vue'
+import {onMounted, reactive, ref} from 'vue'
 import { useDevicesStore } from "@/stores/device.store";
 import { DevicesApi } from "@/api/devices.api";
 import type { Device } from "@/interfaces/device.interface";
@@ -15,9 +15,8 @@ import { useToast } from 'vue-toast-notification';
 import {deviceTypes} from "@/utils/constants";
 
 const $toast = useToast()
-const devicesGroupByRoom = reactive<{ value: Map<string, Device[]>, countMap: Map<string, number> }>({
+const devicesGroupByRoom = reactive<{ value: Map<string, Device[]> }>({
     value: new Map<string, Device[]>(),
-    countMap: new Map<string, number>()
 })
 
 const loadPage = async () => {
@@ -26,7 +25,6 @@ const loadPage = async () => {
     devicesGroupByRoom.value = getDevicesGroupByRoom()
 
     devicesGroupByRoom.value.forEach((value, key) => {
-        devicesGroupByRoom.countMap.set(key, value.length)
         devicesGroupByRoom.value.set(key, value.map((value) => value).slice(0, 3))
     })
 }
@@ -49,34 +47,37 @@ const addRoom = async (name: string) => {
 </script>
 
 <template>
-    <VCol>
-        <VRow>
-            <EditableButton message="Agregar habitación" @valueSet="addRoom"/>
-        </VRow>
-        <VCol v-for="room in roomItems" :key="room.id" class="row-width pt-3">
-            <VRow class="justify-space-between pl-3 pb-3 vert-align">
-                <h2 class="bold">{{room.name}} <span class="span-align qty-devices-font">({{devicesGroupByRoom.countMap.get(room.id) || 0}})</span></h2>
-                <VListItem class="more-devices" :to="`/rooms/${room.id}`">
-                   Ir a {{room.name}}
-                    <VIcon icon="mdi:mdi-chevron-double-right"/>
-                </VListItem>
-            </VRow>
-            <VRow class="d-flex flex-wrap mt-0 pb-3">
-                <component v-for="device in devicesGroupByRoom.value.get(room.id)" :key="device.id" :device="device" :id="device.id" :name="device.name"
-                           :is="deviceTypes[device.type.id].card"/>
-            </VRow>
-        </VCol>
-    </VCol>
+    <VRow>
+        <EditableButton message="Agregar habitación" @valueSet="addRoom"/>
+    </VRow>
+    <VRow>
+        <VExpansionPanels multiple variant="accordion">
+            <VExpansionPanel v-for="room in roomItems" :key="room.id"
+                class="width-auto" color="background" bg-color="background" elevation="0">
+                <VExpansionPanelTitle>
+                    {{room.name}}
+                </VExpansionPanelTitle>
+                <VExpansionPanelText>
+                    <VRow class="flex-row-reverse">
+                        <VListItem class="more-devices" :to="`/rooms/${room.id}`">
+                            Ir a {{room.name}}
+                            <VIcon icon="mdi:mdi-chevron-double-right"/>
+                        </VListItem>
+                    </VRow>
+                    <VSheet class="d-flex flex-wrap justify-start height-auto" color="background">
+                        <component v-for="device in devicesGroupByRoom.value.get(room.id)" :key="device.id" :device="device" :id="device.id" :name="device.name"
+                                   :is="deviceTypes[device.type.id].card"/>
+                    </VSheet>
+                </VExpansionPanelText>
+            </VExpansionPanel>
+        </VExpansionPanels>
+    </VRow>
 </template>
 
 <style scoped>
 
 .row-width{
     width: 100%;
-}
-
-.more-devices{
-    margin-right: 3%;
 }
 
 .qty-devices-font{

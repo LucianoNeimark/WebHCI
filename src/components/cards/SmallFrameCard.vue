@@ -2,7 +2,6 @@
 import {computed} from "vue";
 import {deviceTypes} from "@/utils/constants";
 
-
 const props = defineProps({
     id: String,
     name : String,
@@ -41,8 +40,10 @@ const typesLimited = computed(() => props.types.slice(0, 5))
                                     class="tooltip"
                                     activator="parent"
                                     location="bottom"
-                                    :text="`${device.name}\n${device.secondaryName || ''}`"
-                                ></VTooltip>     
+                                >
+                                    <p>{{ device.name }}</p>
+                                    <p>{{device.secondaryName && $t(device.secondaryName) }}</p>
+                                </VTooltip>
                             </div>
                         </VRow>
                         <VRow v-else class="ml-2">{{emptyMessage }}</VRow>
@@ -65,7 +66,6 @@ const typesLimited = computed(() => props.types.slice(0, 5))
 }
 
 .tooltip{
-    white-space: pre-line;
     text-align: center;
 }
 

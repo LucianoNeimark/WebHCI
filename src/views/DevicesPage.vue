@@ -9,7 +9,6 @@ import {deviceTypes} from "@/utils/constants";
 
 const $toast = useToast()
 const dialog = ref(false)
-const panel = ref();
 const { getDevicesGroupByType } = useDevicesStore()
 const devicesGroupByType = reactive<{ value: Map<string, Device[]> }>({ value: new Map<string, Device[]>() })
 
@@ -38,9 +37,7 @@ onMounted(loadDevices)
             <AddDeviceModal v-model:dialog="dialog" @device-added="reloadDevices"/>
         </VRow>
         <VRow>
-            <VExpansionPanels
-                v-model="panel" multiple variant="accordion"
-            >
+            <VExpansionPanels multiple variant="accordion">
                 <VExpansionPanel
                     v-for="(type, typeId) in deviceTypes" :key="typeId" class="width-auto"
                     color="background" bg-color="background" elevation="0"
