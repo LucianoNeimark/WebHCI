@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, reactive, ref, watch, watchEffect} from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import type {Device} from "@/interfaces/device.interface";
 import {useDevicesStore} from "@/stores/device.store";
 import {useRoute, useRouter} from "vue-router";
@@ -48,7 +48,6 @@ watch(() => myRoomData.room?.name ,async (newValue: string, oldValue: string) =>
 
 const deleteRoom = () => {
     RoomsApi.deleteRoom(myRoomData.room.id)
-    removeRoom(myRoomData.room.id)
     router.push('/rooms')
 }
 </script>

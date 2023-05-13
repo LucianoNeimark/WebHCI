@@ -13,11 +13,10 @@ import type {Room} from "@/interfaces/room.interface";
 import {deviceTypes} from "@/utils/constants";
 
 const route = useRoute()
-const { removeDevice, setCurrentDevice, currentDevice } = useDevicesStore();
 const router = useRouter()
+const { setCurrentDevice, currentDevice } = useDevicesStore();
 
 const device = reactive({
-    //value : <Device> devices.items.get(<string> route.params.id)
     value: {} as Device
 })
 
@@ -27,7 +26,6 @@ watch(() => device.value.name, async () => {
 
 const deleteDevice = async () => {
     await DevicesApi.deleteDevice(device.value.id)
-    removeDevice(device.value.id)
     await router.push('/devices')
 }
 

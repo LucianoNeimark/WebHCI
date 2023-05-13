@@ -12,6 +12,7 @@ export class DevicesApi {
         const device = new DeviceCreationDTO(typeId, name);
         const res = await Api.post("/devices", device)
         if (!res.ok) this.$toast.error("Error al crear el dispositivo", { position: 'top-right' });
+        else this.$toast.success(`Dispositivo ${name} creado satisfactoriamente`, { position: 'top-right' });
         const { result } = await res.json()
         return result
     }
@@ -35,6 +36,10 @@ export class DevicesApi {
     static async deleteDevice(deviceId: string) {
         const res = await Api.delete(`/devices/${deviceId}`);
         if (!res.ok) this.$toast.error("Error al eliminar el dispositivo", { position: 'top-right' });
+        else {
+            const { removeDevice } = useDevicesStore();
+            removeDevice(deviceId);
+        }
         const { result } = await res.json();
         return result;
     }

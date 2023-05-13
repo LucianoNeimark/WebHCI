@@ -36,6 +36,10 @@ export class RoomsApi{
     static async deleteRoom(roomId : string) {
         const res = await Api.delete(`/rooms/${roomId}`)
         if (!res.ok) this.$toast.error("Error al eliminar la habitación", { position: 'top-right' });
+        else{
+            const { removeRoom } = useRoomsStore()
+            removeRoom(roomId)
+        }
         const { result } = await res.json()
         return result
     }
