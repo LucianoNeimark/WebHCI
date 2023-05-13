@@ -13,9 +13,9 @@
   })
 
   const devicesList = computed(() => props.routine.actions.map(action => 
-    ({typeId : action.device.type.id,
+    ({typeId : action.device.type?.id,
     name : action.device.name,
-    secondaryName : action.actionName})))
+    secondaryName : action.actionName})).filter(device => device.typeId))
   
   const routine = reactive(props.routine)
 
@@ -26,7 +26,7 @@
 </script>
 
 <template>
-    <SmallFrameCard :name="routine.name" :types="devicesList" icon="mdi-play-circle" @routine = "action" empty-message="Sin dispositivos"/>
+    <SmallFrameCard :name="routine.name" :types="devicesList" icon="mdi-play" @routine = "action" empty-message="Sin dispositivos"/>
 </template>
 
 <style scoped>

@@ -47,7 +47,7 @@ const addRoom = async (name: string) => {
 </script>
 
 <template>
-    <VRow>
+    <VRow class="my-4 ml-4">
         <EditableButton message="Agregar habitación" @valueSet="addRoom"/>
     </VRow>
     <VRow>

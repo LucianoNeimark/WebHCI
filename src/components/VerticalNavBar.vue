@@ -9,7 +9,7 @@ import Logo from '@/assets/homewizard.png'
               color="primary"
               width=240
       >
-        <img class="align-center" :src="Logo" alt="logo" width="200"/>
+          <a href="/"><img class="align-center" :src="Logo" alt="logo" width="200"/></a>
           <VList color="transparent">
             <VListItem prepend-icon="mdi-view-dashboard" title="Inicio" value="main" to="/"/>
             <VListItem prepend-icon="mdi-lamp" title="Dispositivos" value="devices" to="/devices"/>
@@ -25,8 +25,8 @@ import Logo from '@/assets/homewizard.png'
 
   .align-center {
       display: block;
-      margin-top: 3%;
       margin-bottom: 2%;
+      margin-top: 3%;
       margin-left: auto;
       margin-right: auto;
   }

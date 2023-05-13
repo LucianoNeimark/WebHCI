@@ -3,12 +3,8 @@ import {computed} from "vue";
 import {deviceTypes} from "@/utils/constants";
 
 const props = defineProps({
-    id: String,
     name : String,
-    icon:{
-        type: String,
-        required: false,
-    },
+    icon: String,
     types:{
         type: Array,
         required: true,
@@ -46,12 +42,12 @@ const typesLimited = computed(() => props.types.slice(0, 5))
                                 </VTooltip>
                             </div>
                         </VRow>
-                        <VRow v-else class="ml-2">{{emptyMessage }}</VRow>
+                        <VRow v-else class="ml-2">{{emptyMessage}}</VRow>
                     </VCard>
                 </VCol>
                 <VCol cols="3" align-self="center">
-                    <VBtn size="4vw" :rounded="true" variant="text" @click="$emit('routine')">
-                        <VIcon :icon="icon" size="4vw"/>
+                    <VBtn v-if="icon" size="4vw" rounded="circle" @click="$emit('routine')">
+                        <VIcon :icon="icon" size="3vw"/>
                     </VBtn>
                 </VCol>
             </VRow>

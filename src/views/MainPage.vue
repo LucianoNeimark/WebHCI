@@ -47,37 +47,39 @@ onMounted(async () => {
 
 <template>
     <VCol>
-        <VRow class="pt-3 justify-space-between">
-            <h2 class="bold pl-10">Dispositivos más utilizados</h2>
-            <VListItem class="more-devices" :to="`devices/`">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
-        </VRow>
-        <VRow class="ml-2 align-content-center">
-            <component v-for="device in topDevices.devices" :key="device.id" :device="device" :is="deviceTypes[device.type.id].card"/>
-        </VRow>
+        <VCol>
+            <VRow class="justify-space-between">
+                <h2 class="bold pl-4">Dispositivos más utilizados</h2>
+                <VListItem class="more-devices" :to="`devices/`">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
+            </VRow>
+            <VRow class="align-content-center">
+                <component v-for="device in topDevices.devices" :key="device.id" :device="device" :is="deviceTypes[device.type.id].card"/>
+            </VRow>
+        </VCol>
+        
+        <VCol>
+            <VRow class="justify-space-between">
+                <h2 class="justify-center bold pl-4">Habitaciones</h2>
+                <VListItem class="more-devices" :to="`rooms/`">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
+            </VRow>
+            <VRow>
+                <RoomCard v-for="room in topRooms.rooms" :key="room.id" :room="room" class="pa-3" />
+            </VRow>
+        </VCol>
 
-        <VRow class="justify-space-between">
-            <h2 class="justify-center bold pl-10">Habitaciones</h2>
-            <VListItem class="more-devices" :to="`rooms/`">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
-        </VRow>
-        <VRow class="ml-2">
-            <RoomCard v-for="room in topRooms.rooms" :key="room.id" :room="room" class="pa-3" />
-        </VRow>
-
-        <VRow class="justify-space-between">
-            <h2 class="justify-center bold pl-10">Rutinas más utilizadas</h2>
-            <VListItem class="more-devices" :to="`routines/`">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
-        </VRow>
-        <VRow class="ml-2">
-            <RoutineCard v-for="routine in topRoutines.routines" :key="routine.id" :routine="routine" class="pa-3" />
-        </VRow>
+        <VCol>
+            <VRow class="justify-space-between">
+                <h2 class="justify-center bold pl-4">Rutinas más utilizadas</h2>
+                <VListItem class="more-devices" :to="`routines/`">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
+            </VRow>
+            <VRow>
+                <RoutineCard v-for="routine in topRoutines.routines" :key="routine.id" :routine="routine" class="pa-3" />
+            </VRow>
+        </VCol>
     </VCol>
 </template>
 
 <style scoped>
-
-.more-devices{
-    margin-right: 3%;
-}
 </style>
 
 

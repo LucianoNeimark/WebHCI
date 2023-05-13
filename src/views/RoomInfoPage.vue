@@ -59,9 +59,11 @@ const deleteRoom = () => {
 
 <template>
     <VCol>
-        <VRow>
+        <VRow class="mt-1 ml-1">
             <EditableLabel v-model:value="myRoomData.room.name"/>
-            <VIcon icon="mdi-delete-circle" class="delete-button ml-5" @click="promptModal"/>
+            <VBtn @click="promptModal" rounded="circle" class="ml-3" width="4vw" height="4vw">
+                            <VIcon size="2vw">mdi-delete</VIcon>
+            </VBtn>
         </VRow>
         <VRow class="ml-2 align-content-center">
             <!-- TODO: Sacar IDs y names para usar device en todos-->

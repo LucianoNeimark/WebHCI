@@ -75,9 +75,13 @@ onMounted(async () => {
 
 <template>
     <VCol v-if="device.value.id">
-        <VRow>
-            <EditableLabel v-model:value="device.value.name" :icon="deviceTypes[device.value.type.id].icon"/>
-            <VIcon icon="mdi-delete-circle" class="delete-button ml-5" @click="promptModal"/>
+        <VRow class="ma-3">
+            <div class="align-editable-label">
+                <EditableLabel v-model:value="device.value.name" :icon="deviceTypes[device.value.type.id].icon"/>
+            </div>
+            <div>
+              <VBtn icon="mdi-delete" class="delete-button ml-5" @click="promptModal"/>
+            </div>
         </VRow>
         <VRow class="device-row ma-5">
             <component :is="deviceTypes[device.value.type.id].info" :device="device.value" class="device mr-10" ></component>
@@ -93,18 +97,18 @@ onMounted(async () => {
                         <RoomComboBox v-model="room" :disabled="!changingRoom" />
                     </VCol>
                     <VCol class="px-0">
-                        <VBtn v-if="!changingRoom" @click="startChangeRoomAction" rounded="circle" class="changeButton">
-                            <VIcon>mdi-pencil</VIcon>
+                        <VBtn v-if="!changingRoom" @click="startChangeRoomAction" rounded="circle" class="ml-6" width="4vw" height="4vw">
+                            <VIcon size="2vw">mdi-pencil</VIcon>
                         </VBtn>
-                        <VBtn v-if="changingRoom" @click="changeRoom" rounded="circle" class="changeButton">
-                            <VIcon>mdi-check</VIcon>
+                        <VBtn v-if="changingRoom" @click="changeRoom" rounded="circle" class="ml-6" width="4vw" height="4vw">
+                            <VIcon size="2vw">mdi-check</VIcon>
                         </VBtn>
                     </VCol>
                 </VRow>
             </VCol>
         </VRow>
         <VRow>
-            <VExpansionPanels multiple class="ma-5">
+            <VExpansionPanels multiple>
                 <VExpansionPanel>
                     <VExpansionPanelTitle>Historial de acciones</VExpansionPanelTitle>
                     <VExpansionPanelText>
@@ -124,10 +128,12 @@ onMounted(async () => {
     min-height: 35vh;
 }
 
-.changeButton{
-    width: 3vw;
-    height: 3vw;
-    margin-left: 1vw;
+.margin-label{
+    margin-top: 0%;
+}
+.align-editable-label{
+    display: flex;
+   align-items: center;
 }
 
 </style>
