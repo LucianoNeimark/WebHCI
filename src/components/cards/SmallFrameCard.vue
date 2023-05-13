@@ -41,7 +41,7 @@ const typesLimited = computed(() => props.types.slice(0, 5))
                                     class="tooltip"
                                     activator="parent"
                                     location="bottom"
-                                    :text="`${device.name} \r\n ${device.secondaryName || ''}`"
+                                    :text="`${device.name}\n${device.secondaryName || ''}`"
                                 ></VTooltip>     
                             </div>
                         </VRow>
@@ -68,4 +68,6 @@ const typesLimited = computed(() => props.types.slice(0, 5))
     white-space: pre-line;
     text-align: center;
 }
+
+
 </style>

@@ -94,3 +94,7 @@
 .add-button{
     height: 3vw !important;
 }
+
+.v-tooltip > .v-overlay__content {
+    background: $primary !important;
+  }
