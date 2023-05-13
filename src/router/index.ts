@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainPage from '../views/MainPage.vue'
-import DevicesPage from '../views/DevicesPage.vue'
+import MainPage from '@/views/MainPage.vue'
+import DevicesPage from '@/views/DevicesPage.vue'
 import RoomsPage from "@/views/RoomsPage.vue"
 import RoutinesPage from "@/views/RoutinesPage.vue"
 import DeviceInfoPage from "@/views/DeviceInfoPage.vue";
@@ -8,6 +8,8 @@ import RoomInfoPage from "@/views/RoomInfoPage.vue";
 import {useRoomsStore} from "@/stores/room.store";
 import {useDevicesStore} from "@/stores/device.store";
 import CreateRoutinePage from "@/views/CreateRoutinePage.vue";
+import RoutineInfoPage from "@/views/RoutineInfoPage.vue";
+import {useRoutinesStore} from "@/stores/routine.store";
 
 
 const router = createRouter({
@@ -47,6 +49,15 @@ const router = createRouter({
           meta: {
               name: () => "Rutinas",
               ancestors: []
+          }
+      },
+      {
+          path: '/routines/:id',
+          name: 'Rutina',
+          component: RoutineInfoPage,
+          meta: {
+              name: () => useRoutinesStore()?.currentRoutine?.value.name || "Rutina",
+              ancestors: [{ title: 'Rutinas', href: '/routines', disabled: false}]
           }
       },
       {

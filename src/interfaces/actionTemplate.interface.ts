@@ -1,4 +1,4 @@
-import type { Parameter } from "./actionParam.interface"
+import type { Parameter } from "@/interfaces/actionParam.interface"
 
 export interface ActionTemplate {
    name : string

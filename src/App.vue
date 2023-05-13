@@ -13,7 +13,9 @@
                 <VMain>
                     <StaticHeader/>
                     <EventsHandler>
-                        <RouterView/>
+                        <suspense>
+                            <RouterView/>
+                        </suspense>
                     </EventsHandler>
                 </VMain>
                 <Footer/>

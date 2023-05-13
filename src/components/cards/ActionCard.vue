@@ -17,21 +17,25 @@ const props = defineProps({
   },
   valid : {
     type : Boolean
+  },
+  editMode : {
+      type : Boolean,
+      default : false
   }
 })
 const emits = defineEmits(["update:action", "delete:action", "update:valid"])
 const showParameters = ref(true)
 const action = reactive<Partial<Action>>(Object.assign({},props.action))
-action.params = []
+if(!action.params) {
+    action.params = []
+}
 
 const validAction = ref(props.valid)
-watch(validAction, (newValidAction) => {
-    emits("update:valid", newValidAction)
-})
+watch(validAction, (newValidAction) => { emits("update:valid", newValidAction) })
 
 const requestActionUpdate = async () => {
     await form.value.validate()
-    if(validAction.value) {
+    if(props.editMode && validAction.value) {
         emits("update:action", action as Action)
     }
 }
@@ -41,35 +45,46 @@ const deviceList= computed<Device[]>(
     () => Array.from(devices.items.values())
 )
 
-const { actionTemplates } = useActionsStore();
-const actionTemplateList = ref<ActionTemplate[]>([])
-
-const form = ref(null)
-watch(() => action.device, async (newDevice, oldDevice) => {
-    if (newDevice) {
-        actionTemplateList.value = actionTemplates.items.get(newDevice.type.id) || []
-    }
-    if (!newDevice || newDevice.type.id !== oldDevice?.type.id) {
-        actionTemplate.value = undefined
-        paramList.value = []
-        if (oldDevice) form.value.validate()
-    }
-    await requestActionUpdate()
-})
-
+const { actionTemplates, getActionTemplateByName } = useActionsStore();
+const actionTemplateList = ref<ActionTemplate[]>()
 const actionTemplate = ref<ActionTemplate>()
 const paramList = reactive<{ value : Parameter[]}>({value:[]})
-watch(actionTemplate, async (newActionTemplate) => {
-    paramList.value = []
-    if (newActionTemplate) {
-        action.actionName = newActionTemplate.name
-        newActionTemplate.params.forEach(param => {
+const form = ref(null)
+
+if (action.device){
+    actionTemplateList.value = actionTemplates.items.get(action.device.type.id) || []
+    if(action.actionName) {
+        actionTemplate.value = getActionTemplateByName(action.device.type.id, action.actionName)
+        actionTemplate.value.params.forEach(param => {
             paramList.value.push(param)
         })
-        action.params = Array(paramList.value.length).fill(undefined)
-        await requestActionUpdate()
     }
-})
+}
+if (props.editMode) {
+    watch(() => action.device, async (newDevice, oldDevice) => {
+        if (newDevice) {
+            actionTemplateList.value = actionTemplates.items.get(newDevice.type.id) || []
+        }
+        if (!newDevice || newDevice.type.id !== oldDevice?.type.id) {
+            actionTemplate.value = undefined
+            paramList.value = []
+            if (oldDevice) form.value.validate()
+        }
+        await requestActionUpdate()
+    })
+
+    watch(actionTemplate, async (newActionTemplate) => {
+        paramList.value = []
+        if (newActionTemplate) {
+            action.actionName = newActionTemplate.name
+            newActionTemplate.params.forEach(param => {
+                paramList.value.push(param)
+            })
+            action.params = Array(paramList.value.length).fill(undefined)
+            await requestActionUpdate()
+        }
+    })
+}
 const updateParameter = async (value : any, index : number) => {
     if(action.params) action.params[index] = value
     await requestActionUpdate()
@@ -85,23 +100,23 @@ defineExpose({
 
 <template>
   <VCard class="pa-5" color="tertiary" rounded="lg">
-      <VForm v-model="validAction" ref="form">
+      <VForm v-model="validAction" ref="form" :disabled="!editMode">
         <VRow class="align-content-center">
           <VCol cols="6">
-            <VAutocomplete v-model="action.device" :prepend-inner-icon="deviceIcon"
+            <VAutocomplete v-model="action.device" :prepend-inner-icon="deviceIcon" class="required"
                   variant="solo-filled" label="Dispositivo" no-data-text="No hay dispositivos" hide-details="auto"
                   :items="deviceList" item-title="name" return-object :rules="[requiredRule]"
             />
           </VCol>
           <VCol cols="3">
-              <VAutocomplete v-model="actionTemplate" :disabled="!action.device" variant="solo-filled" label="Acción" hide-details="auto"
+              <VAutocomplete v-model="actionTemplate" :disabled="!action.device" variant="solo-filled" label="Acción" hide-details="auto" class="required"
                       :items="actionTemplateList" :item-title="item => `${$t(item.name as string)}`" return-object  :rules="[requiredRule]"
               />
           </VCol>
-          <VCol cols="1" class="align-center d-flex">
+          <VCol cols="1" class="align-center d-flex" v-if="editMode">
               <VIcon :icon="stateIcon" class="state-icon align-content-center" size="x-large" :color="stateColor"/>
           </VCol>
-          <VCol class="d-flex">
+          <VCol class="d-flex" v-if="editMode">
               <VSpacer/>
               <VBtn icon="mdi-delete" class="delete-button ml-5" @click="$emit('delete:action')"/>
           </VCol>
@@ -133,5 +148,8 @@ defineExpose({
 <style scoped>
 .param-input {
     max-width: 20vw;
+}
+.v-col{
+    margin: 0 !important;
 }
 </style>

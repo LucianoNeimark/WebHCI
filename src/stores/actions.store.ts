@@ -6,18 +6,23 @@ export const useActionsStore = defineStore('actions', () => {
     const actionTemplates = reactive<{items: Map<string, ActionTemplate[]>}>({
         items: new Map<string, ActionTemplate[]>()
     })
+
+    const getActionTemplateByName = (deviceTypeId : string, actionName : string) : ActionTemplate => {
+        const actionTemplatesByDevice = actionTemplates.items.get(deviceTypeId) || []
+        return actionTemplatesByDevice.find((actionTemplate) => actionTemplate.name === actionName) as ActionTemplate
+    }
     const loadActionType = (deviceTypeId : string, actionType : ActionTemplate) => {
-        const actionTypeList = actionTemplates.items.get(deviceTypeId) || []
+        const actionTemplatesByDevice = actionTemplates.items.get(deviceTypeId) || []
         if(!actionTemplates.items.has(deviceTypeId)){
-            actionTemplates.items.set(deviceTypeId, actionTypeList)
+            actionTemplates.items.set(deviceTypeId, actionTemplatesByDevice)
         }
-        actionTypeList.push(actionType)
+        actionTemplatesByDevice.push(actionType)
     }
 
     const clearActionTypes = () => {
         actionTemplates.items.clear()
     }
 
-    return { actionTemplates, loadActionType, clearActionTypes}
+    return { actionTemplates, loadActionType, clearActionTypes, getActionTemplateByName}
 })
 

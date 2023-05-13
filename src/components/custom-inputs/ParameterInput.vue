@@ -50,10 +50,10 @@ watch(newValue, (value) => {
 </script>
 <template>
     <VSelect v-if="param.supportedValues" variant="solo-filled" :rules="[requiredRule]" v-model="newValue" :label="$t(param.name)"
-        :items="param.supportedValues" :item-value="item => item"  :item-title="item => `${$t(item as string)}`"
+        :items="param.supportedValues" :item-value="item => item"  :item-title="item => `${$t(item as string)}`" class="required"
     />
     <VTextField v-else :label="$t(param.name)" v-model="newValue" :type="paramType" :min="param.minValue" :max="param.maxValue"
-                    outlined dense variant="solo-filled" :rules="rules"
+                    outlined dense variant="solo-filled" :rules="rules" class="required"
     />
 </template>
 

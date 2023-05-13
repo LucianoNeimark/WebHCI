@@ -3,8 +3,8 @@
 import type { Routine } from '@/interfaces/routine.interface';
 import {onMounted, reactive} from 'vue'
 import RoutineCard from '@/components/cards/RoutineCard.vue';
-import { useRoutinesStore } from '../stores/routine.store';
-import { RoutinesApi } from '../api/routines.api';
+import { useRoutinesStore } from '@/stores/routine.store';
+import { RoutinesApi } from '@/api/routines.api';
 
     const routinesList = reactive<{routines: Routine[]}>({
         routines: []

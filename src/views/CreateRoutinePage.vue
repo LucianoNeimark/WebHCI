@@ -58,7 +58,7 @@ onMounted(async () => {
     <TransitionGroup name="action-card-list" tag="div">
       <ActionCard class="ma-2"
         v-for="(action, index) in actions" :key="action.id" :action="action.value" @update:action="onActionUpdate($event, index)" @delete:action="actions.splice(index, 1)"
-        :valid="action.valid" @update:valid="actions[index].valid = $event"
+        :valid="action.valid" @update:valid="actions[index].valid = $event" :edit-mode="true"
       />
     </TransitionGroup>
     <VContainer class="d-flex justify-center align-end">
