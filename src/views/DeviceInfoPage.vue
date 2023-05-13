@@ -2,7 +2,7 @@
 import ActionsHistoryTable from "@/components/tables/ActionsHistoryTable.vue";
 import { useDevicesStore } from '@/stores/device.store';
 import {useRoute, useRouter} from 'vue-router';
-import {computed, onMounted, reactive, ref, watch, watchEffect} from 'vue';
+import {computed, onMounted, reactive, ref, watch} from 'vue';
 import type { Device } from '@/interfaces/device.interface';
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
 import {DevicesApi} from "@/api/devices.api";
@@ -63,10 +63,13 @@ const changeRoom = async () => {
 const goToButtonDisabled = computed(() => changingRoom.value || device.value.room === undefined )
 
 onMounted(async () => {
-        await DevicesApi.reloadDevices()
-        await RoomsApi.reloadRooms()
-        setCurrentDevice(<string> route.params.id)
-        device.value = currentDevice.value
+    await DevicesApi.reloadDevices()
+    await RoomsApi.reloadRooms()
+    setCurrentDevice(<string> route.params.id)
+    device.value = currentDevice.value
+    if (device.value.room) {
+        room.value = device.value.room
+    }
 })
 </script>
 
