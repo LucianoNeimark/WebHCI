@@ -52,7 +52,11 @@ const router = createRouter({
       {
           path: '/routines/create',
           name: 'Crear Rutina',
-          component: CreateRoutinePage
+          component: CreateRoutinePage,
+          meta: {
+            name: () => "Nueva Rutina",
+            ancestors: [{ title: 'Rutinas', href: '/routines', disabled: false}]
+          }
       },
       {
           path: '/rooms',

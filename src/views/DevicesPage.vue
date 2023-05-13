@@ -28,12 +28,12 @@ onMounted(loadDevices)
 
 <template>
         <VRow>
-            <VBtn class="ma-5"
-                color="surface" rounded="xl"
+            <VBtn class="ma-5 add-button"
+                color="secondary" rounded="xl"
                 @click="dialog = true"
             >
-                Agregar Dispositivo
-                <VIcon icon="mdi-plus-circle-outline"></VIcon>
+                <VIcon icon="mdi-plus" class="px-2"/>
+                <span class="px-2">Agregar Dispositivo</span>
             </VBtn>
             <AddDeviceModal v-model:dialog="dialog" @device-added="reloadDevices"/>
         </VRow>

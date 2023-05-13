@@ -39,9 +39,9 @@ const rules = [
 
   <span>
       <VBtn v-if="!isEditing" @click="isEditing = true" class="add-button ml-5 mt-5 mb-3"
-            color="surface" rounded="xl">
-            {{ message }}
-          <VIcon icon="mdi-plus-circle-outline"></VIcon>
+            color="secondary" rounded="xl">
+            <VIcon icon="mdi-plus"/>
+            <span class="px-2">{{ message }}</span>
       </VBtn>
       <VForm class="ml-7 mt-3" v-model="valid">
           <VTextField v-if="isEditing" v-model="value"

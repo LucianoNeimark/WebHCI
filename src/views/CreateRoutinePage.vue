@@ -50,7 +50,7 @@ onMounted(async () => {
         />
       </VForm>
       <VSpacer/>
-      <VBtn class="save-changes" rounded="xl" @click="saveChanges" :disabled="!validRoutines" :color="saveChangesColor">
+      <VBtn class="add-button" rounded="xl" @click="saveChanges" :disabled="!validRoutines" :color="saveChangesColor">
           <VIcon icon="mdi-plus" class="mx-2"/>
           <span class="mx-2">Agregar Rutina</span>
       </VBtn>
@@ -70,9 +70,6 @@ onMounted(async () => {
 <style scoped>
 .name-input{
   width: 40vw  !important;
-}
-.save-changes{
-  height: 3vw !important;
 }
 .add-action-btn{
   min-height: 3vw !important;
