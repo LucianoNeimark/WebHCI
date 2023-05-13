@@ -25,5 +25,9 @@ export const useRoomsStore = defineStore('rooms', () => {
         currentRoom.value = rooms.items.get(roomId) as Room
     }
 
-    return { rooms, loadRoom, clearRooms, removeRoom, setCurrentRoom, currentRoom }
+    const roomWithSameNameExists = (roomName: string) => {
+        return Array.from(rooms.items.values()).some(room => room.name === roomName)
+    }
+
+    return { rooms, loadRoom, clearRooms, removeRoom, setCurrentRoom, currentRoom, roomWithSameNameExists }
 })

@@ -17,11 +17,11 @@ const emit = defineEmits(['valueSet'])
 
 const save = () => {
     if (!valid.value) return
-    isEditing.value = false
     emit('valueSet', value.value)
+    close()
 };
 
-const cancel = () => {
+const close = () => {
     isEditing.value = false
     value.value = ''
 };
@@ -40,7 +40,7 @@ const cancel = () => {
       <VForm v-model="valid">
           <VTextField v-if="isEditing" v-model="value"
                 append-inner-icon="mdi-check" @click:append-inner="save" :rules="validNameRules"
-                append-icon="mdi-close" @click:append="cancel" class="value-input">
+                append-icon="mdi-close" @click:append="close" class="value-input mt-5 ml-5">
           </VTextField>
       </VForm>
     </div>

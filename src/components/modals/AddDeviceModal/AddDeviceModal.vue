@@ -6,6 +6,8 @@ import {computed, type PropType, ref} from "vue";
   import {RoomsApi} from "@/api/rooms.api";
   import type {Room} from "@/interfaces/room.interface";
   import type {Device} from "@/interfaces/device.interface";
+import { useDevicesStore } from '../../../stores/device.store';
+import { useToast } from 'vue-toast-notification';
 
   const emit = defineEmits(['update:dialog', 'device-added'])
 
@@ -20,6 +22,8 @@ import {computed, type PropType, ref} from "vue";
   const name = ref()
   const room = ref<Room | String | undefined>(props.room)
   const type = ref()
+  const { deviceWithSameNameExists } = useDevicesStore()
+  const $toast = useToast()
   
   const show = computed({
       get() {
@@ -29,7 +33,7 @@ import {computed, type PropType, ref} from "vue";
         emit('update:dialog', value)
       }
   })
-
+  
   const inputErrorMessage = computed(() => {
       if (name.value?.length < 3 && name.value?.length > 0) 
         return 'El nombre debe tener al menos 3 caracteres'
@@ -42,30 +46,32 @@ import {computed, type PropType, ref} from "vue";
   const formReady = computed(() => inputErrorMessage.value === '' && name.value && type.value)
 
   const addDevice = async () => {
-      const newDevice = await DevicesApi.addDevice(type.value, name.value) as Device
-      if (!newDevice) return;
-      if(typeof room.value === "string") {
-          room.value = await RoomsApi.addRoom(room.value) as Room
-          if (!room.value) return;
-          await RoomsApi.reloadRooms()
-      }
-      if (room.value) {
-          if(typeof room.value === "string") {
-              room.value = await RoomsApi.addRoom(room.value) as Room
-              if (!room.value) return;
-              await RoomsApi.reloadRooms()
-          }
-          const addedDevice = await RoomsApi.addDeviceToRoom((room.value as Room).id, newDevice.id)
-          if (!addedDevice) return;
-      }
-      emit('update:dialog', false)
-      emit('device-added')
-      name.value = ""
-      type.value = ""
-      room.value = props.room || undefined
+    if (deviceWithSameNameExists(name.value)) {
+        $toast.error('Ya existe un dispositivo con ese nombre', { position: 'top-right' })
+        return;
+    }
+    const newDevice = await DevicesApi.addDevice(type.value, name.value) as Device
+    if (!newDevice) return;
+    if (typeof room.value === "string") {
+        room.value = await RoomsApi.addRoom(room.value) as Room
+        if (!room.value) return;
+        await RoomsApi.reloadRooms()
+    }
+    if (room.value) {
+        if (typeof room.value === "string") {
+            room.value = await RoomsApi.addRoom(room.value) as Room
+            if (!room.value) return;
+            await RoomsApi.reloadRooms()
+        }
+        const addedDevice = await RoomsApi.addDeviceToRoom((room.value as Room).id, newDevice.id)
+        if (!addedDevice) return;
+    }
+    emit('update:dialog', false)
+    emit('device-added')
+    name.value = ""
+    type.value = ""
+    room.value = props.room || undefined
   }
-
-
 
 </script>
 
@@ -111,7 +117,7 @@ import {computed, type PropType, ref} from "vue";
                                 ></VTextField>
                             </VRow>
                             <VRow  class="mb-2">
-                                <label>Habitacion</label>
+                                <label>Habitación</label>
                             </VRow>
                             <VRow>
                                 <RoomComboBox v-model="room"/>

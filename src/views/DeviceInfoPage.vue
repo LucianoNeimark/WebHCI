@@ -13,7 +13,7 @@ import type {Room} from "@/interfaces/room.interface";
 import {deviceTypes} from "@/utils/constants";
 
 const route = useRoute()
-const { devices, removeDevice, setCurrentDevice, currentDevice } = useDevicesStore();
+const { removeDevice, setCurrentDevice, currentDevice } = useDevicesStore();
 const router = useRouter()
 
 const device = reactive({
@@ -55,7 +55,6 @@ const changeRoom = async () => {
         }
     }
     await DevicesApi.reloadDevices()
-    //device.value = <Device> devices.items.get(<string> route.params.id)
     setCurrentDevice(<string> route.params.id)
     device.value = currentDevice.value
 }
@@ -97,19 +96,15 @@ onMounted(async () => {
                         <RoomComboBox v-model="room" :disabled="!changingRoom" />
                     </VCol>
                     <VCol class="px-0">
-                        <VBtn v-if="!changingRoom" @click="startChangeRoomAction" rounded="circle" class="ml-6" width="4vw" height="4vw">
-                            <VIcon size="2vw">mdi-pencil</VIcon>
-                        </VBtn>
-                        <VBtn v-if="changingRoom" @click="changeRoom" rounded="circle" class="ml-6" width="4vw" height="4vw">
-                            <VIcon size="2vw">mdi-check</VIcon>
-                        </VBtn>
+                        <VBtn icon="mdi-pencil" v-if="!changingRoom" @click="startChangeRoomAction" rounded="circle" class="ml-6" width="3vw" height="3vw"/>
+                        <VBtn icon="mdi-check" v-if="changingRoom" @click="changeRoom" rounded="circle" class="ml-6" width="3vw" height="3vw"/>
                     </VCol>
                 </VRow>
             </VCol>
         </VRow>
         <VRow>
-            <VExpansionPanels multiple>
-                <VExpansionPanel>
+            <VExpansionPanels multiple variant="accordion">
+                <VExpansionPanel class="width-auto" color="background" bg-color="background" elevation="1">
                     <VExpansionPanelTitle>Historial de acciones</VExpansionPanelTitle>
                     <VExpansionPanelText>
                         <ActionsHistoryTable :deviceId="device.value.id" :qty-uses="device.value.meta.qtyUses"/>
@@ -131,9 +126,4 @@ onMounted(async () => {
 .margin-label{
     margin-top: 0%;
 }
-.align-editable-label{
-    display: flex;
-   align-items: center;
-}
-
 </style>

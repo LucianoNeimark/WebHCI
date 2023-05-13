@@ -20,13 +20,10 @@ const roomDevices = reactive<{devices: Device[]}>({
 })
 
 const router = useRouter()
-const { rooms, removeRoom, setCurrentRoom, currentRoom } = useRoomsStore()
+const { removeRoom, setCurrentRoom, currentRoom } = useRoomsStore()
 const { getDevicesGroupByRoom } = useDevicesStore()
 
-const myRoomData = reactive({room:
-        //<Room> rooms.items.get(<string> route.params.id) || {id: '', name: ''}
-        <Room> {id: '', name: ''}
-})
+const myRoomData = reactive({room: {} as Room })
 
 onMounted(async () => await load())
 
@@ -35,7 +32,6 @@ const load = async () => {
     await DevicesApi.reloadDevices() // Ver si conviene hacerlo mas eficiente
     setCurrentRoom(<string> route.params.id)
     roomDevices.devices = getDevicesGroupByRoom().get(<string> route.params.id) || [];
-    //myRoomData.room = <Room> rooms.items.get(<string> route.params.id)
     myRoomData.room = currentRoom.value
 }
 
@@ -58,12 +54,14 @@ const deleteRoom = () => {
 </script>
 
 <template>
-    <VCol>
-        <VRow class="mt-1 ml-1">
-            <EditableLabel v-model:value="myRoomData.room.name"/>
-            <VBtn @click="promptModal" rounded="circle" class="ml-3" width="4vw" height="4vw">
-                            <VIcon size="2vw">mdi-delete</VIcon>
-            </VBtn>
+    <VCol v-if="myRoomData.room.id">
+        <VRow class="ma-3">
+            <div class="align-editable-label">
+                <EditableLabel v-model:value="myRoomData.room.name"/>
+            </div>
+            <div>
+              <VBtn icon="mdi-delete" class="delete-button ml-5" @click="promptModal"/>
+            </div>
         </VRow>
         <VRow class="ml-2 align-content-center">
             <!-- TODO: Sacar IDs y names para usar device en todos-->

@@ -9,7 +9,7 @@ import { RoomsApi } from '@/api/rooms.api';
 import { computed } from 'vue';
 import EditableButton from "@/components/custom-inputs/EditableButton.vue";
 
-const { rooms } = useRoomsStore()
+const { rooms, roomWithSameNameExists } = useRoomsStore()
 const { getDevicesGroupByRoom } = useDevicesStore()
 import { useToast } from 'vue-toast-notification';
 import {deviceTypes} from "@/utils/constants";
@@ -36,6 +36,10 @@ const roomItems = computed(() => {
 onMounted(loadPage)
 
 const addRoom = async (name: string) => {
+    if (roomWithSameNameExists(name)) {
+        $toast.error('Ya existe una habitación con ese nombre', { position: 'top-right' })
+        return
+    }
     const addedRoom = await RoomsApi.addRoom(name)
     if (!addedRoom) return
     await RoomsApi.reloadRooms()

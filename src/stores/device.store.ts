@@ -51,6 +51,10 @@ export const useDevicesStore = defineStore('devices', () => {
     currentDevice.value = devices.items.get(deviceId) as Device
   }
 
+  const deviceWithSameNameExists = (deviceName: string) => {
+    return Array.from(devices.items.values()).some(device => device.name === deviceName)
+  }
+
   return {
       devices,
       currentDevice,
@@ -60,6 +64,7 @@ export const useDevicesStore = defineStore('devices', () => {
       getDevicesGroupByType,
       clearDevices,
       getTopDevices,
-      getDevicesGroupByRoom
+      getDevicesGroupByRoom,
+      deviceWithSameNameExists
   }
 })
