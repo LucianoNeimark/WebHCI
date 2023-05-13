@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import {reactive, ref} from 'vue'
+import {reactive} from 'vue'
 import type { Room } from "@/interfaces/room.interface";
 
 export const useRoomsStore = defineStore('rooms', () => {

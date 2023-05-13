@@ -2,7 +2,7 @@
 import SmallFrameCard from "@/components/cards/SmallFrameCard.vue";
 import type { Room } from "@/interfaces/room.interface";
 import type { PropType } from "vue";
-import {computed, reactive} from "vue";
+import {reactive} from "vue";
 import { useDevicesStore } from "@/stores/device.store";
 
 const props = defineProps({

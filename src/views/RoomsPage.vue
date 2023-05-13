@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {onMounted, reactive, ref} from 'vue'
+import {onMounted, reactive} from 'vue'
 import { useDevicesStore } from "@/stores/device.store";
 import { DevicesApi } from "@/api/devices.api";
 import type { Device } from "@/interfaces/device.interface";

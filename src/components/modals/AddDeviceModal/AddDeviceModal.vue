@@ -1,51 +1,42 @@
 <script setup lang="ts">
-import {computed, type PropType, ref} from "vue";
-  import { DevicesApi } from '@/api/devices.api';
-  import DeviceTypePicker from "@/components/modals/AddDeviceModal/DeviceTypePicker.vue";
-  import RoomComboBox from "@/components/custom-inputs/RoomComboBox.vue";
-  import {RoomsApi} from "@/api/rooms.api";
-  import type {Room} from "@/interfaces/room.interface";
-  import type {Device} from "@/interfaces/device.interface";
-import { useDevicesStore } from '../../../stores/device.store';
+import { computed, type PropType, ref } from "vue";
+import { DevicesApi } from '@/api/devices.api';
+import DeviceTypePicker from "@/components/modals/AddDeviceModal/DeviceTypePicker.vue";
+import RoomComboBox from "@/components/custom-inputs/RoomComboBox.vue";
+import { RoomsApi } from "@/api/rooms.api";
+import type { Room } from "@/interfaces/room.interface";
+import type { Device } from "@/interfaces/device.interface";
+import { useDevicesStore } from '@/stores/device.store';
 import { useToast } from 'vue-toast-notification';
+import { validNameRules } from '@/utils/rules';
 
-  const emit = defineEmits(['update:dialog', 'device-added'])
+const emit = defineEmits(['update:dialog', 'device-added'])
 
-  const props = defineProps({
+const props = defineProps({
     dialog: {
         type: Boolean,
         required: true
     },
     room: Object as PropType<Room>
-  })
+})
 
-  const name = ref()
-  const room = ref<Room | String | undefined>(props.room)
-  const type = ref()
-  const { deviceWithSameNameExists } = useDevicesStore()
-  const $toast = useToast()
-  
-  const show = computed({
-      get() {
+const name = ref()
+const room = ref<Room | String | undefined>(props.room)
+const type = ref()
+const valid = ref(true)
+const { deviceWithSameNameExists } = useDevicesStore()
+const $toast = useToast()
+
+const show = computed({
+    get() {
         return props.dialog
-      },
-      set(value) {
+    },
+    set(value) {
         emit('update:dialog', value)
-      }
-  })
-  
-  const inputErrorMessage = computed(() => {
-      if (name.value?.length < 3 && name.value?.length > 0) 
-        return 'El nombre debe tener al menos 3 caracteres'
-      else if (name.value?.length > 60) 
-        return 'El nombre debe tener menos de 60 caracteres'
-      else if (!/^[a-zA-Z0-9_ ]*$/.test(name.value)) 
-        return 'El nombre debe tener letras, números, _ y espacios únicamente'
-      return ''
-  })
-  const formReady = computed(() => inputErrorMessage.value === '' && name.value && type.value)
+    }
+})
 
-  const addDevice = async () => {
+const addDevice = async () => {
     if (deviceWithSameNameExists(name.value)) {
         $toast.error('Ya existe un dispositivo con ese nombre', { position: 'top-right' })
         return;
@@ -71,7 +62,11 @@ import { useToast } from 'vue-toast-notification';
     name.value = ""
     type.value = ""
     room.value = props.room || undefined
-  }
+}
+
+const validForm = computed(() => {
+    return valid.value && type.value
+}) 
 
 </script>
 
@@ -83,67 +78,69 @@ import { useToast } from 'vue-toast-notification';
             scrim="true"
     >
         <VCard color="primary">
-            <VRow class="mt-3 justify-space-between">
-                <VCardTitle class="ml-4">
-                    <span class="text-h5 bold">Agregar Dispositivo</span>
-                </VCardTitle>
+            <VForm v-model="valid">
+                <VRow class="mt-3 justify-space-between">
+                    <VCardTitle class="ml-4">
+                        <span class="text-h5 bold">Agregar Dispositivo</span>
+                    </VCardTitle>
+                    <VCardActions>
+                        <VSpacer></VSpacer>
+                        <VBtn
+                            @click="emit('update:dialog', false)"
+                            class="mr-3"
+                        >
+                            <VIcon icon="mdi:mdi-close" size="2vw"></VIcon>
+                        </VBtn>
+                    </VCardActions>
+                </VRow>
+                <VCardText>
+                    <VContainer>
+                        <VRow>
+                            <VCol>
+                                <VRow class="mb-2 required">
+                                    <label>Nombre</label>
+                                </VRow>
+                                <VRow>
+                                    <VTextField
+                                            v-model="name"
+                                            class="align-self-center"
+                                            label="Nombre"
+                                            placeholder="Nuevo dispositivo"
+                                            clearable
+                                            required
+                                            :rules="validNameRules"
+                                            bg-color="lightSurface"
+                                    ></VTextField>
+                                </VRow>
+                                <VRow  class="mb-2">
+                                    <label>Habitación</label>
+                                </VRow>
+                                <VRow>
+                                    <RoomComboBox v-model="room"/>
+                                </VRow>
+                            </VCol>
+                            <VCol class="justify-center">
+                                <VRow class="required">
+                                    <label class="ml-6">Tipo de dispositivo</label>
+                                </VRow>
+                                <VRow>
+                                    <DeviceTypePicker :selectedTypeId="type" @pick="(value: string) => type = value"/>
+                                </VRow>
+                            </VCol>
+                        </VRow>
+                    </VContainer>
+                </VCardText>
                 <VCardActions>
                     <VSpacer></VSpacer>
                     <VBtn
-                        @click="emit('update:dialog', false)"
-                        class="mr-3"
+                            class="add ma-3"
+                            @click="addDevice"
+                            :disabled="!validForm"
                     >
-                        <VIcon icon="mdi:mdi-close" size="2vw"></VIcon>
+                        Agregar
                     </VBtn>
                 </VCardActions>
-            </VRow>
-            <VCardText>
-                <VContainer>
-                    <VRow>
-                        <VCol cols="6">
-                            <VRow class="mb-2 required">
-                                <label>Nombre</label>
-                            </VRow>
-                            <VRow>
-                                <VTextField
-                                        v-model="name"
-                                        class="align-self-center"
-                                        label="Nombre"
-                                        placeholder="Nuevo dispositivo"
-                                        clearable
-                                        required
-                                        :error-messages="inputErrorMessage"
-                                        bg-color="lightSurface"
-                                ></VTextField>
-                            </VRow>
-                            <VRow  class="mb-2">
-                                <label>Habitación</label>
-                            </VRow>
-                            <VRow>
-                                <RoomComboBox v-model="room"/>
-                            </VRow>
-                        </VCol>
-                        <VCol cols="6" class="justify-center">
-                            <VRow class="required">
-                                <label class="ml-6">Tipo de dispositivo</label>
-                            </VRow>
-                            <VRow>
-                                <DeviceTypePicker :selectedTypeId="type" @pick="(value: string) => type = value"/>
-                            </VRow>
-                        </VCol>
-                    </VRow>
-                </VContainer>
-            </VCardText>
-            <VCardActions>
-                <VSpacer></VSpacer>
-                <VBtn
-                        class="add ma-3"
-                        @click="addDevice"
-                        :disabled="!formReady"
-                >
-                    Agregar
-                </VBtn>
-            </VCardActions>
+            </VForm>
         </VCard>
     </VDialog>
 </template>

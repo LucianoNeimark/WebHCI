@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import FrameCard from "@/components/cards/FrameCard.vue"
 import {computed, inject, type Ref, type PropType, reactive, watch} from "vue";
 import { type Refrigerator, changeTemperatureRefrigerator, changeFreezerTemperatureRefrigerator, changeModeRefrigerator, setMode} from "@/interfaces/models/refrigerator";
 import type { Device } from '@/interfaces/models/device'

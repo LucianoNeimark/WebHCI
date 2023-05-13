@@ -1,7 +1,7 @@
 
 <script setup lang="ts">
 import type { Routine } from '@/interfaces/routine.interface';
-import {onMounted, reactive, ref} from 'vue'
+import {onMounted, reactive} from 'vue'
 import RoutineCard from '@/components/cards/RoutineCard.vue';
 import { useRoutinesStore } from '../stores/routine.store';
 import { RoutinesApi } from '../api/routines.api';

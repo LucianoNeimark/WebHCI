@@ -1,9 +1,8 @@
 <script setup lang="ts">
 
 import FrameCard from "@/components/cards/FrameCard.vue"
-import {computed, inject, type PropType, reactive, watch, type Ref} from "vue";
+import {inject, type PropType, reactive, watch, type Ref} from "vue";
 import { type Refrigerator, changeTemperatureRefrigerator, changeFreezerTemperatureRefrigerator} from "@/interfaces/models/refrigerator";
-import type { Device } from '@/interfaces/models/device'
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
 import { CONSTANTS } from "@/utils/constants";
 import type { Event } from "@/interfaces/event.interface";

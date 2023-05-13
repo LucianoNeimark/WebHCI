@@ -3,7 +3,7 @@ import {DevicesApi} from "@/api/devices.api";
 import {type PropType, reactive, computed, watch, ref} from "vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
 import SpeakerPlayer from "@/components/custom-inputs/SpeakerPlayer.vue";
-import {type Speaker, type SpeakerSong, previousSongSpeaker, nextSongSpeaker, toggleSpeaker, changeVolumeSpeaker, setGenreSpeaker, getPlaylistSpeaker, stopSpeaker} from "@/interfaces/models/speaker";
+import {type Speaker, type SpeakerSong, previousSongSpeaker, nextSongSpeaker, toggleSpeaker, changeVolumeSpeaker, setGenreSpeaker, getPlaylistSpeaker } from "@/interfaces/models/speaker";
 import { CONSTANTS } from '@/utils/constants'
 import type { Device } from '@/interfaces/models/device'
 import { onMounted } from "vue";

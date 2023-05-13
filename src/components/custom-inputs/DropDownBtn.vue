@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import type { PropType} from 'vue'
 import type { VMenu } from 'vuetify/lib/components';
 
 const props = defineProps({
