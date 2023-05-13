@@ -32,7 +32,7 @@ const cancel = () => {
 <template>
 
   <div>
-      <VBtn v-if="!isEditing" @click="isEditing = true" class="add-button"
+      <VBtn v-if="!isEditing" @click="isEditing = true" class="add-button ma-5"
             color="secondary" rounded="xl">
             <VIcon icon="mdi-plus"/>
             <span class="px-2">{{ message }}</span>
