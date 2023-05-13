@@ -11,6 +11,8 @@ export class RoutinesApi{
     static async addRoutine(name : string, actions : Action[]){
         const routine = new RoutineCreationDTO(name, actions)
         const res = await Api.post("/routines", routine)
+        if (!res.ok) this.$toast.error("Error al crear la rutina", { position: 'top-right' });
+        else this.$toast.success(`Rutina ${name} creada satisfactoriamente`, { position: 'top-right' });
         const { result } = await res.json()
         return result
     }
@@ -25,6 +27,8 @@ export class RoutinesApi{
 
     static async executeRoutine(id : string) : Promise<string>{
         const res = await Api.put(`/routines/${id}/execute`, {})
+        if (!res.ok) this.$toast.error("Error al ejecutar la rutina", { position: 'top-right' });
+        else this.$toast.success(`Rutina ejecutada satisfactoriamente`, { position: 'top-right' });
         const { result } = await res.json();
         return result;
     }
@@ -35,6 +39,7 @@ export class RoutinesApi{
         else{
             const { removeRoutine } = useRoutinesStore();
             removeRoutine(id);
+            this.$toast.success(`Rutina eliminada satisfactoriamente`, { position: 'top-right' });
         }
         const { result } = await res.json();
         return result;
@@ -43,6 +48,7 @@ export class RoutinesApi{
     static async updateRoutine(routine : Routine){
         const res = await Api.put(`/routines/${routine.id}`, new RoutineUpdateDTO(routine))
         if (!res.ok) this.$toast.error("Error al modificar la rutina", { position: 'top-right' });
+        else this.$toast.success(`Nombre de rutina cambiado a ${routine.name}`, { position: 'top-right' });
         const { result } = await res.json();
         return result;
     }

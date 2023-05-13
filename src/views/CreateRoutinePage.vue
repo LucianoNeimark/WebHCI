@@ -7,7 +7,9 @@ import ActionCard from "@/components/cards/ActionCard.vue";
 import type {Action} from "@/interfaces/action.interface";
 import {RoutinesApi} from "@/api/routines.api";
 import {validNameRules} from "@/utils/rules";
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 const name = ref("")
 const validName = ref(false)
 const actionId = ref(1)
@@ -20,11 +22,12 @@ const addAction = () => {
     actions.push({id : actionId.value, value : undefined, valid : false})
 }
 
-const saveChangesColor = computed(() => validRoutines.value? "success" : "gray")
-const saveChanges = async () => {
+const createButtonColor = computed(() => validRoutines.value? "success" : "gray")
+const createRoutine = async () => {
     if(validRoutines.value) {
         const actionList = actions.map(action => action.value) as Action[]
-        await RoutinesApi.addRoutine(name.value, actionList)
+        const result = await RoutinesApi.addRoutine(name.value, actionList)
+        await router.push(`/routines/${result.id}`)
     }
 }
 const onActionUpdate = (action : Action, index : number) => {
@@ -50,7 +53,7 @@ onMounted(async () => {
         />
       </VForm>
       <VSpacer/>
-      <VBtn class="add-button" rounded="xl" @click="saveChanges" :disabled="!validRoutines" :color="saveChangesColor">
+      <VBtn class="add-button" rounded="xl" @click="createRoutine" :disabled="!validRoutines" :color="createButtonColor">
           <VIcon icon="mdi-plus" class="mx-2"/>
           <span class="mx-2">Agregar Rutina</span>
       </VBtn>
