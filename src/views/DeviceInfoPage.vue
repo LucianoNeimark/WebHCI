@@ -72,14 +72,21 @@ onMounted(async () => {
     await RoomsApi.reloadRooms()
     setCurrentDevice(<string> route.params.id)
     device.value = currentDevice.value
-    if (device.value.room) {
+    
+    if(!device.value){
+        router.push('/notfound')
+    }
+    
+    if (device.value?.room) {
         room.value = device.value.room
     }
+
+    
 })
 </script>
 
 <template>
-    <VCol v-if="device.value.id">
+    <VCol v-if="device.value?.id">
         <VRow class="ma-3">
             <div class="align-editable-label">
                 <EditableLabel :value="device.value.name" @update:value="updateName" :icon="deviceTypes[device.value.type.id].icon"/>

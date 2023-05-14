@@ -39,7 +39,7 @@ const router = createRouter({
           name: 'Dispositivo',
           component: DeviceInfoPage,
           meta: {
-              name: () => useDevicesStore()?.currentDevice?.value.name || "Dispositivo",
+              name: () => useDevicesStore()?.currentDevice?.value?.name || "Dispositivo",
               ancestors: [{ title: 'Dispositivos', href: '/devices', disabled: false }]
           }
       },
@@ -57,7 +57,7 @@ const router = createRouter({
           name: 'Rutina',
           component: RoutineInfoPage,
           meta: {
-              name: () => useRoutinesStore()?.currentRoutine?.value.name || "Rutina",
+              name: () => useRoutinesStore()?.currentRoutine?.value?.name || "Rutina",
               ancestors: [{ title: 'Rutinas', href: '/routines', disabled: false}]
           }
       },
@@ -84,7 +84,7 @@ const router = createRouter({
           name: 'Habitación',
           component: RoomInfoPage,
           meta: {
-              name: () => useRoomsStore()?.currentRoom?.value.name || "Habitación",
+              name: () => useRoomsStore()?.currentRoom?.value?.name || "Habitación",
               ancestors: [{ title: 'Habitaciones', href: '/rooms', disabled: false }]
           }
       },

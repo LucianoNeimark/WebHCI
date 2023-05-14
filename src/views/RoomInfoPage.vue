@@ -29,8 +29,13 @@ const load = async () => {
     await RoomsApi.reloadRooms() // Ver si conviene hacerlo mas eficiente
     await DevicesApi.reloadDevices() // Ver si conviene hacerlo mas eficiente
     setCurrentRoom(<string> route.params.id)
+    
     roomDevices.devices = getDevicesGroupByRoom().get(<string> route.params.id) || [];
     myRoomData.room = currentRoom.value
+
+    if (myRoomData.room === undefined) {
+        router.push('/notfound')
+    }
 }
 await load()
 
@@ -52,7 +57,7 @@ const deleteRoom = () => {
 </script>
 
 <template>
-    <VCol v-if="myRoomData.room.id">
+    <VCol v-if="myRoomData.room?.id">
         <VRow class="ma-3">
             <div class="align-editable-label">
                 <EditableLabel v-model:value="myRoomData.room.name"/>

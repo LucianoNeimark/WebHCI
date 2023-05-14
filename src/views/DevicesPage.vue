@@ -22,6 +22,8 @@ const reloadDevices = () => {
 }
 onMounted(loadDevices)
 
+
+
 </script>
 
 <template>

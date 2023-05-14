@@ -25,6 +25,10 @@ await ActionTemplatesApi.reloadActionTypes()
 setCurrentRoutine(<string> route.params.id)
 routine.value = currentRoutine.value
 
+if (!routine.value){
+    router.push('/notfound')
+}
+
 
 const update = async (value: string) => {
     if (routineWithSameNameExists(value)) {
@@ -50,7 +54,7 @@ const deleteRoutine = async () => {
     <VContainer class="mx-0 py-1 px-6">
         <VRow class="ma-3 d-flex align-center">
             <div>
-                <EditableLabel class="align-editable-label" :value="routine.value.name" @update:value="update"/>
+                <EditableLabel class="align-editable-label" :value="routine.value?.name" @update:value="update"/>
             </div>
             <div>
                 <VBtn color="lightSurface" icon="mdi-delete" class="delete-button ml-5" @click="showConfirmationModal = true"/>
@@ -64,7 +68,7 @@ const deleteRoutine = async () => {
         </VRow>
         <TransitionGroup name="action-card-list" tag="div">
             <ActionCard class="ma-2"
-                v-for="action in routine.value.actions" :action="action" :key="action.actionName"
+                v-for="action in routine.value?.actions" :action="action" :key="action.actionName"
             />
         </TransitionGroup>
     </VContainer>
