@@ -50,7 +50,7 @@ export class DevicesApi {
         const res = await Api.put(`/devices/${device.id}`, new DeviceUpdateDTO(device));
         const { result, error } = await res.json();
         if (!res.ok) displayErrorMsg(DevicesApi.$toast, "Error al modificar el dispositivo", error?.code);
-        else this.$toast.success(`Dispositivo ${device.name} modificado satisfactoriamente`, { position: 'top-right' });
+        // else this.$toast.success(`Dispositivo ${device.name} modificado satisfactoriamente`, { position: 'top-right' });
         return result;
     }
 

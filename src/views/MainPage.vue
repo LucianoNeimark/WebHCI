@@ -47,7 +47,7 @@ onMounted(async () => {
     <VCol>
         <VCol>
             <VRow class="justify-space-between">
-                <h2 class="bold pl-4">Dispositivos más utilizados</h2>
+                <h2 class="bold pl-4">Dispositivos</h2>
                 <VListItem class="more-devices" to="devices">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
             </VRow>
             <VRow class="align-content-center">
@@ -67,7 +67,7 @@ onMounted(async () => {
 
         <VCol>
             <VRow class="justify-space-between">
-                <h2 class="justify-center bold pl-4">Rutinas más utilizadas</h2>
+                <h2 class="justify-center bold pl-4">Rutinas</h2>
                 <VListItem class="more-devices" to="routines">Ver más<VIcon icon="mdi:mdi-chevron-double-right"/></VListItem>
             </VRow>
             <VRow>

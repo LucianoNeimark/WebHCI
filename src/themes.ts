@@ -5,8 +5,9 @@ export const defaultTheme = {
         primary: '#2D4552', //azul navbar
         secondary:'#50AB64', //verde select
         tertiary:'#89D8CB', //verde cards
-        footer: '#1a282f',
+        footer: '#1A282f',
         surface: '#D7FDFF',
-        lightSurface: '#FFFFFF'
+        lightSurface: '#FFFFFF', 
+        error: '#FF0000',
     }
 }
