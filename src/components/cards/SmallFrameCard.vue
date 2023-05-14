@@ -60,7 +60,7 @@ const typesLimited = computed(() => props.types.slice(0, 5))
                 </VCol>
             </VRow>
             <VRow class="flex-column mb-2">
-                <VBtn bottom rounded="xl" size="small" color="lightSurface" class="align-self-center" :to="`${optionsUrlBase}/${id}`">Mas opciones</VBtn>
+                <VBtn bottom rounded="xl" size="small" color="lightSurface" class="align-self-center" :to="`${optionsUrlBase}/${id}`">Más opciones</VBtn>
             </VRow>
         </VContainer>
     </VCard>
