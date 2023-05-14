@@ -25,7 +25,7 @@ const props = defineProps({
                 v-for="(item, i) in items"
                 :key="i"
                 @click="$emit('itemClicked', item)">
-                <VListItemTitle>{{ item }}</VListItemTitle>
+                <VListItemTitle>{{ $t(item) }}</VListItemTitle>
               </VListItem>
             </VList>
           </VMenu>
