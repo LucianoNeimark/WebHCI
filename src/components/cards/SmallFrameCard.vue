@@ -28,7 +28,7 @@ const typesLimited = computed(() => props.types.slice(0, 5))
 </script>
 
 <template>
-    <VCard class="ma-3 pa-3 pb-2" color="tertiary" rounded="xl" height="20vh" width="25vw">
+    <VCard class="ma-3 pa-3 pb-2" color="tertiary" rounded="xl" height="22vh" width="25vw">
         <VContainer>
             <VRow>
                 <div>{{name}}</div>
@@ -54,7 +54,7 @@ const typesLimited = computed(() => props.types.slice(0, 5))
                     </VCard>
                 </VCol>
                 <VCol cols="3" align-self="center">
-                    <VBtn v-if="icon" size="4vw" rounded="circle" @click="$emit('routine')">
+                    <VBtn v-if="icon" size="4vw" color="lightSurface" rounded="circle" @click="$emit('routine')">
                         <VIcon :icon="icon" size="3vw"/>
                     </VBtn>
                 </VCol>

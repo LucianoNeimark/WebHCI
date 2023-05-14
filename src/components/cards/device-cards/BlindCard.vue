@@ -45,8 +45,8 @@ watch(() => MSG?.value, async (newMSG) => {
 <template>
     <FrameCard :id="blind.id" :name="blind.name" icon="mdi-blinds-horizontal">
       <VRow class="mt-3 buttons-align justify-space-evenly">
-        <VBtn rounded="xl" class="btn-large" @click="open"><VIcon icon="mdi-blinds-horizontal" size="4.5vw"/></VBtn>
-        <VBtn rounded="xl" class="btn-large" @click="close"><VIcon icon="mdi-blinds-horizontal-closed" size="4.5vw"/></VBtn>
+        <VBtn rounded="xl" color="lightSurface" class="btn-large" @click="open"><VIcon icon="mdi-blinds-horizontal" size="4.5vw"/></VBtn>
+        <VBtn rounded="xl" color="lightSurface" class="btn-large" @click="close"><VIcon icon="mdi-blinds-horizontal-closed" size="4.5vw"/></VBtn>
       </VRow>
       <VRow class="px-5 mt-5">
         <CardSlider v-model:value="blind.state.level" :min="0" :max="100" icon="mdi-blinds"

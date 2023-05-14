@@ -118,7 +118,7 @@ defineExpose({
           </VCol>
           <VCol class="d-flex" v-if="editMode">
               <VSpacer/>
-              <VBtn icon="mdi-delete" class="delete-button ml-5" @click="$emit('delete:action')"/>
+              <VBtn icon="mdi-delete" color="lightSurface" class="delete-button ml-5" @click="$emit('delete:action')"/>
           </VCol>
         </VRow>
         <VExpandTransition>

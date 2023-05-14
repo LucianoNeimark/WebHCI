@@ -50,7 +50,7 @@ const deleteRoutine = async () => {
     <VContainer class="mx-0 py-1 px-6">
         <VRow class="ma-3 d-flex align-editable-label">
             <EditableLabel :value="routine.value.name" @update:value="update"/>
-            <VBtn icon="mdi-delete" class="delete-button ml-5" @click="showConfirmationModal = true"/>
+            <VBtn color="lightSurface" icon="mdi-delete" class="delete-button ml-5" @click="showConfirmationModal = true"/>
             <VSpacer/>
             <VBtn class="add-button" rounded="xl" @click="executeRoutine" color="success">
                 <VIcon icon="mdi-play" class="mx-2"/>

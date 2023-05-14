@@ -37,26 +37,9 @@ export const toggleOven = (oven: Oven) => {
     oven.state.status = oven.state.status === 'on' ? 'off' : 'on';
 }
 
-export const setHeat = (oven : Oven , heat : string) => {
-    oven.state.heat = heat
-}
-
-export const setGrill = (oven : Oven , grill : string) => {
-    oven.state.grill = grill
-}
-
-export const setTemp = (oven : Oven , temp : number) => {
-    oven.state.temperature = temp
-}
-
-export const setConv = (oven : Oven , conv : string) => {
-    oven.state.convection = conv
-}
-
 export const changeModes = (oven : Oven, type : string,  mode : string) : Promise <string> => {
     return DevicesApi.executeAction(oven.id, `set${type}`, [mode])
 }
-
 
 export const changeOnOf = (oven : Oven, status: string) : Promise <string> => {
     if (status === 'on') {
@@ -68,9 +51,11 @@ export const changeOnOf = (oven : Oven, status: string) : Promise <string> => {
 }
 
 export const changeOvenTemp = (oven : Oven, temp : number) => {
-    return DevicesApi.executeAction(oven.id, 'setTemperature', [temp])
+    let limitTemp = temp
+    if(temp < 90)
+        limitTemp = 90
+    else if(temp > 230)
+        limitTemp = 230
+    return DevicesApi.executeAction(oven.id, 'setTemperature', [limitTemp]) 
 }
 
-// export const changeAngle = (ac : AC, axis: string, angle : string) : Promise <string> => {
-//     return DevicesApi.executeAction(ac.id, 'set'+axis+'Swing', [angle])
-// }

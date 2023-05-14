@@ -26,7 +26,12 @@ export const changeLampStatus = (lamp: Lamp, status: string): Promise<string> =>
 }
 
 export const changeLampBrightness = (lamp: Lamp, brightness: number): Promise<string> => {
-  return DevicesApi.executeAction(lamp.id, 'setBrightness', [ brightness ]);
+  let limitBrightness = brightness
+    if(brightness < 0)
+      limitBrightness = 0
+    else if(brightness > 100)
+      limitBrightness = 100
+  return DevicesApi.executeAction(lamp.id, 'setBrightness', [ limitBrightness ]);
 }
 
 export const changeLampColor = (lamp: Lamp, color: string): Promise<string> => {

@@ -6,7 +6,7 @@ import {computed, inject, type PropType, reactive, type Ref, watch} from "vue";
 import {useDevicesStore} from "@/stores/device.store";
 import type {Event} from "@/interfaces/event.interface";
 import {CONSTANTS} from "@/utils/constants";
-
+import { SizesEnum } from "@/enums/enums";
 
 const props = defineProps({
   device: {
@@ -39,8 +39,8 @@ watch(() => MSG?.value, async (newMSG) => {
 <template>
     <FrameCard :id="door.id" :name="door.name" icon="mdi-door">
         <VRow class="align-content-center justify-space-evenly mb-1">
-            <ToggleButton :selected="locked" icon-selected="mdi-lock-open" icon="mdi-lock" @click="() => toggleLock(door)"/>
-            <ToggleButton :selected="status" icon-selected="mdi-door-open" icon="mdi-door-closed" @click="() => toggleStatus(door)"/>
+            <ToggleButton class="btn-x-large" :selected="locked" icon-selected="mdi-lock-open" icon="mdi-lock" iconSize="5vw" @click="() => toggleLock(door)"/>
+            <ToggleButton class="btn-x-large" :selected="status" icon-selected="mdi-door-open" icon="mdi-door-closed" iconSize="5vw" @click="() => toggleStatus(door)"/>
         </VRow>
     </FrameCard>
 </template>

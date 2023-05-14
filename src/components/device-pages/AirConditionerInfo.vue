@@ -63,13 +63,13 @@ watch(() => ac.state.fanSpeed, async (newStatus : string, oldStatus : string) =>
             </VRow>
             <VRow class="mt-10 mb-3">
                 <VCol class="d-flex justify-center">
-                    <DropDownBtn :selected="ac.state.fanSpeed" :items="speedOpts" text="Velocidad Ventilador" @itemClicked="(value : string) => ac.state.fanSpeed = value" />
+                    <DropDownBtn color="lightSurface" :selected="ac.state.fanSpeed" :items="speedOpts" text="Velocidad Ventilador" @itemClicked="(value : string) => ac.state.fanSpeed = value" />
                 </VCol>
                 <VCol class="d-flex justify-center">
-                    <DropDownBtn :selected="ac.state.verticalSwing" :items="verticalOpts" text="Aspas verticales"  @itemClicked="(value : string) => ac.state.verticalSwing = value" />
+                    <DropDownBtn color="lightSurface" :selected="ac.state.verticalSwing" :items="verticalOpts" text="Aspas verticales"  @itemClicked="(value : string) => ac.state.verticalSwing = value" />
                 </VCol>
                 <VCol class="d-flex justify-center">
-                    <DropDownBtn :selected="ac.state.horizontalSwing" :items="horizontalOpts" text="Aspas horizontales" @itemClicked="(value : string) => ac.state.horizontalSwing = value" />
+                    <DropDownBtn color="lightSurface" :selected="ac.state.horizontalSwing" :items="horizontalOpts" text="Aspas horizontales" @itemClicked="(value : string) => ac.state.horizontalSwing = value" />
                 </VCol>
             </VRow>
         </VContainer>

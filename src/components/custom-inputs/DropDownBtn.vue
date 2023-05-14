@@ -5,7 +5,8 @@ import type { VMenu } from 'vuetify/lib/components';
 const props = defineProps({
   items: { type: Array<string>, required: true },
   text: { type: String, required: true },
-  selected: {type: String, required: true}
+  selected: {type: String, required: true},
+  color: {type: String, default: 'lightSurface'}
 })
 
 </script>
@@ -14,7 +15,7 @@ const props = defineProps({
     <div>
         <VMenu>
             <template v-slot:activator="{ props }">
-                <VBtn rounded="xl" v-bind="props" class="hola"> 
+                <VBtn :color="color" rounded="xl" v-bind="props" class="hola"> 
                   {{ text }}
                 </VBtn>
             </template>

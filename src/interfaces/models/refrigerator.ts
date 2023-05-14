@@ -14,11 +14,21 @@ export interface Refrigerator extends Device {
 }
 
 export const changeTemperatureRefrigerator = (refrigerator : Refrigerator, temp : number) => {
-    return DevicesApi.executeAction(refrigerator.id, 'setTemperature', [temp])
+    let limitTemp = temp
+    if(temp < 2)
+        limitTemp = 2
+    else if(temp > 8)
+        limitTemp = 8
+    return DevicesApi.executeAction(refrigerator.id, 'setTemperature', [limitTemp])
 }
 
 export const changeFreezerTemperatureRefrigerator = (refrigerator : Refrigerator, temp : number) => {
-    return DevicesApi.executeAction(refrigerator.id, 'setFreezerTemperature', [temp])
+    let limitTemp = temp
+    if(temp < -20)
+        limitTemp = -20
+    else if(temp > -8)
+        limitTemp = -8
+    return DevicesApi.executeAction(refrigerator.id, 'setFreezerTemperature', [limitTemp])
 }
 
 export const changeModeRefrigerator = (refrigerator: Refrigerator, mode: string) : Promise <string> => {

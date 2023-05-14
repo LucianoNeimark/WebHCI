@@ -85,16 +85,15 @@ onMounted(async () => {
                 <EditableLabel :value="device.value.name" @update:value="updateName" :icon="deviceTypes[device.value.type.id].icon"/>
             </div>
             <div>
-              <VBtn icon="mdi-delete" class="delete-button ml-5" @click="promptModal"/>
+              <VBtn color="lightSurface" icon="mdi-delete" class="delete-button ml-5" @click="promptModal"/>
             </div>
         </VRow>
         <VRow class="device-row ma-5">
             <component :is="deviceTypes[device.value.type.id].info" :device="device.value" class="device mr-10" ></component>
             <VCol>
                 <VRow>
-                    <VBtn class="mb-3" :disabled="goToButtonDisabled" :to="`/rooms/${device.value.room?.id}`">
+                    <VBtn color="lightSurface" rounded="xl" size="small" class="mb-3" :disabled="goToButtonDisabled" :to="`/rooms/${device.value.room?.id}`">
                         Ir a la habitación
-                        <VIcon>mdi-arrow-right</VIcon>
                     </VBtn>
                 </VRow>
                 <VRow class="align-content-center">
@@ -102,8 +101,8 @@ onMounted(async () => {
                         <RoomComboBox v-model="room" :disabled="!changingRoom" />
                     </VCol>
                     <VCol class="px-0">
-                        <VBtn icon="mdi-pencil" v-if="!changingRoom" @click="startChangeRoomAction" rounded="circle" class="ml-6" width="3vw" height="3vw"/>
-                        <VBtn icon="mdi-check" v-if="changingRoom" @click="changeRoom" rounded="circle" class="ml-6" width="3vw" height="3vw"/>
+                        <VBtn color="lightSurface" icon="mdi-pencil" v-if="!changingRoom" @click="startChangeRoomAction" rounded="circle" class="ml-6" width="3vw" height="3vw"/>
+                        <VBtn color="lightSurface" icon="mdi-check" v-if="changingRoom" @click="changeRoom" rounded="circle" class="ml-6" width="3vw" height="3vw"/>
                     </VCol>
                 </VRow>
             </VCol>

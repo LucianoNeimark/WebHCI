@@ -58,7 +58,7 @@ const deleteRoom = () => {
                 <EditableLabel v-model:value="myRoomData.room.name"/>
             </div>
             <div>
-              <VBtn icon="mdi-delete" class="delete-button ml-5" @click="promptModal"/>
+              <VBtn icon="mdi-delete" color="lightSurface" class="delete-button ml-5" @click="promptModal"/>
             </div>
         </VRow>
         <VRow class="ml-2 align-content-center">

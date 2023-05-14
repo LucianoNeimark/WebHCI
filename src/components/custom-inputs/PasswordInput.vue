@@ -47,7 +47,7 @@ const type = computed(() => show.value ? 'text' : 'password')
                 :placeholder="props.placeholder"
                 :type="type"
                 :error="error"
-                bg-color="surface"
+                bg-color="lightSurface"
                 :rules="rules"
                 autocomplete="on"
                 clearable

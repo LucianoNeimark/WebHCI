@@ -4,6 +4,7 @@
 import {computed, type PropType, reactive, watch} from "vue";
 import ToggleButton from "@/components/custom-inputs/ToggleButton.vue"
 import { changeDoorLockedUnlocked, changeDoorOpenClosed, toggleLock, toggleStatus, type Door } from "@/interfaces/models/door";
+import { SizesEnum } from "@/enums/enums";
 
 const props = defineProps({
   device: {
@@ -31,8 +32,8 @@ watch(() => door.state.lock, async (newStatus : string, oldStatus : string) => {
   <VCard class="d-flex align-center" color="primary" rounded="xl">
     <VContainer>
       <VRow class="flex-row justify-center ma-1 doorRow">
-        <ToggleButton class="" :selected="locked" icon-selected="mdi-lock-open" size="140" icon="mdi-lock" @click="() => toggleLock(door)"/>
-        <ToggleButton :selected="status" icon-selected="mdi-door-open" icon="mdi-door-closed" size="140" @click="() => toggleStatus(door)"/>
+        <ToggleButton class="btn-x-large" :selected="locked" icon-selected="mdi-lock-open" icon="mdi-lock" iconSize="5vw" @click="() => toggleLock(door)"/>
+        <ToggleButton class="btn-x-large" :selected="status" icon-selected="mdi-door-open" icon="mdi-door-closed" iconSize="5vw"  @click="() => toggleStatus(door)"/>
       </VRow>
     </VContainer>
   </VCard>

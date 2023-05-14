@@ -64,12 +64,15 @@ onUnmounted(() => {
   <VCard color="primary" rounded="xl">
     <VContainer>
       <VRow class="mt-3 mb-5 buttons-align justify-space-evenly">
-        <VBtn rounded="xl" class="btn-large" @click="open"><VIcon icon="mdi-blinds-horizontal" size="4.5vw"/></VBtn>
-        <VBtn rounded="xl" class="btn-large" @click="close"><VIcon icon="mdi-blinds-horizontal-closed" size="4.5vw"/></VBtn>
+        <VBtn rounded="xl" color="lightSurface" class="btn-large" @click="open"><VIcon icon="mdi-blinds-horizontal" size="4.5vw"/></VBtn>
+        <VBtn rounded="xl" color="lightSurface" class="btn-large" @click="close"><VIcon icon="mdi-blinds-horizontal-closed" size="4.5vw"/></VBtn>
       </VRow>
-      <VRow>
-        <VSlider
-          class="px-5"
+      <VCol>
+        <VRow class="ml-3">
+          Nivel de apertura
+        </VRow>
+        <VRow class="px-4">
+          <VSlider  
             v-model="blind.state.level"
             @end="updateLevel"
             min="0"
@@ -79,11 +82,13 @@ onUnmounted(() => {
             track-fill-color="white"
             thumb-color="white"
             append-icon="mdi-blinds"
-        />
-      </VRow>
-      <VRow class="mx-4 mb-5">
+          />        
+        </VRow>
+      </VCol>
+      <VCol class="ml-4 pr-10 mb-5">
+        Nivel actual: {{blind.state.currentLevel}}
         <VProgressLinear :model-value="blind.state.currentLevel"></VProgressLinear>
-      </VRow>
+      </VCol>
     </VContainer>
   </VCard>
 </template>

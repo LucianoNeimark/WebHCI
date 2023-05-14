@@ -62,6 +62,8 @@ watch(() => oven.state.convection, async (newStatus : string, oldStatus : string
                 v-model="oven.state.temperature"
                 @update:model-value="() => changeOvenTemp(oven, oven.state.temperature)"
                 hide-details
+                min="90"
+                max="230"
                 single-line
                 density="compact"
                 type="number"

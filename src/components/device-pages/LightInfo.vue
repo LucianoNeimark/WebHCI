@@ -45,6 +45,8 @@ watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
                   <template v-slot:append>
                       <VTextField
                               v-model="lamp.state.brightness"
+                              min="0"
+                              max="100"
                               @update:model-value="() => changeLampBrightness(lamp, lamp.state.brightness)"
                               hide-details
                               single-line

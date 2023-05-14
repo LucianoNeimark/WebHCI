@@ -26,7 +26,6 @@ const addAction = () => {
     actions.push({id : actionId.value, value : undefined, valid : false})
 }
 
-const createButtonColor = computed(() => validRoutines.value? "success" : "gray")
 const createRoutine = async () => {
     if (routineWithSameNameExists(name.value)) {
         $toast.error('Ya existe una rutina con ese nombre', { position: 'top-right' })
@@ -61,7 +60,7 @@ onMounted(async () => {
         />
       </VForm>
       <VSpacer/>
-      <VBtn class="add-button" rounded="xl" @click="createRoutine" :disabled="!validRoutines" :color="createButtonColor">
+      <VBtn class="add-button" rounded="xl" @click="createRoutine" :disabled="!validRoutines" color="secondary">
           <VIcon icon="mdi-plus" class="mx-2"/>
           <span class="mx-2">Agregar Rutina</span>
       </VBtn>
@@ -73,7 +72,7 @@ onMounted(async () => {
       />
     </TransitionGroup>
     <VContainer class="d-flex justify-center align-end">
-      <VBtn rounded="xl" class="add-action-btn" @click="addAction">Agregar Acción</VBtn>
+      <VBtn rounded="circle" color="lightSurface" class="add-action-btn" icon="mdi-plus" @click="addAction"/>
     </VContainer>
   </VContainer>
 </template>
@@ -84,6 +83,7 @@ onMounted(async () => {
 }
 .add-action-btn{
   min-height: 3vw !important;
+  min-width: 3vw !important;
 }
 .action-card-list-enter-active,
 .action-card-list-leave-active {

@@ -23,7 +23,7 @@ const SelectedTypeId = computed({
       <VContainer v-for="(type, typeId) in deviceTypes"
           :key="typeId" class="width-auto">
           <VRow>
-              <VBtn color="surface" class="device-type mx-3 my-2" rounded="circle" :value="typeId" elevation="8" selected-class="selected">
+              <VBtn class="device-type mx-3 my-2" rounded="circle" :value="typeId" elevation="8" selected-class="selected">
                   <VIcon :icon="type.icon" size="2.5vw"/>
               </VBtn>
           </VRow>
@@ -52,6 +52,7 @@ const SelectedTypeId = computed({
 .device-type{
     height: 6vw !important;
     width: 6vw;
+    background-color: $lightSurface;
 }
 
 .device-name{

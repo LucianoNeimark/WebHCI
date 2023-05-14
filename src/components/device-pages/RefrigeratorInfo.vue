@@ -66,6 +66,8 @@ watch(() => MSG?.value, async (newMSG) => {
                         single-line
                         density="compact"
                         type="number"
+                        min="2"
+                        max="8"
                     />
                 </VCol>
             </VRow>
@@ -80,6 +82,8 @@ watch(() => MSG?.value, async (newMSG) => {
                         single-line
                         density="compact"
                         type="number"
+                        min="-20"
+                        max="-8"
                     />
                 </VCol>
                   

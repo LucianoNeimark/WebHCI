@@ -18,6 +18,10 @@ const props = defineProps({
     size: {
         type: String,
         default: SizesEnum.XLarge
+    },
+    iconSize: {
+        type: String,
+        default: '3vw'
     }
 })
 
@@ -28,7 +32,7 @@ const currentIcon = computed(() => props.selected ? props.icon : props.iconSelec
 
 <template>
     <VBtn :size="size" color="lightSurface" rounded="xl" stacked>
-        <VIcon :icon="currentIcon" size="3vw"> </VIcon>
+        <VIcon :icon="currentIcon" :size="iconSize"> </VIcon>
     </VBtn>
 </template>
 
