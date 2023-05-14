@@ -56,7 +56,7 @@ watch(() => MSG?.value, async (newMSG) => {
             <VRow class="song-title">
                 <span class="marquee">
                     <span class="track">
-                        {{ speaker.state?.song?.title || '' }}
+                        {{ speaker.state?.song?.title || 'Lista de reproducción vacía' }}
                     </span>
                 </span>
             </VRow>
