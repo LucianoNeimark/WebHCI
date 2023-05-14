@@ -28,7 +28,7 @@ const typesLimited = computed(() => props.types.slice(0, 5))
 </script>
 
 <template>
-    <VCard class="ma-3 pa-3 pb-2" color="tertiary" rounded="xl" height="22vh" width="25vw">
+    <VCard class="ma-3 pa-3 pb-2" color="tertiary" rounded="xl" width="25vw">
         <VContainer>
             <VRow>
                 <div>{{name}}</div>
@@ -59,7 +59,7 @@ const typesLimited = computed(() => props.types.slice(0, 5))
                     </VBtn>
                 </VCol>
             </VRow>
-            <VRow class="flex-column mb-2">
+            <VRow class="flex-column mt-5">
                 <VBtn bottom rounded="xl" size="small" color="lightSurface" class="align-self-center" :to="`${optionsUrlBase}/${id}`">Más opciones</VBtn>
             </VRow>
         </VContainer>
