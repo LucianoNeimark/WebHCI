@@ -23,7 +23,7 @@ const props = defineProps({
     }
 })
 
-const typesLimited = computed(() => props.types.slice(0, 5))
+const typesLimited = computed(() => props.types.slice(0, 4))
 
 </script>
 
