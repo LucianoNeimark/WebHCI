@@ -6,7 +6,8 @@ defineProps({
     message: {
         type: String,
         required: true
-    }
+    },
+    placeHolder: String
 })
 
 const value = ref('')
@@ -39,6 +40,7 @@ const close = () => {
       </VBtn>
       <VForm v-model="valid">
           <VTextField v-if="isEditing" v-model="value"
+                :placeholder="placeHolder" :label="message" outlined
                 append-inner-icon="mdi-check" @click:append-inner="save" :rules="validNameRules"
                 append-icon="mdi-close" @click:append="close" class="value-input mt-5 ml-5">
           </VTextField>

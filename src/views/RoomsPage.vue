@@ -51,7 +51,7 @@ const addRoom = async (name: string) => {
 
 <template>
     <VRow>
-        <EditableButton message="Agregar habitación" @valueSet="addRoom"/>
+        <EditableButton message="Agregar habitación" place-holder="Nombre" @valueSet="addRoom"/>
     </VRow>
     <VRow>
         <VExpansionPanels multiple variant="accordion">
