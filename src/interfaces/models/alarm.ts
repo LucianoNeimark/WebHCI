@@ -1,6 +1,7 @@
 import {DevicesApi} from "@/api/devices.api";
+import type { Device } from "@/interfaces/device.interface";
 
-export interface Alarm {
+export interface Alarm extends Device{
     id: string;
     name: string;
     state: {

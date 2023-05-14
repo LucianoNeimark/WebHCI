@@ -35,16 +35,18 @@ onMounted(() => {
 
 <template>
     <VCombobox
-        v-if="roomList.length > 0"
+        v-if="roomList.length > 0" class="room-combo-box"
         v-model="room"
         clearable persistent-clear variant="solo-filled" label="Habitación"
         no-data-text="No hay habitaciones" placeholder="Sin Habitación" persistent-placeholder
-        :items="roomList" item-title="name" item-value="id"
+        :items="roomList" item-title="name"
         :messages="msg"
-        :single-line="false"
     />
 </template>
 
 <style scoped>
-
+.room-combo-box{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>
