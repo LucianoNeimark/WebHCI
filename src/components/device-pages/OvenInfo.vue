@@ -67,7 +67,7 @@ watch(() => oven.state.convection, async (newStatus : string, oldStatus : string
                 single-line
                 density="compact"
                 type="number"
-                style="width: 6vw"
+                class="temperature"
               ></VTextField>
           </template>
         </VSlider>
@@ -90,8 +90,8 @@ watch(() => oven.state.convection, async (newStatus : string, oldStatus : string
 
 <style scoped>
 
-.test{
-  width:35%
+.temperature {
+  width: 6vw; 
 }
 
 </style>
