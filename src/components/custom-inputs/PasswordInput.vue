@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
+import { codeRules } from '../../utils/rules';
 
 const props = defineProps({
     label: {
@@ -29,12 +30,6 @@ const code = computed({
 
 const show = ref(false)
 
-const rules = [
-    (v: string) => !!v || 'El código es requerido',
-    (v: string) => (v && v.length === 4) || 'El código debe tener 4 dígitos',
-    (v: string) => (v && !isNaN(Number(v))) || 'El código debe ser numérico'
-];
-
 const icon = computed(() => show.value ? 'mdi-eye' : 'mdi-eye-off')
 const type = computed(() => show.value ? 'text' : 'password')
 
@@ -48,7 +43,7 @@ const type = computed(() => show.value ? 'text' : 'password')
                 :type="type"
                 :error="error"
                 bg-color="lightSurface"
-                :rules="rules"
+                :rules="codeRules"
                 autocomplete="on"
                 clearable
                 class="required"

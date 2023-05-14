@@ -11,7 +11,7 @@ export const validNameRules = [
 ]
 
 export const codeRules = [
-    (v: string) => !!v || 'El código es requerido',
+    requiredRule,
     (v: string) => (v && v.length === 4) || 'El código debe tener 4 dígitos',
     (v: string) => (v && !isNaN(Number(v))) || 'El código debe ser numérico'
 ];
