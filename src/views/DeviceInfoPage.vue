@@ -11,18 +11,26 @@ import RoomComboBox from "@/components/custom-inputs/RoomComboBox.vue";
 import {RoomsApi} from "@/api/rooms.api";
 import type {Room} from "@/interfaces/room.interface";
 import {deviceTypes} from "@/utils/constants";
+import { useToast } from 'vue-toast-notification';
 
 const route = useRoute()
 const router = useRouter()
-const { setCurrentDevice, currentDevice } = useDevicesStore();
+const { setCurrentDevice, currentDevice, deviceWithSameNameExists } = useDevicesStore();
+const $toast = useToast() 
 
 const device = reactive({
     value: {} as Device
 })
 
-watch(() => device.value.name, async () => {
-    if (device.value?.name) await DevicesApi.updateDevice(device.value)
-})
+
+const updateName = async (value: string) => {
+    if (deviceWithSameNameExists(value)) {
+        $toast.error("Ya existe un dispositivo con ese nombre", { position: 'top-right' })
+        return;
+    }
+    device.value.name = value;
+    await DevicesApi.updateDevice(device.value)
+}
 
 const deleteDevice = async () => {
     await DevicesApi.deleteDevice(device.value.id)
@@ -74,7 +82,7 @@ onMounted(async () => {
     <VCol v-if="device.value.id">
         <VRow class="ma-3">
             <div class="align-editable-label">
-                <EditableLabel v-model:value="device.value.name" :icon="deviceTypes[device.value.type.id].icon"/>
+                <EditableLabel :value="device.value.name" @update:value="updateName" :icon="deviceTypes[device.value.type.id].icon"/>
             </div>
             <div>
               <VBtn icon="mdi-delete" class="delete-button ml-5" @click="promptModal"/>
