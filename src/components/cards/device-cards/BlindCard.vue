@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import FrameCard from "@/components/cards/FrameCard.vue"
-import { type Blind, openBlind, closeBlind, changeBlindLevel } from "@/interfaces/models/blind";
-import {type PropType, reactive} from "vue";
+import { type Blind, openBlind, closeBlind, changeBlindLevel} from "@/interfaces/models/blind";
+import {type PropType, reactive, inject, type Ref, watch} from "vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
-
-
+import { DevicesApi } from "@/api/devices.api";
+import { onMounted } from "vue";
+import { CONSTANTS } from "@/utils/constants";
+import {useDevicesStore} from "@/stores/device.store";
+import type { Event } from "@/interfaces/event.interface";
 const props = defineProps({
   device: {
     type: Object as PropType<Blind>,
@@ -19,15 +22,24 @@ const updateLevel = async () => {
 }
 
 const open = async () => {
-  blind.state.currentLevel = blind.state.level
+  blind.state.currentLevel = 0
   await openBlind(blind)
 }
 
 const close = async () => {
-  blind.state.currentLevel = 0
+  blind.state.currentLevel = blind.state.level
   await closeBlind(blind)
 }
 
+const { devices } = useDevicesStore()
+
+const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+
+watch(() => MSG?.value, async (newMSG) => {
+    if (newMSG && newMSG.deviceId === blind.id)
+        ({...blind.state} = {...(devices.items.get(blind.id) as Blind)?.state} || {...blind.state})
+        console.log(newMSG)
+})
 </script>
 
 <template>

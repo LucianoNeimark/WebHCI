@@ -2,10 +2,12 @@
 <script setup lang="ts">
 import {type PropType} from "vue";
 import { type Blind, openBlind, changeBlindLevel, closeBlind} from "@/interfaces/models/blind";
-import { reactive, inject, type Ref, watch, computed } from "vue";
+import { reactive, inject, ref, type Ref, watch, computed, onMounted } from "vue";
 import { CONSTANTS } from "@/utils/constants";
 import {useDevicesStore} from "@/stores/device.store";
 import type { Event } from "@/interfaces/event.interface";
+import { DevicesApi } from "@/api/devices.api";
+import { onUnmounted } from "vue";
 const props = defineProps({
   device: {
     type: Object as PropType<Blind>,
@@ -27,14 +29,34 @@ const close = async () => {
   await closeBlind(blind)
 }
 
-const { devices } = useDevicesStore()
+// const { devices } = useDevicesStore()
 
-const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
+// const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
 
-watch(() => MSG?.value, async (newMSG) => {
-    if (newMSG && newMSG.deviceId === blind.id)
-        ({...blind.state} = {...(devices.items.get(blind.id) as Blind)?.state} || {...blind.state})
+// watch(() => MSG?.value, async (newMSG) => {
+//     if (newMSG && newMSG.deviceId === blind.id)
+//         ({...blind.state} = {...(devices.items.get(blind.id) as Blind)?.state} || {...blind.state})
+// })
+
+const interval = ref()
+
+const getData = async () => {
+  const data = await DevicesApi.getDeviceById(blind.id) as Blind
+  ({...blind.state} = {...data.state}) 
+}
+
+onMounted(async () => {
+  interval.value = setInterval(() => {
+    getData()
+  }, 1000)
 })
+
+onUnmounted(() => {
+  clearInterval(interval.value)
+})
+
+
+
 
 </script>
 
