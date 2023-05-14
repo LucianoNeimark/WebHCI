@@ -38,3 +38,10 @@ export const deviceTypes = {
   'lsf78ly0eqrjbz91': { name: 'Puerta', icon: 'mdi-door-open', card: DoorCard, info: DoorInfo},
   'rnizejqr2di0okho': { name: 'Heladera', icon: 'mdi-fridge-outline', card: RefrigeratorCard, info: RefrigeratorInfo},
 }
+
+export const errorMessages = {
+  1: 'alguno de los parámetros ingresados es incorrecto',
+  2: 'no se pudo realizar la operación',
+  3: 'ocurrió un error dentro del servidor, por favor intente más tarde',
+  4: 'ocurrió un error inesperado, por favor intente más tarde',
+}

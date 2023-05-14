@@ -1,10 +1,7 @@
-
-
 <script setup lang="ts">
 import {computed, type PropType, reactive, watch} from "vue";
 import ToggleButton from "@/components/custom-inputs/ToggleButton.vue"
 import { changeDoorLockedUnlocked, changeDoorOpenClosed, toggleLock, toggleStatus, type Door } from "@/interfaces/models/door";
-import { SizesEnum } from "@/enums/enums";
 
 const props = defineProps({
   device: {

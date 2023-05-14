@@ -1,13 +1,8 @@
 
 <script setup lang="ts">
-import {type PropType} from "vue";
 import { type Blind, openBlind, changeBlindLevel, closeBlind} from "@/interfaces/models/blind";
-import { reactive, inject, ref, type Ref, watch, computed, onMounted } from "vue";
-import { CONSTANTS } from "@/utils/constants";
-import {useDevicesStore} from "@/stores/device.store";
-import type { Event } from "@/interfaces/event.interface";
+import { reactive, ref, onMounted, type PropType, onUnmounted } from "vue";
 import { DevicesApi } from "@/api/devices.api";
-import { onUnmounted } from "vue";
 const props = defineProps({
   device: {
     type: Object as PropType<Blind>,

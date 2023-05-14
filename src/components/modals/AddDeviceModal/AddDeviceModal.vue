@@ -43,25 +43,20 @@ const addDevice = async () => {
         $toast.error('Ya existe un dispositivo con ese nombre', { position: 'top-right' })
         return;
     }
-    if (roomWithSameNameExists(room.value as string)) {
+    if (room.value && roomWithSameNameExists(room.value as string)) {
         $toast.error('Ya existe una habitación con ese nombre', { position: 'top-right' })
         return;
     }
     const newDevice = await DevicesApi.addDevice(type.value, name.value) as Device
     if (!newDevice) return;
-    if (typeof room.value === "string") {
-        room.value = await RoomsApi.addRoom(room.value) as Room
-        if (!room.value) return;
-        await RoomsApi.reloadRooms()
-    }
+
     if (room.value) {
         if (typeof room.value === "string") {
             room.value = await RoomsApi.addRoom(room.value) as Room
-            if (!room.value) return;
             await RoomsApi.reloadRooms()
+        } else {
+            await RoomsApi.addDeviceToRoom((room.value as Room).id, newDevice.id)
         }
-        const addedDevice = await RoomsApi.addDeviceToRoom((room.value as Room).id, newDevice.id)
-        if (!addedDevice) return;
     }
     emit('update:dialog', false)
     emit('device-added')

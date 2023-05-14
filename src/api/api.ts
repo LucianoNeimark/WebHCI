@@ -1,4 +1,8 @@
+import { useToast } from 'vue-toast-notification';
+
 export class Api {
+    private static $toast = useToast();
+
     static get baseUrl() {
         return `${import.meta.env.VITE_API_BASE_URL}:${import.meta.env.VITE_API_PORT}/api` 
     }
@@ -8,12 +12,15 @@ export class Api {
     }
 
     static fetchApi(path: string | URL, init = {}): Promise<Response> {
+        let data = null;
         try {
-            return fetch(new URL(`${Api.baseUrl}${path}`), init)
-        } catch(error) {
-            console.error(error)
+            data = fetch(new URL(`${Api.baseUrl}${path}`), init)
+        } catch(error: unknown) {
+            console.error("Hola", error)
+            this.$toast.error("Error al conectar con el servidor", { position: 'top-right' });
             return Promise.reject(error)
         }
+        return data;
     }
 
     static get(path: string): Promise<Response> {
@@ -51,5 +58,4 @@ export class Api {
             }
         })
     }
-
 }

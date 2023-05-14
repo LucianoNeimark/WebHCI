@@ -4,10 +4,8 @@ import AddDeviceModal from "@/components/modals/AddDeviceModal/AddDeviceModal.vu
 import { useDevicesStore } from "@/stores/device.store";
 import { DevicesApi } from "@/api/devices.api";
 import type { Device } from "@/interfaces/device.interface";
-import { useToast } from 'vue-toast-notification';
 import {deviceTypes} from "@/utils/constants";
 
-const $toast = useToast()
 const dialog = ref(false)
 const { getDevicesGroupByType } = useDevicesStore()
 const devicesGroupByType = reactive<{ value: Map<string, Device[]> }>({ value: new Map<string, Device[]>() })

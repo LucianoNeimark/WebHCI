@@ -19,7 +19,7 @@ const iconSize = {
 }
 
 const powerButtonColor = computed(() => {
-    return props.power ? 'green' : 'white' // TODO: Change to utils
+    return props.power ? 'secondary' : 'lightSurface'
 })
 </script>
 

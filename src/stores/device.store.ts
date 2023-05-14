@@ -28,7 +28,6 @@ export const useDevicesStore = defineStore('devices', () => {
     return result;
   }
 
-  // TODO: Ver si se puede pasar a un computed
   const getDevicesGroupByRoom = () : Map<string, Device[]> => {
     const result = new Map<string, Device[]>();
     devices.items.forEach(device => {

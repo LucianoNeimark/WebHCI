@@ -3,8 +3,6 @@ import FrameCard from "@/components/cards/FrameCard.vue"
 import { type Blind, openBlind, closeBlind, changeBlindLevel} from "@/interfaces/models/blind";
 import {type PropType, reactive, inject, type Ref, watch} from "vue";
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
-import { DevicesApi } from "@/api/devices.api";
-import { onMounted } from "vue";
 import { CONSTANTS } from "@/utils/constants";
 import {useDevicesStore} from "@/stores/device.store";
 import type { Event } from "@/interfaces/event.interface";

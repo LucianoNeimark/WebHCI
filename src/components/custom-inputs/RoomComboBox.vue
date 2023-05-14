@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useRoomsStore} from "@/stores/room.store"
-import {computed, type PropType, ref} from "vue"
+import {computed, ref} from "vue"
 import type { Room } from "@/interfaces/room.interface"
 import { onMounted } from 'vue'
 import { RoomsApi } from '@/api/rooms.api'

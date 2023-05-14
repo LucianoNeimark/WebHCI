@@ -6,7 +6,6 @@ import {computed, inject, type PropType, reactive, type Ref, watch} from "vue";
 import {useDevicesStore} from "@/stores/device.store";
 import type {Event} from "@/interfaces/event.interface";
 import {CONSTANTS} from "@/utils/constants";
-import { SizesEnum } from "@/enums/enums";
 
 const props = defineProps({
   device: {

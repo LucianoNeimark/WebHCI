@@ -67,10 +67,9 @@ const deleteRoom = () => {
             </div>
         </VRow>
         <VRow class="ml-2 align-content-center">
-            <!-- TODO: Sacar IDs y names para usar device en todos-->
+            <AddCard @click="showAddDeviceModal = true"/>
             <component v-for="device in roomDevices.devices" :key="device.id" :device="device"
                        :is="deviceTypes[device.type.id].card"/>
-            <AddCard @click="showAddDeviceModal = true"/>
         </VRow>
     </VCol>
     <ConfirmationModal title="¿Estás seguro? Esta opción no puede revertirse"

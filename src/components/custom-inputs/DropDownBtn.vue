@@ -2,7 +2,7 @@
 
 import type { VMenu } from 'vuetify/lib/components';
 
-const props = defineProps({
+defineProps({
   items: { type: Array<string>, required: true },
   text: { type: String, required: true },
   selected: {type: String, required: true},
