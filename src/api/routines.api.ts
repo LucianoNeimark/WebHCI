@@ -33,7 +33,18 @@ export class RoutinesApi{
         const res = await Api.put(`/routines/${id}/execute`, {})
         const { result, error } = await res.json();
         if (!res.ok) displayErrorMsg(RoutinesApi.$toast, "Error al ejecutar la rutina", error?.code);
-        else this.$toast.success(`Rutina ejecutada satisfactoriamente`, { position: 'top-right' });
+        else {
+            const { routines, loadRoutine } = useRoutinesStore();
+            const routine = routines.items.get(id);
+            if (routine) {
+                this.$toast.success(`Rutina ejecutada satisfactoriamente`, { position: 'top-right' });
+                routine.meta.qtyUses++;
+                await this.updateRoutine(routine);
+                loadRoutine(routine);
+            }else {
+                this.$toast.error("Error al ejecutar la rutina: la rutina no existe", { position: 'top-right' });
+            }
+        }
         return result;
     }
 
@@ -53,7 +64,7 @@ export class RoutinesApi{
         const res = await Api.put(`/routines/${routine.id}`, new RoutineUpdateDTO(routine))
         const { result, error } = await res.json();
         if (!res.ok) displayErrorMsg(RoutinesApi.$toast, "Error al modificar la rutina", error?.code);
-        else this.$toast.success(`Nombre de rutina cambiado a ${routine.name}`, { position: 'top-right' });
+        //else this.$toast.success(`Nombre de rutina cambiado a ${routine.name}`, { position: 'top-right' });
         return result;
     }
 }
