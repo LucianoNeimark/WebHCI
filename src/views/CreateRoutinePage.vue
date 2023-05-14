@@ -55,7 +55,7 @@ onMounted(async () => {
   <VContainer class="mx-0">
     <VRow class="align-start ma-3 d-flex">
       <VForm v-model="validName" class="name-form">
-        <VTextField class="name-input" v-model="name" autofocus placeholder="Nueva Rutina" label="nombre" variant="solo-filled"
+        <VTextField class="name-input" v-model="name" autofocus placeholder="Nueva Rutina" label="Nombre" variant="solo-filled"
                     :rules="validNameRules"
         />
       </VForm>
