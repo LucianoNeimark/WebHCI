@@ -12,15 +12,11 @@ export class Api {
     }
 
     static fetchApi(path: string | URL, init = {}): Promise<Response> {
-        let data = null;
-        try {
-            data = fetch(new URL(`${Api.baseUrl}${path}`), init)
-        } catch(error: unknown) {
-            console.error("Hola", error)
-            this.$toast.error("Error al conectar con el servidor", { position: 'top-right' });
-            return Promise.reject(error)
-        }
-        return data;
+        const res = fetch(new URL(`${Api.baseUrl}${path}`), init)
+        res.catch(() => {
+            this.$toast.error('Hubo un problema con la conexión al servidor', { position: 'top-right' });
+        });
+        return res;
     }
 
     static get(path: string): Promise<Response> {

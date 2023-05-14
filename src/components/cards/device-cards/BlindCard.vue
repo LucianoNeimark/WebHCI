@@ -36,7 +36,6 @@ const MSG = inject<Ref<Event>>(CONSTANTS.EVENT)
 watch(() => MSG?.value, async (newMSG) => {
     if (newMSG && newMSG.deviceId === blind.id)
         ({...blind.state} = {...(devices.items.get(blind.id) as Blind)?.state} || {...blind.state})
-        console.log(newMSG)
 })
 </script>
 
