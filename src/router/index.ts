@@ -10,6 +10,7 @@ import {useDevicesStore} from "@/stores/device.store";
 import CreateRoutinePage from "@/views/CreateRoutinePage.vue";
 import RoutineInfoPage from "@/views/RoutineInfoPage.vue";
 import {useRoutinesStore} from "@/stores/routine.store";
+import NotFound from '@/views/NotFound.vue'
 
 
 const router = createRouter({
@@ -86,7 +87,12 @@ const router = createRouter({
               name: () => useRoomsStore()?.currentRoom?.value.name || "Habitación",
               ancestors: [{ title: 'Habitaciones', href: '/rooms', disabled: false }]
           }
-      }
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        name: 'NoEncontrado',
+        component: NotFound
+    }
   ]
 })
 
