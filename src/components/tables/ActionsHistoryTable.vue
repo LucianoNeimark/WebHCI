@@ -30,7 +30,7 @@ const loadItems = async ({page, itemsPerPage}) => {
         const date = new Date(log.timestamp)
         return {
             actionName: t(log.action),
-            params: log.params?.join(', ') || 'Sin parámetros',
+            params: log.params?.map(p => t(p)).join(', ') || 'Sin parámetros',
             date: date.toLocaleDateString(),
             time: date.toLocaleTimeString()
         }

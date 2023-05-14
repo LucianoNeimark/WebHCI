@@ -26,7 +26,9 @@ const i18n = createI18n({
     fallbackLocale: 'en',
     messages: {
         es: locale
-    }
+    },
+    fallbackWarn: false,
+    missingWarn: false
 })
 
 const vuetify = createVuetify({
