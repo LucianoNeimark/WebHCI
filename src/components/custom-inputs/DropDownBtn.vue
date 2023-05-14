@@ -15,7 +15,7 @@ const props = defineProps({
     <div>
         <VMenu>
             <template v-slot:activator="{ props }">
-                <VBtn :color="color" rounded="xl" v-bind="props" class="hola"> 
+                <VBtn :color="color" rounded="xl" v-bind="props"> 
                   {{ text }}
                 </VBtn>
             </template>

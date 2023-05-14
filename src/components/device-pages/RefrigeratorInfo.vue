@@ -52,44 +52,50 @@ watch(() => MSG?.value, async (newMSG) => {
 </script>
 
 <template>
-  <VCard class="d-flex " color="primary" rounded="xl">
-    <VCol class="pt-7 px-5">
+  <VCard class="d-flex" color="primary" rounded="xl">
+    <VCol class="pt-3 px-5">
         <VCol>
-            <VRow>
-                <CardSlider v-model:value="refrigerator.state.temperature" :min="2" :max="8" icon="mdi-thermometer-low"
-                  @updateSlider="setTemperature" class="pt-4"/>
-                <VCol cols="3">
-                    <VTextField
-                        v-model="refrigerator.state.temperature"
-                        @update:model-value="() => changeTemperatureRefrigerator(refrigerator, refrigerator.state.temperature)"
-                        hide-details
-                        single-line
-                        density="compact"
-                        type="number"
-                        min="2"
-                        max="8"
-                    />
-                </VCol>
-            </VRow>
-            <VRow>
-                <CardSlider v-model:value="refrigerator.state.freezerTemperature" :min="-20" :max="-8" icon="mdi-snowflake-thermometer"
-                  @updateSlider="setFreezerTemperature" class="pt-4"/>
-                  <VCol cols="3">
-                    <VTextField
-                        v-model="refrigerator.state.freezerTemperature"
-                        @update:model-value="() => changeFreezerTemperatureRefrigerator(refrigerator, refrigerator.state.freezerTemperature)"
-                        hide-details
-                        single-line
-                        density="compact"
-                        type="number"
-                        min="-20"
-                        max="-8"
-                    />
-                </VCol>
-                  
-            </VRow>
+            <VCol>
+                <VRow>Temperatura de la heladera</VRow>
+                <VRow>
+                    <CardSlider v-model:value="refrigerator.state.temperature" :min="2" :max="8" icon="mdi-thermometer-low"
+                        @updateSlider="setTemperature" class="pt-4"/>
+                    <VCol cols="3">
+                        <VTextField
+                            v-model="refrigerator.state.temperature"
+                            @update:model-value="() => changeTemperatureRefrigerator(refrigerator, refrigerator.state.temperature)"
+                            hide-details
+                            single-line
+                            density="compact"
+                            type="number"
+                            min="2"
+                            max="8"
+                        />
+                    </VCol>
+                </VRow>
+                
+            </VCol>
+            <VCol>
+                <VRow>Temperatura del freezer</VRow>
+                <VRow>
+                    <CardSlider v-model:value="refrigerator.state.freezerTemperature" :min="-20" :max="-8" icon="mdi-snowflake-thermometer"
+                        @updateSlider="setFreezerTemperature" class="pt-4"/>
+                    <VCol cols="3">
+                        <VTextField
+                            v-model="refrigerator.state.freezerTemperature"
+                            @update:model-value="() => changeFreezerTemperatureRefrigerator(refrigerator, refrigerator.state.freezerTemperature)"
+                            hide-details
+                            single-line
+                            density="compact"
+                            type="number"
+                            min="-20"
+                            max="-8"
+                        />
+                    </VCol>
+                </VRow> 
+            </VCol>
         </VCol>
-        <VRow class="pt-5 px-5">
+        <VRow class="pb-7 pt-2 px-5">
           <ModeToggle :icons="iconArray" :toggle="toggle" @updateToggle="(index: number) => setMode(refrigerator, modes[index])"/>
         </VRow>
     </VCol>

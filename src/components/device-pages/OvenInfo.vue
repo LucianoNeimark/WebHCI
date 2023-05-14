@@ -78,7 +78,7 @@ watch(() => oven.state.convection, async (newStatus : string, oldStatus : string
           <DropDownBtn :selected="oven.state.heat" :items="Object.values(heatModes)" text="Calor"  @itemClicked="(value : string) => oven.state.heat = value" />
         </VCol>
         <VCol class="d-flex justify-center ma-1">
-            <DropDownBtn :selected="oven.state.grill" :items="Object.values(grillModes)" text="Grill"  @itemClicked="(value : string) => oven.state.grill = value" />
+            <DropDownBtn :selected="oven.state.grill" :items="Object.values(grillModes)" text="Parrilla"  @itemClicked="(value : string) => oven.state.grill = value" />
         </VCol>
         <VCol class="d-flex justify-center ma-1">
           <DropDownBtn :selected="oven.state.convection" :items="Object.values(convModes)" text="Convección"  @itemClicked="(value : string) => oven.state.convection = value" />
