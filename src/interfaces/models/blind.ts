@@ -1,6 +1,6 @@
 import type { DeviceType } from '@/interfaces/deviceType.interface';
 import type { Device } from '@/interfaces/device.interface';
-import { DevicesApi } from '../../api/devices.api';
+import { DevicesApi } from '@/api/devices.api';
 
 export interface Blind extends Device {
     id: string;

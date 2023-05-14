@@ -3,7 +3,7 @@ import { useActionsStore} from "@/stores/actions.store";
 import type {ActionTemplate} from "@/interfaces/actionTemplate.interface";
 import {deviceTypes} from "@/utils/constants";
 import { useToast } from 'vue-toast-notification';
-import { displayErrorMsg } from '../utils/utils';
+import { displayErrorMsg } from '@/utils/utils';
 
 export class ActionTemplatesApi {
     private static $toast = useToast();

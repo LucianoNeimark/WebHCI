@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
-import { codeRules } from '../../utils/rules';
+import { codeRules } from '@/utils/rules';
 
 const props = defineProps({
     label: {

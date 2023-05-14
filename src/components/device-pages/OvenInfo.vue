@@ -4,7 +4,7 @@ import {computed, type PropType, reactive, watch} from "vue";
 import PowerButton from "@/components/custom-inputs/PowerButton.vue";
 import {SizesEnum} from "@/enums/enums";
 import { type Oven, toggleOven, changeOnOf, changeOvenTemp, convModes, grillModes, heatModes, changeModes}  from "@/interfaces/models/oven"
-import DropDownBtn from "../custom-inputs/DropDownBtn.vue";
+import DropDownBtn from "@/components/custom-inputs/DropDownBtn.vue";
 
 
 const props = defineProps({

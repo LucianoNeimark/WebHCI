@@ -1,6 +1,6 @@
 import type { Device } from '@/interfaces/device.interface';
 import type { DeviceType } from '@/interfaces/deviceType.interface';
-import { DevicesApi } from '../../api/devices.api';
+import { DevicesApi } from '@/api/devices.api';
 
 export interface Refrigerator extends Device {
     id: string;

@@ -9,7 +9,7 @@ import {RoutinesApi} from "@/api/routines.api";
 import {ActionTemplatesApi} from "@/api/actionTemplates.api";
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
 import { useToast } from 'vue-toast-notification';
-import ConfirmationModal from '../components/modals/AddDeviceModal/ConfirmationModal.vue';
+import ConfirmationModal from '@/components/modals/AddDeviceModal/ConfirmationModal.vue';
 
 const route = useRoute()
 const router = useRouter()

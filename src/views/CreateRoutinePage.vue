@@ -8,7 +8,7 @@ import type {Action} from "@/interfaces/action.interface";
 import {RoutinesApi} from "@/api/routines.api";
 import {validNameRules} from "@/utils/rules";
 import {useRouter} from "vue-router";
-import { useRoutinesStore } from '../stores/routine.store';
+import { useRoutinesStore } from '@/stores/routine.store';
 import { useToast } from 'vue-toast-notification';
 
 const router = useRouter()
