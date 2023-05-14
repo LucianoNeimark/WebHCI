@@ -62,6 +62,7 @@ watch(() => MSG?.value, async (newMSG) => {
                         @updateSlider="setTemperature" class="pt-4"/>
                     <VCol cols="3">
                         <VTextField
+                            class="input-temperature"
                             v-model="refrigerator.state.temperature"
                             @update:model-value="() => changeTemperatureRefrigerator(refrigerator, refrigerator.state.temperature)"
                             hide-details
@@ -82,6 +83,7 @@ watch(() => MSG?.value, async (newMSG) => {
                         @updateSlider="setFreezerTemperature" class="pt-4"/>
                     <VCol cols="3">
                         <VTextField
+                            class="input-temperature"
                             v-model="refrigerator.state.freezerTemperature"
                             @update:model-value="() => changeFreezerTemperatureRefrigerator(refrigerator, refrigerator.state.freezerTemperature)"
                             hide-details
@@ -103,5 +105,7 @@ watch(() => MSG?.value, async (newMSG) => {
 </template>
 
 <style scoped>
-
+.input-temperature{
+    min-width: 6vw;
+}
 </style>
