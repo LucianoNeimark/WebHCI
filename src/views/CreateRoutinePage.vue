@@ -8,12 +8,16 @@ import type {Action} from "@/interfaces/action.interface";
 import {RoutinesApi} from "@/api/routines.api";
 import {validNameRules} from "@/utils/rules";
 import {useRouter} from "vue-router";
+import { useRoutinesStore } from '../stores/routine.store';
+import { useToast } from 'vue-toast-notification';
 
 const router = useRouter()
 const name = ref("")
 const validName = ref(false)
 const actionId = ref(1)
 const actions = reactive<{ id : Number, value : Action | undefined, valid : boolean}[]>([{id : actionId.value, value : undefined, valid : false}])
+const { routineWithSameNameExists } = useRoutinesStore()
+const $toast = useToast()
 
 const validRoutines = computed(() : boolean => validName.value && actions.length > 0 && !actions.some(action => !action.valid))
 
@@ -24,6 +28,10 @@ const addAction = () => {
 
 const createButtonColor = computed(() => validRoutines.value? "success" : "gray")
 const createRoutine = async () => {
+    if (routineWithSameNameExists(name.value)) {
+        $toast.error('Ya existe una rutina con ese nombre', { position: 'top-right' })
+        return;
+    }
     if(validRoutines.value) {
         const actionList = actions.map(action => action.value) as Action[]
         const result = await RoutinesApi.addRoutine(name.value, actionList)

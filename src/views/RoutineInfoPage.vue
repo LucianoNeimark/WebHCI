@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {reactive, watch} from "vue";
+import {reactive, watch, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {useRoutinesStore} from "@/stores/routine.store";
 import type {Routine} from "@/interfaces/routine.interface";
@@ -8,10 +8,14 @@ import ActionCard from "@/components/cards/ActionCard.vue";
 import {RoutinesApi} from "@/api/routines.api";
 import {ActionTemplatesApi} from "@/api/actionTemplates.api";
 import EditableLabel from "@/components/custom-inputs/EditableLabel.vue";
+import { useToast } from 'vue-toast-notification';
+import ConfirmationModal from '../components/modals/AddDeviceModal/ConfirmationModal.vue';
 
 const route = useRoute()
 const router = useRouter()
-const {setCurrentRoutine, currentRoutine} = useRoutinesStore()
+const {setCurrentRoutine, currentRoutine, routineWithSameNameExists} = useRoutinesStore()
+const $toast = useToast()
+const showConfirmationModal = ref(false)
 
 const routine = reactive({
     value: {} as Routine
@@ -22,9 +26,14 @@ setCurrentRoutine(<string> route.params.id)
 routine.value = currentRoutine.value
 
 
-watch(() => routine.value.name, async () => {
-    if (routine.value?.name) await RoutinesApi.updateRoutine(routine.value)
-})
+const update = async (value: string) => {
+    if (routineWithSameNameExists(value)) {
+        $toast.error('Ya existe una rutina con ese nombre', { position: 'top-right' })
+        return;
+    }
+    routine.value.name = value
+    await RoutinesApi.updateRoutine(routine.value)
+}
 
 const executeRoutine = async () => {
     await RoutinesApi.executeRoutine(routine.value.id)
@@ -40,8 +49,8 @@ const deleteRoutine = async () => {
 <template>
     <VContainer class="mx-0 py-1 px-6">
         <VRow class="ma-3 d-flex align-editable-label">
-            <EditableLabel v-model:value="routine.value.name"/>
-            <VBtn icon="mdi-delete" class="delete-button ml-5" @click="deleteRoutine"/>
+            <EditableLabel :value="routine.value.name" @update:value="update"/>
+            <VBtn icon="mdi-delete" class="delete-button ml-5" @click="showConfirmationModal = true"/>
             <VSpacer/>
             <VBtn class="add-button" rounded="xl" @click="executeRoutine" color="success">
                 <VIcon icon="mdi-play" class="mx-2"/>
@@ -54,6 +63,8 @@ const deleteRoutine = async () => {
             />
         </TransitionGroup>
     </VContainer>
+    <ConfirmationModal title="¿Estás seguro? Esta opción no puede revertirse"
+                       v-model:show="showConfirmationModal" @confirm="deleteRoutine"/>
 </template>
 
 

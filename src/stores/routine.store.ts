@@ -24,5 +24,9 @@ export const useRoutinesStore = defineStore('routines', () => {
     const removeRoutine = (routineId: string) => {
         routines.items.delete(routineId)
     }
-    return { routines, loadRoutine, getTopRoutines, setCurrentRoutine, currentRoutine, removeRoutine}
+
+    const routineWithSameNameExists = (routineName: string) => {
+        return Array.from(routines.items.values()).some(routine => routine.name === routineName)
+    }
+    return { routines, loadRoutine, getTopRoutines, setCurrentRoutine, currentRoutine, removeRoutine, routineWithSameNameExists }
 })
