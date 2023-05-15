@@ -135,7 +135,7 @@ const progress = computed(() => {
             </VRow>
             <VSelect label="Género" v-model="speaker.device.state.genre" :item-title="item => $t(item as string)"  :item-value="item => item" :items="genres"/>
             <VList rounded="xl" v-if="!stopped">
-                <VListItem v-for="song in playlist" :key="song">
+                <VListItem v-for="song in playlist" :key="song.title">
                   <VListItemTitle :class="song.title === speaker.device?.state?.song?.title ? 'bold' : ''">{{ song.title }} </VListItemTitle>
                 </VListItem>
             </VList>  

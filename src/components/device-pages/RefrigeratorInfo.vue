@@ -2,7 +2,6 @@
 
 import {computed, inject, type Ref, type PropType, reactive, watch} from "vue";
 import { type Refrigerator, changeTemperatureRefrigerator, changeFreezerTemperatureRefrigerator, changeModeRefrigerator, setMode} from "@/interfaces/models/refrigerator";
-import type { Device } from '@/interfaces/models/device'
 import CardSlider from "@/components/custom-inputs/CardSlider.vue";
 import ModeToggle from "@/components/custom-inputs/ModeToggle.vue";
 import { CONSTANTS } from "@/utils/constants";
@@ -17,7 +16,7 @@ const props = defineProps({
     } 
 });
 
-const refrigerator = reactive<Device>(props.device)
+const refrigerator = reactive<Refrigerator>(props.device)
 
 const setTemperature = async () => {
     await changeTemperatureRefrigerator(refrigerator, refrigerator.state.temperature)
