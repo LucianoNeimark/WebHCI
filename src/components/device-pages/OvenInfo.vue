@@ -35,6 +35,11 @@ watch(() => oven.state.convection, async (newStatus : string, oldStatus : string
     if (newStatus !== oldStatus) await changeModes(oven, "Convection", newStatus)
 })
 
+const updateTemperature = async (newValue: string) => {
+    oven.state.temperature = Number(newValue)
+    await changeOvenTemp(oven, oven.state.temperature)
+}
+
 </script>
 
 <template>
@@ -59,8 +64,8 @@ watch(() => oven.state.convection, async (newStatus : string, oldStatus : string
         >
           <template v-slot:append>
               <VTextField
-                v-model="oven.state.temperature"
-                @update:model-value="() => changeOvenTemp(oven, oven.state.temperature)"
+                :value="oven.state.temperature"
+                @update:model-value="(newValue) => updateTemperature(newValue)"
                 hide-details
                 min="90"
                 max="230"

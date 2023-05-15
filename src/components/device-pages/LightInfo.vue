@@ -19,6 +19,11 @@ watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
     if (newStatus !== oldStatus) await changeLampStatus(lamp, newStatus)
 })
 
+const updateBrightness = async (newValue: string) => {
+    lamp.state.brightness = Number(newValue)
+    await changeLampBrightness(lamp, lamp.state.brightness)
+}
+
 </script>
 
 <template>
@@ -44,10 +49,10 @@ watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
               >
                   <template v-slot:append>
                       <VTextField
-                              v-model="lamp.state.brightness"
+                              :value="lamp.state.brightness"
+                              @update:model-value="(newValue) => updateBrightness(newValue)"
                               min="0"
                               max="100"
-                              @update:model-value="() => changeLampBrightness(lamp, lamp.state.brightness)"
                               hide-details
                               single-line
                               density="compact"
@@ -74,11 +79,6 @@ watch(() => lamp.state.status, async (newStatus: string, oldStatus: string) => {
 </template>
 
 <style scoped>
-.light-button {
-    width: 8vw;
-    height: 8vw;
-}
-
 .input-brightness{
     width: 6vw !important;
 }

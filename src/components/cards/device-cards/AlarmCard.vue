@@ -21,7 +21,7 @@ const props = defineProps({
 const $toast = useToast()
 
 const alarm = reactive(props.device)
-const code = ref('')
+const code = ref("")
 
 const toggle = computed(() => Object.values(alarmType).indexOf(alarm.state.status))
 

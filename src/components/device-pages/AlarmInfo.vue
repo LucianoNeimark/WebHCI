@@ -17,9 +17,9 @@ const $toast = useToast()
 
 const changingCode = ref(false)
 const alarm = reactive(props.device)
-const code = ref()
-const oldCode = ref()
-const newCode = ref()
+const code = ref("")
+const oldCode = ref("")
+const newCode = ref("")
 const valid = ref(false)
 const manualError = ref(false)
 

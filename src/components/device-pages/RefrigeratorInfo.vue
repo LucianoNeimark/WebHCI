@@ -20,13 +20,22 @@ const props = defineProps({
 const refrigerator = reactive<Device>(props.device)
 
 const setTemperature = async () => {
-  await changeTemperatureRefrigerator(refrigerator, refrigerator.state.temperature)
+    await changeTemperatureRefrigerator(refrigerator, refrigerator.state.temperature)
 }
 
 const setFreezerTemperature = async () => {
-  await changeFreezerTemperatureRefrigerator(refrigerator, refrigerator.state.freezerTemperature)
+     await changeFreezerTemperatureRefrigerator(refrigerator, refrigerator.state.freezerTemperature)
 }
 
+const updateTemperature = async (newValue: string) => {
+    refrigerator.state.temperature = Number(newValue)
+    await changeTemperatureRefrigerator(refrigerator, refrigerator.state.temperature)
+}
+
+const updateFreezerTemperature = async (newValue: string) => {
+    refrigerator.state.freezerTemperature = Number(newValue)
+    await changeFreezerTemperatureRefrigerator(refrigerator, refrigerator.state.freezerTemperature)
+}
 
 watch(() => refrigerator.state.mode, async (newStatus : string, oldStatus : string) => {
     if (newStatus !== oldStatus) await changeModeRefrigerator(refrigerator, newStatus)
@@ -63,8 +72,8 @@ watch(() => MSG?.value, async (newMSG) => {
                     <VCol cols="3">
                         <VTextField
                             class="input-temperature"
-                            v-model="refrigerator.state.temperature"
-                            @update:model-value="() => changeTemperatureRefrigerator(refrigerator, refrigerator.state.temperature)"
+                            :value="refrigerator.state.temperature"
+                            @update:model-value="(newValue) => updateTemperature(newValue)"
                             hide-details
                             single-line
                             density="compact"
@@ -84,8 +93,8 @@ watch(() => MSG?.value, async (newMSG) => {
                     <VCol cols="3">
                         <VTextField
                             class="input-temperature"
-                            v-model="refrigerator.state.freezerTemperature"
-                            @update:model-value="() => changeFreezerTemperatureRefrigerator(refrigerator, refrigerator.state.freezerTemperature)"
+                            :value="refrigerator.state.freezerTemperature"
+                            @update:model-value="(newValue) => updateFreezerTemperature(newValue)"
                             hide-details
                             single-line
                             density="compact"
